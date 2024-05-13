@@ -18,10 +18,10 @@ return new class extends Migration
             $table->integer('phone', 9);
             $table->string('email')->unique();
             $table->string('password');
+            $table->integer('vat_number', 9)->nullable();
 
             $table->boolean('isAdmin')->default('0');
             $table->integer('idPlan')->default('0');
-
 
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();

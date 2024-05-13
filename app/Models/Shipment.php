@@ -9,7 +9,8 @@ class Shipments extends Model
 {
     use HasFactory;
 
-    public function cart(){
+    public function cart()
+    {
         return $this->belongsTo(Cart::class);
     }
 }
