@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
@@ -16,10 +15,8 @@ return new class extends Migration
             $table->integer('phone', 9);
             $table->string('email')->unique();
             $table->string('password');
-            $table->integer('vat_number', 9)->nullable();
-
             $table->boolean('isAdmin')->default('0');
-            $table->integer('idPlan')->default('0');
+            $table->integer('vat_number', 9)->nullable();
 
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();

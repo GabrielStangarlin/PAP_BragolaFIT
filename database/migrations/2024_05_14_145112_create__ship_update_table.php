@@ -1,7 +1,6 @@
 <?php
 
-use App\Models\Cart;
-use App\Models\Product;
+use App\Models\Shipment;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,10 +12,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('products_carts', function (Blueprint $table) {
+        Schema::create('_ship_update', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Product::class);
-            $table->foreignIdFor(Cart::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Shipment::class)->constrained()->cascadeOnDelete();
+            $table->string('shipment_status');
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('products_carts');
+        Schema::dropIfExists('_ship_update');
     }
 };
