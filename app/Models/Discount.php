@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Discount extends Model
 {
     use HasFactory;
-    public function product(){
+
+    public function product()
+    {
         return $this->belongsTo(Product::class);
     }
 }

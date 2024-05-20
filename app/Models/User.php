@@ -17,13 +17,13 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-
-
-     public function cart(){
+    public function cart()
+    {
         return $this->hasMany(Cart::class);
     }
 
-    public function wishlist(){
+    public function wishlist()
+    {
         return $this->hasOne(Wishlist::class);
     }
 

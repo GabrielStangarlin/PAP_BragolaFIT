@@ -5,20 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Products extends Model
+class Product extends Model
 {
     use HasFactory;
 
-    public function category(){
+    public function category()
+    {
         return $this->belongsToMany(Category::class);
     }
 
-    public function wishlist(){
+    public function wishlist()
+    {
         return $this->belongsToMany(Wishlist::class);
     }
 
-    public function cart(){
+    public function cart()
+    {
         return $this->belongsToMany(Cart::class);
     }
-
 }
