@@ -43,7 +43,7 @@
 <footer class="bg-black text-white py-3">
     <div class="container d-flex justify-content-between align-items-center">
         <div class="text-center w-100">
-            <p class="mb-0">© 2024 Todos os direitos reservados MuscleMasterss | Site by Gabriel Stangarlin & Mario
+            <p class="mb-0">© 2024 Todos os direitos reservados MuscleMasters | Site by Gabriel Stangarlin & Mario
                 Figueiredo.</p>
         </div>
         <div class="d-flex justify-content-end">
