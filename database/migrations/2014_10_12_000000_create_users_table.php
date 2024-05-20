@@ -12,16 +12,15 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('address');
-            $table->integer('phone', 9);
+            $table->integer('phone');
             $table->string('email')->unique();
             $table->string('password');
             $table->boolean('isAdmin')->default('0');
-            $table->integer('vat_number', 9)->nullable();
-
-            $table->timestamp('email_verified_at')->nullable();
+            $table->integer('vat_number')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
+
     }
 
     /**

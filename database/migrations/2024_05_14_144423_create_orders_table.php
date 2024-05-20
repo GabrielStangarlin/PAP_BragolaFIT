@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(User::class);
             $table->foreignIdFor(Shipment::class);
-            $table->int('order_status');
+            $table->integer('order_status');
             $table->longtext('ship_address');
             $table->longtext('invoicing_address');
             $table->timestamps();

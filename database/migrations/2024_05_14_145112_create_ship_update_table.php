@@ -12,7 +12,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('_ship_update', function (Blueprint $table) {
+        Schema::create('ship_update', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Shipment::class)->constrained()->cascadeOnDelete();
             $table->string('shipment_status');
