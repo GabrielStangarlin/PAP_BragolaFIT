@@ -13,10 +13,10 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-black">
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: rgb(255, 255, 255) ">
         <div class="container px-5">
             <a class="navbar-brand" href="#!">
-                <img src="img(s)/MuscleMastersLogo.png" alt="Logo" style="max-width: 100px; height: auto;">
+                <img src="img(s)/Bragola-Logo.png" alt="Logo" style="max-width: 100px; height: auto;">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
