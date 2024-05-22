@@ -20,3 +20,9 @@ Route::get('/', function () {
 Route::get('/store', function () {
     return view('store');
 });
+
+
+Route::get('/db', function () {
+    return view('dashboard/dTemplate');
+});
+
