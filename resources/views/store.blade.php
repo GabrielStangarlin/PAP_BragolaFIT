@@ -26,7 +26,7 @@
 
 <body>
     <!-- Navigation-->
-    <nav class="navbar navbar-expand-lg navbar-light bg-">
+    <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container px-4 px-lg-5">
             <a class="navbar-brand"><img src="img(s)/Bragola-Logo.png" style="max-width: 100px; height: auto;"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
