@@ -27,6 +27,11 @@ class User extends Authenticatable
         return $this->hasOne(Wishlist::class);
     }
 
+    public function role()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
     protected $fillable = [
         'name',
         'email',

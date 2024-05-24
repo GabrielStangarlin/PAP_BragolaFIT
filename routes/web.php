@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,8 +22,9 @@ Route::get('/store', function () {
     return view('store');
 });
 
-
+//Dashboard (Gabriel)
 Route::get('/db', function () {
-    return view('dashboard/dTemplate');
+    return view('dashboard/dHome');
 });
 
+Route::get('/db/list/user', [UserController::class, 'listUser'])->name('dashboard.user');

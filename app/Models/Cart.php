@@ -18,9 +18,4 @@ class Cart extends Model
     {
         return $this->belongsTo(User::class);
     }
-
-    public function shipment()
-    {
-        return $this->hasOne(Shipment::class);
-    }
 }
