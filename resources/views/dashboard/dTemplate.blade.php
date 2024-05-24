@@ -16,29 +16,62 @@
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.min.js"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.7/css/dataTables.bootstrap5.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.2/css/responsive.bootstrap5.css">
+
+    <style>
+        .fixed-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .welcome-message {
+            position: fixed;
+            bottom: 70px;
+            /* Ajuste conforme necessário */
+            right: 20px;
+            z-index: 1000;
+            display: none;
+            /* Inicialmente oculto */
+        }
+
+        @media (max-width: 768px) {
+            .fixed-button {
+                display: none;
+            }
+
+            .welcome-message {
+                display: none;
+            }
+        }
+    </style>
 </head>
 
 <body>
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-auto sticky-top" style="background-color: rgba(255, 255, 255, 0)">
-                <div class="d-flex flex-sm-column flex-nowrap sticky-top">
-                    <a href="/" class="d-block p-3 link-dark text-decoration-none" title=""
+                <div class="d-flex flex-sm-column flex-nowrap flex-row sticky-top">
+                    <a href="{{ route('index') }}" class="d-block p-3 link-dark text-decoration-none" title=""
                         data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Icon-only">
                         <i class="fa-solid fa-arrow-left fa-beat"></i>
                         Go back
                     </a>
                     <ul class="nav nav-pills nav-flush flex-sm-column flex-row flex-nowrap mb-auto mx-auto">
                         <li>
-                            <a href="#" class="nav-link py-3 px-2" title="" data-bs-toggle="tooltip"
-                                data-bs-placement="right" data-bs-original-title="Dashboard">
+                            <a href="{{ route('dashboard.home') }}" class="nav-link py-3 px-2" title=""
+                                data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Dashboard">
                                 <i class="fa-solid fa-grip"></i>
                                 Dashboard
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="nav-link py-3 px-2" title="" data-bs-toggle="tooltip"
-                                data-bs-placement="right" data-bs-original-title="Orders">
+                            <a href="{{ route('dashboard.user') }}" class="nav-link py-3 px-2" title=""
+                                data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
                                 <i class="fa-solid fa-users"></i>
                                 Users
                             </a>
@@ -75,6 +108,7 @@
                             class="d-flex align-items-center justify-content-center p-3 link-dark text-decoration-none dropdown-toggle"
                             id="dropdownUser3" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fa-regular fa-circle-user"></i>
+                            Profile
                         </a>
                         <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser3">
                             <li><a class="dropdown-item" href="#">name</a></li>
@@ -127,6 +161,24 @@
 
     <script>
         var csrf = '{{ csrf_token() }}';
+
+        document.getElementById('toggleButton').addEventListener('click', function() {
+            var message = document.getElementById('welcomeMessage');
+            var button = document.getElementById('toggleButton');
+
+            // Mostrar a mensagem
+            message.style.display = 'block';
+
+            // Esconder o botão de notificação
+            button.style.display = 'none';
+        });
+
+        document.getElementById('closeMessageButton').addEventListener('click', function() {
+            var message = document.getElementById('welcomeMessage');
+
+            // Esconder a mensagem de boas-vindas
+            message.style.display = 'none';
+        });
     </script>
 </body>
 
