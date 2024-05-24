@@ -54,24 +54,24 @@
             border-radius: 5px; /* Cantos arredondados */
         }
 
-        #topBtn:hover {
+    #topBtn:hover {
             background-color: #555; /* Cor de fundo do botão ao passar o mouse */
         }
 
-        .fa-box{
+    .fa-box{
             font-size: 40px;
         }
 
-        .nav-item:hover .submenu {
+    .nav-item:hover .submenu {
         display: block;
         }
           /* Adicione estilos CSS personalizados aqui */
-          .nav-item {
+    .nav-item {
             position: relative;
             cursor: pointer;
         }
 
-        .submenu {
+    .submenu {
             display: none;
             position: absolute;
             top: 100%;
@@ -83,47 +83,71 @@
             width: 800px; /* Ajuste a largura conforme necessário */
         }
 
-        .nav-item:hover .submenu {
+    .nav-item:hover .submenu {
             display: block;
         }
 
-        .submenu .container {
+    .submenu .container {
             display: flex;
             justify-content: space-between;
         }
 
-        .submenu .container a {
+    .submenu .container a {
             display: block;
             margin-bottom: 5px;
             color: black;
             text-decoration: none;
         }
 
-        .submenu .container a:hover {
+    .submenu .container a:hover {
             text-decoration: underline;
         }
 
-        .submenu .image {
+    .submenu .image {
             width: 300px; /* Ajuste a largura da imagem conforme necessário */
             margin-left: 20px;
         }
 
-        .card {
+    .card {
             transition: transform 0.3s, box-shadow 0.3s;
         }
 
-        .card:hover {
+    .card:hover {
             transform: scale(1.05);
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
         }
         
-        .card-img-top {
+    .card-img-top {
             transition: opacity 0.3s;
         }
 
-        .card:hover .card-img-top {
+    .card:hover .card-img-top {
             opacity: 0.7;
         }
+
+    .nav-link {
+            position: relative;
+            display: inline-block;
+            color: black;
+            text-decoration: none;
+        }
+    .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            display: block;
+            margin-top: 5px;
+            right: 0;
+            background: black;
+            transition: width 0.3s ease, right 0.3s ease;
+        }
+    .nav-link:hover::after {
+            width: 100%;
+            right: 0;
+        }
+        
+        
 </style>
 
 <body>
@@ -133,7 +157,7 @@
             <!-- Parte superior da div -->
             <div class="d-flex justify-content-between align-items-center w-100">
                 <!-- Logo -->
-                <a href="/" class="navbar-brand mb-0"><img src="img(s)/Bragola-Logo.png" style="max-width: 100px; height: auto;"></a>
+                <a href="/" class="navbar-brand mb-0"><img src="img(s)/Bragola-Logo.png" style="max-width: 150px; height: auto;"></a>
                 <!-- Barra de Pesquisa -->
                 <form class="d-flex position-relative" style="width: 550px;">
                     <input class="form-control me-2" type="search" placeholder="Encontre o melhor suplemento pra ti" aria-label="Search">
@@ -161,26 +185,18 @@
                                     <!-- Adicione seus subitens de menu aqui -->
                                     <div>
                                         <a href="#" class="fw-bold">Proteínas</a>
-                                        <a href="#">Proteínas whey</a>
-                                        <a href="#">Mas Gainners</a>
-                                        <a href="#">Concentrada</a>
+                                        <a href="#">Proteínas</a>
                                         <a href="#">Isolada</a>
                                         <a href="#">Proteína Vegetal</a>
-                                        <a href="#">Whey protein</a>
+                                        <a href="#">protein</a>
                                     </div>
                                     <div>
                                         <a href="#" class="fw-bold">Proteína</a>
                                         <a href="#">2 Hot</a>
                                         <a href="#">Fire Black</a>
-                                        <a href="#">L Carnitina</a>
+                                        <a href="#">Carnitina</a>
                                         <a href="#">Shot Dry</a>
                                         <a href="#">Max Cut</a>
-                                    </div>
-                                    <div>
-                                        <a href="#" class="fw-bold">Proteína</a>
-                                        <a href="#">Linha Paulo Muzy</a>
-                                        <a href="#">Linha Max Titanium</a>
-                                        <a href="#">Linha Ramon Dino</a>
                                     </div>
                                     <div>
                                         <a href="#" class="fw-bold">Hipercalóricos</a>
@@ -189,7 +205,7 @@
                                         <a href="#">Refil 2,4kg zero Lactose</a>
                                     </div>
                                     <div class="image">
-                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpNkyYofEow7FKJUiC-RuFha29I_v6opGTuw&usqp=CAU" alt="Imagem" class="img-fluid">
+                                        <img src="https://www.esportelandia.com.br/wp-content/uploads/2023/06/93222e8d-1678-4893-ba07-437863974ce6___a50bb6152fb8007ba71e99f6ad444bfa-e1687531158319.jpg" alt="Imagem" class="img-fluid">
                                     </div>
                                 </div>
                             </div>
@@ -198,38 +214,30 @@
                             <p class="nav-link text-black">PROTEINAS</p>
                             <div class="submenu">
                                 <div class="container">
-                                    <!-- Adicione seus subitens de menu aqui -->
-                                    <div>
-                                        <a href="#" class="fw-bold">Proteínas</a>
-                                        <a href="#">Proteínas whey</a>
-                                        <a href="#">Mas Gainners</a>
-                                        <a href="#">Concentrada</a>
-                                        <a href="#">Isolada</a>
-                                        <a href="#">Proteína Vegetal</a>
-                                        <a href="#">Whey protein</a>
-                                    </div>
-                                    <div>
-                                        <a href="#" class="fw-bold">Proteína</a>
-                                        <a href="#">2 Hot</a>
-                                        <a href="#">Fire Black</a>
-                                        <a href="#">L Carnitina</a>
-                                        <a href="#">Shot Dry</a>
-                                        <a href="#">Max Cut</a>
-                                    </div>
-                                    <div>
-                                        <a href="#" class="fw-bold">Proteína</a>
-                                        <a href="#">Linha Paulo Muzy</a>
-                                        <a href="#">Linha Max Titanium</a>
-                                        <a href="#">Linha Ramon Dino</a>
-                                    </div>
-                                    <div>
-                                        <a href="#" class="fw-bold">Hipercalóricos</a>
-                                        <a href="#">Refil 3kg</a>
-                                        <a href="#">Refil 1,4kg</a>
-                                        <a href="#">Refil 2,4kg zero Lactose</a>
-                                    </div>
+                                   <!-- Adicione seus subitens de menu aqui -->
+                                   <div>
+                                    <a href="#" class="fw-bold">Proteínas</a>
+                                    <a href="#">Proteínas</a>
+                                    <a href="#">Isolada</a>
+                                    <a href="#">Proteína Vegetal</a>
+                                    <a href="#">protein</a>
+                                </div>
+                                <div>
+                                    <a href="#" class="fw-bold">Proteína</a>
+                                    <a href="#">2 Hot</a>
+                                    <a href="#">Fire Black</a>
+                                    <a href="#">Carnitina</a>
+                                    <a href="#">Shot Dry</a>
+                                    <a href="#">Max Cut</a>
+                                </div>
+                                <div>
+                                    <a href="#" class="fw-bold">Hipercalóricos</a>
+                                    <a href="#">Refil 3kg</a>
+                                    <a href="#">Refil 1,4kg</a>
+                                    <a href="#">Refil 2,4kg zero Lactose</a>
+                                </div>
                                     <div class="image">
-                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpNkyYofEow7FKJUiC-RuFha29I_v6opGTuw&usqp=CAU" alt="Imagem" class="img-fluid">
+                                        <img src="https://saudeguia.com/wp-content/uploads/produtos-growth.jpg" alt="Imagem" class="img-fluid">
                                     </div>
                                 </div>
                             </div>
@@ -241,26 +249,18 @@
                                     <!-- Adicione seus subitens de menu aqui -->
                                     <div>
                                         <a href="#" class="fw-bold">Proteínas</a>
-                                        <a href="#">Proteínas whey</a>
-                                        <a href="#">Mas Gainners</a>
-                                        <a href="#">Concentrada</a>
+                                        <a href="#">Proteínas</a>
                                         <a href="#">Isolada</a>
                                         <a href="#">Proteína Vegetal</a>
-                                        <a href="#">Whey protein</a>
+                                        <a href="#">protein</a>
                                     </div>
                                     <div>
                                         <a href="#" class="fw-bold">Proteína</a>
                                         <a href="#">2 Hot</a>
                                         <a href="#">Fire Black</a>
-                                        <a href="#">L Carnitina</a>
+                                        <a href="#">Carnitina</a>
                                         <a href="#">Shot Dry</a>
                                         <a href="#">Max Cut</a>
-                                    </div>
-                                    <div>
-                                        <a href="#" class="fw-bold">Proteína</a>
-                                        <a href="#">Linha Paulo Muzy</a>
-                                        <a href="#">Linha Max Titanium</a>
-                                        <a href="#">Linha Ramon Dino</a>
                                     </div>
                                     <div>
                                         <a href="#" class="fw-bold">Hipercalóricos</a>
@@ -278,38 +278,30 @@
                             <p class="nav-link text-black">CREATINA</p>
                             <div class="submenu">
                                 <div class="container">
-                                    <!-- Adicione seus subitens de menu aqui -->
-                                    <div>
-                                        <a href="#" class="fw-bold">Proteínas</a>
-                                        <a href="#">Proteínas whey</a>
-                                        <a href="#">Mas Gainners</a>
-                                        <a href="#">Concentrada</a>
-                                        <a href="#">Isolada</a>
-                                        <a href="#">Proteína Vegetal</a>
-                                        <a href="#">Whey protein</a>
-                                    </div>
-                                    <div>
-                                        <a href="#" class="fw-bold">Proteína</a>
-                                        <a href="#">2 Hot</a>
-                                        <a href="#">Fire Black</a>
-                                        <a href="#">L Carnitina</a>
-                                        <a href="#">Shot Dry</a>
-                                        <a href="#">Max Cut</a>
-                                    </div>
-                                    <div>
-                                        <a href="#" class="fw-bold">Proteína</a>
-                                        <a href="#">Linha Paulo Muzy</a>
-                                        <a href="#">Linha Max Titanium</a>
-                                        <a href="#">Linha Ramon Dino</a>
-                                    </div>
-                                    <div>
-                                        <a href="#" class="fw-bold">Hipercalóricos</a>
-                                        <a href="#">Refil 3kg</a>
-                                        <a href="#">Refil 1,4kg</a>
-                                        <a href="#">Refil 2,4kg zero Lactose</a>
-                                    </div>
+                                   <!-- Adicione seus subitens de menu aqui -->
+                                   <div>
+                                    <a href="#" class="fw-bold">Proteínas</a>
+                                    <a href="#">Proteínas</a>
+                                    <a href="#">Isolada</a>
+                                    <a href="#">Proteína Vegetal</a>
+                                    <a href="#">protein</a>
+                                </div>
+                                <div>
+                                    <a href="#" class="fw-bold">Proteína</a>
+                                    <a href="#">2 Hot</a>
+                                    <a href="#">Fire Black</a>
+                                    <a href="#">Carnitina</a>
+                                    <a href="#">Shot Dry</a>
+                                    <a href="#">Max Cut</a>
+                                </div>
+                                <div>
+                                    <a href="#" class="fw-bold">Hipercalóricos</a>
+                                    <a href="#">Refil 3kg</a>
+                                    <a href="#">Refil 1,4kg</a>
+                                    <a href="#">Refil 2,4kg zero Lactose</a>
+                                </div>
                                     <div class="image">
-                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpNkyYofEow7FKJUiC-RuFha29I_v6opGTuw&usqp=CAU" alt="Imagem" class="img-fluid">
+                                        <img src="https://i0.wp.com/naturvida.com.br/wp-content/uploads/2023/08/Pre-Treino.webp?fit=1170%2C650&ssl=1" alt="Imagem" class="img-fluid">
                                     </div>
                                 </div>
                             </div>
@@ -424,7 +416,7 @@
                                 <div class="card h-100">
                                     <!-- Sale badge-->
                                     <div class="badge bg-dark text-white position-absolute"
-                                        style="top: 0.5rem; right: 0.5rem">Sale</div>
+                                        style="top: 0.5rem; right: 0.5rem">Saldo</div>
                                     <!-- Product image-->
                                     <img class="card-img-top" src="/img(s)/card1.png"
                                         alt="..." />
@@ -456,7 +448,7 @@
                                 <div class="card h-100">
                                     <!-- Sale badge-->
                                     <div class="badge bg-dark text-white position-absolute"
-                                        style="top: 0.5rem; right: 0.5rem">Sale</div>
+                                        style="top: 0.5rem; right: 0.5rem">Saldo</div>
                                     <!-- Product image-->
                                     <img class="card-img-top" src="/img(s)/card1.png"
                                         alt="..." />
@@ -487,7 +479,7 @@
                                 <div class="card h-100">
                                     <!-- Sale badge-->
                                     <div class="badge bg-dark text-white position-absolute"
-                                        style="top: 0.5rem; right: 0.5rem">Sale</div>
+                                        style="top: 0.5rem; right: 0.5rem">Saldo</div>
                                     <!-- Product image-->
                                     <img class="card-img-top" src="/img(s)/card1.png"
                                         alt="..." />
@@ -587,7 +579,7 @@
                                 <div class="card h-100">
                                     <!-- Sale badge-->
                                     <div class="badge bg-dark text-white position-absolute"
-                                        style="top: 0.5rem; right: 0.5rem">Sale</div>
+                                        style="top: 0.5rem; right: 0.5rem">Saldo</div>
                                     <!-- Product image-->
                                     <img class="card-img-top" src="/img(s)/card1.png"
                                         alt="..." />
@@ -618,7 +610,7 @@
                                 <div class="card h-100">
                                     <!-- Sale badge-->
                                     <div class="badge bg-dark text-white position-absolute"
-                                        style="top: 0.5rem; right: 0.5rem">Sale</div>
+                                        style="top: 0.5rem; right: 0.5rem">Saldo</div>
                                     <!-- Product image-->
                                     <img class="card-img-top" src="/img(s)/card1.png"
                                         alt="..." />
