@@ -387,8 +387,8 @@
                             <div class="col mb-5">
                                 <div class="card h-100">
                                     <!-- Product image-->
-                                    <img class="card-img-top" src="/img(s)/card1.png"
-                                        alt="..." />
+                                    <a href="/show_product"><img class="card-img-top" src="/img(s)/card1.png"
+                                        alt="..." /></a>
                                     <!-- Product details-->
                                     <div class="card-body p-4">
                                         <div class="text-center">
@@ -418,8 +418,8 @@
                                     <div class="badge bg-dark text-white position-absolute"
                                         style="top: 0.5rem; right: 0.5rem">Saldo</div>
                                     <!-- Product image-->
-                                    <img class="card-img-top" src="/img(s)/card1.png"
-                                        alt="..." />
+                                    <a href="/show_product"><img class="card-img-top" src="/img(s)/card1.png"
+                                        alt="..." /></a>
                                     <!-- Product details-->
                                     <div class="card-body p-4">
                                         <div class="text-center">
@@ -450,8 +450,8 @@
                                     <div class="badge bg-dark text-white position-absolute"
                                         style="top: 0.5rem; right: 0.5rem">Saldo</div>
                                     <!-- Product image-->
-                                    <img class="card-img-top" src="/img(s)/card1.png"
-                                        alt="..." />
+                                    <a href="/show_product"><img class="card-img-top" src="/img(s)/card1.png"
+                                        alt="..." /></a>
                                     <!-- Product details-->
                                     <div class="card-body p-4">
                                         <div class="text-center">
@@ -481,8 +481,8 @@
                                     <div class="badge bg-dark text-white position-absolute"
                                         style="top: 0.5rem; right: 0.5rem">Saldo</div>
                                     <!-- Product image-->
-                                    <img class="card-img-top" src="/img(s)/card1.png"
-                                        alt="..." />
+                                    <a href="/show_product"><img class="card-img-top" src="/img(s)/card1.png"
+                                        alt="..." /></a>
                                     <!-- Product details-->
                                     <div class="card-body p-4">
                                         <div class="text-center">
@@ -518,8 +518,8 @@
                             <div class="col mb-5">
                                 <div class="card h-100">
                                     <!-- Product image-->
-                                    <img class="card-img-top" src="/img(s)/card1.png"
-                                        alt="..." />
+                                    <a href="/show_product"><img class="card-img-top" src="/img(s)/card1.png"
+                                        alt="..." /></a>
                                     <!-- Product details-->
                                     <div class="card-body p-4">
                                         <div class="text-center">
@@ -550,8 +550,8 @@
                                     <div class="badge bg-dark text-white position-absolute"
                                         style="top: 0.5rem; right: 0.5rem">Sale</div>
                                     <!-- Product image-->
-                                    <img class="card-img-top" src="/img(s)/card1.png"
-                                        alt="..." />
+                                    <a href="/show_product"><img class="card-img-top" src="/img(s)/card1.png"
+                                        alt="..." /></a>
                                     <!-- Product details-->
                                     <div class="card-body p-4">
                                         <div class="text-center">
@@ -581,8 +581,8 @@
                                     <div class="badge bg-dark text-white position-absolute"
                                         style="top: 0.5rem; right: 0.5rem">Saldo</div>
                                     <!-- Product image-->
-                                    <img class="card-img-top" src="/img(s)/card1.png"
-                                        alt="..." />
+                                    <a href="/show_product"><img class="card-img-top" src="/img(s)/card1.png"
+                                        alt="..." /></a>
                                     <!-- Product details-->
                                     <div class="card-body p-4">
                                         <div class="text-center">
@@ -612,8 +612,8 @@
                                     <div class="badge bg-dark text-white position-absolute"
                                         style="top: 0.5rem; right: 0.5rem">Saldo</div>
                                     <!-- Product image-->
-                                    <img class="card-img-top" src="/img(s)/card1.png"
-                                        alt="..." />
+                                    <a href="/show_product"><img class="card-img-top" src="/img(s)/card1.png"
+                                        alt="..." /></a>
                                     <!-- Product details-->
                                     <div class="card-body p-4">
                                         <div class="text-center">

@@ -21,6 +21,11 @@ Route::get('/store', function () {
     return view('store');
 });
 
+
+Route::get('/show_product', function () {
+    return view('show_product');
+});
+
 //Dashboard (Gabriel)
 Route::get('/db', [SiteController::class, 'dashboardHome'])->name('dashboard.home');
 
