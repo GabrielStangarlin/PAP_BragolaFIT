@@ -8,6 +8,8 @@ use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
 {
+    
+
     //dashboard:
     public function listUser()
     {

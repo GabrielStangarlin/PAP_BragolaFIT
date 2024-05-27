@@ -12,13 +12,13 @@
         </div>
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img class="" src="img(s)/gym-bg1.jpg" alt="First slide">
+                <img class="img-fluid" src="img(s)/gym-bg1.jpg" alt="First slide">
             </div>
             <div class="carousel-item">
-                <img class="" src="img(s)/gym-bg2.jpg" alt="Second slide">
+                <img class="img-fluid" src="img(s)/gym-bg2.jpg" alt="Second slide">
             </div>
             <div class="carousel-item">
-                <img class="" src="img(s)/gym-bg3.jpg" alt="Third slide">
+                <img class="img-fluid" src="img(s)/gym-bg3.jpg" alt="Third slide">
             </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">

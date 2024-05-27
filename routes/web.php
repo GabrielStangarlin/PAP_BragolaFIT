@@ -18,12 +18,15 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [SiteController::class, 'index'])->name('index');
 
 Route::get('/store', function () {
-    return view('store');
+    return view('store.store');
 });
 
 
 Route::get('/show_product', function () {
-    return view('show_product');
+    return view('store.show_product');
+});
+Route::get('/login', function () {
+    return view('login.login');
 });
 
 //Dashboard (Gabriel)
