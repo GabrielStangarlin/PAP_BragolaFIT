@@ -98,7 +98,7 @@
                                     <li>
                                         <a class="dropdown-item" href="{{ route('dashboard.subcategory') }}">
                                             <i class="fa-solid fa-layer-group"></i>
-                                            Subc ategories
+                                            Subcategories
                                         </a>
                                     </li>
                                     <li>
