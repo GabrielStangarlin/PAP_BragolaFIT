@@ -1,6 +1,6 @@
 @extends('dashboard.dTemplate')
 
-@section('title', 'Dashboard Products')
+@section('title', 'Dashboard Users')
 
 @section('dContent')
     <h1 class="text-white">All Users</h1>
@@ -19,7 +19,7 @@
                 <th>E-mail</th>
                 <th>Admin</th>
                 <th>Vat-Number</th>
-                <th>Ações</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody class="text-center">
@@ -38,9 +38,8 @@
                     <div class="container">
                         <div class="row justify-content-center">
                             <div class="col-md-12">
-                                <form method="post" class="p-3">
+                                <form class="p-3">
                                     @csrf
-                                    <input type="hidden" name="id" id="id">
 
                                     <div class="form-group">
                                         <label for="name" class="form-label">Name:</label>
@@ -99,7 +98,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form method="post" class="p-3">
+                    <form class="p-3">
                         @csrf
                         <input type="hidden" name="id" id="id">
 
@@ -135,7 +134,7 @@
                         </div>
 
                         <div class="model-footer d-flex mt-1" style="justify-content:flex-end">
-                            <button type="button" id="btn-save" class="btn btn-primary">Save</button>
+                            <button type="button" id="btn-save-edit" class="btn btn-primary">Save</button>
                         </div>
 
 
@@ -201,7 +200,7 @@
         let addUserModal = $('#addUserModal');
 
         $(document).on('click', '#btn-save', function() {
-            var id = addUserModal.find('#idAdd').val();
+
             var name = addUserModal.find('#nameAdd').val();
             var address = addUserModal.find('#addressAdd').val();
             var email = addUserModal.find('#emailAdd').val();
@@ -210,13 +209,10 @@
             var vat_number = addUserModal.find('#vat_numberAdd').val();
             var isAdmin = addUserModal.find('#isAdminAdd').is(':checked') ? 1 : 0;
 
-            console.log('Click');
-
             $.ajax({
                 type: 'POST',
                 url: "/user/add",
                 data: {
-                    id: id,
                     name: name,
                     address: address,
                     email: email,
@@ -260,6 +256,39 @@
                 }
             });
         }
+
+        $(document).on('click', '#btn-save-edit', function() {
+            var id = editUserModal.find('#id').val();
+            var name = editUserModal.find('#name').val();
+            var address = editUserModal.find('#address').val();
+            var email = editUserModal.find('#email').val();
+            var phone = editUserModal.find('#phone').val();
+            var password = editUserModal.find('#password').val();
+            var vat_number = editUserModal.find('#vat_number').val();
+            var isAdmin = editUserModal.find('#isAdmin').is(':checked') ? 1 : 0;
+
+            $.ajax({
+                type: 'POST',
+                url: "/user/edit",
+                data: {
+                    id: id,
+                    name: name,
+                    address: address,
+                    email: email,
+                    phone: phone,
+                    password: password,
+                    vat_number: vat_number,
+                    isAdmin: isAdmin
+                },
+                dataType: 'json',
+                success: (data) => {
+                    editUserModal.modal('hide');
+                    $("#btn-save-edit").html('Submit');
+                    $("#btn-save-edit").attr("disabled", false);
+                    table.ajax.reload();
+                }
+            });
+        });
 
         function deleteFunction(id) {
             if (confirm("Do you really want do delete?") == true) {

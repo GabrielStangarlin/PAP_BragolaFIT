@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SiteController;
+use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,7 +23,6 @@ Route::get('/store', function () {
     return view('store.store');
 });
 
-
 Route::get('/show_product', function () {
     return view('store.show_product');
 });
@@ -37,3 +38,14 @@ Route::get('/db/list/user', [UserController::class, 'listUser'])->name('dashboar
 Route::post('/user/add', [UserController::class, 'addUser']);
 Route::post('/user/delete', [UserController::class, 'destroy']);
 Route::post('/user/informations/edit', [UserController::class, 'showInformation']);
+Route::post('/user/edit', [UserController::class, 'editUser']);
+
+//Categories
+Route::get('/db/list/category', [CategoryController::class, 'listCategory'])->name('dashboard.category');
+Route::post('/category/add', [CategoryController::class, 'addCategory']);
+Route::post('/category/delete', [CategoryController::class, 'destroy']);
+Route::post('/category/informations/edit', [CategoryController::class, 'showInformation']);
+Route::post('/category/edit', [CategoryController::class, 'editCategory']);
+
+//Subcategory
+Route::get('/db/list/subcategory', [SubcategoryController::class, 'listSubcategory'])->name('dashboard.subcategory');

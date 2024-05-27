@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.7/css/dataTables.bootstrap5.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.2/css/responsive.bootstrap5.css">
 
+
     <style>
         .fixed-button {
             position: fixed;
@@ -48,67 +49,80 @@
                 display: none;
             }
         }
+
+        [data-bs-toggle="tooltip"] {
+            position: relative;
+        }
     </style>
 </head>
 
 <body>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-auto sticky-top" style="background-color: rgba(255, 255, 255, 0)">
+            <div class="col-sm-auto" style="background-color: rgb(255, 255, 255)">
                 <div class="d-flex flex-sm-column flex-nowrap flex-row sticky-top">
                     <a href="{{ route('index') }}" class="d-block p-3 link-dark text-decoration-none" title=""
                         data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Icon-only">
                         <i class="fa-solid fa-arrow-left fa-beat"></i>
-                        Go back
+                        <span class="d-none d-sm-inline">Go back</span>
                     </a>
                     <ul class="nav nav-pills nav-flush flex-sm-column flex-row flex-nowrap mb-auto mx-auto">
                         <li>
                             <a href="{{ route('dashboard.home') }}" class="nav-link py-3 px-2" title=""
                                 data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Dashboard">
                                 <i class="fa-solid fa-grip"></i>
-                                Dashboard
+                                <span class="d-none d-sm-inline">Dashboard</span>
                             </a>
                         </li>
                         <li>
                             <a href="{{ route('dashboard.user') }}" class="nav-link py-3 px-2" title=""
-                                data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
+                                data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Users">
                                 <i class="fa-solid fa-users"></i>
-                                Users
+                                <span class="d-none d-sm-inline">Users</span>
                             </a>
                         </li>
                         <li>
                             <div class="dropdown">
                                 <a href="#" class="nav-link py-3 px-2 text-decoration-none" id="dropdownUser3"
                                     data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa-solid fa-boxes-stacked"></i> Products
+                                    <i class="fa-solid fa-boxes-stacked"></i>
+                                    <span class="d-none d-sm-inline">Products</span>
                                 </a>
                                 <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser3">
                                     <li>
-                                        <a class="dropdown-item" href="#">
-                                            <i class="fa-solid fa-layer-group"></i>Categories
+                                        <a class="dropdown-item" href="{{ route('dashboard.category') }}">
+                                            <i class="fa-solid fa-layer-group"></i>
+                                            Categories
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('dashboard.subcategory') }}">
+                                            <i class="fa-solid fa-layer-group"></i>
+                                            Subcategories
                                         </a>
                                     </li>
                                     <li>
                                         <a class="dropdown-item" href="#">
-                                            <i class="fa-solid fa-layer-group"></i>Products
+                                            <i class="fa-solid fa-layer-group"></i>
+                                            Products
                                         </a>
                                     </li>
-
                                 </ul>
                             </div>
                         </li>
-                        <a href="#" class="nav-link py-3 px-2" title="" data-bs-toggle="tooltip"
-                            data-bs-placement="right" data-bs-original-title="Orders">
-                            <i class="fa-solid fa-truck-fast"></i>
-                            Orders
-                        </a>
+                        <li>
+                            <a href="#" class="nav-link py-3 px-2" title="" data-bs-toggle="tooltip"
+                                data-bs-placement="right" data-bs-original-title="Orders">
+                                <i class="fa-solid fa-truck-fast"></i>
+                                <span class="d-none d-sm-inline">Orders</span>
+                            </a>
+                        </li>
                     </ul>
                     <div class="dropdown">
                         <a href="#"
                             class="d-flex align-items-center justify-content-center p-3 link-dark text-decoration-none dropdown-toggle"
                             id="dropdownUser3" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fa-regular fa-circle-user"></i>
-                            Profile
                         </a>
                         <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser3">
                             <li><a class="dropdown-item" href="#">name</a></li>
@@ -161,24 +175,6 @@
 
     <script>
         var csrf = '{{ csrf_token() }}';
-
-        document.getElementById('toggleButton').addEventListener('click', function() {
-            var message = document.getElementById('welcomeMessage');
-            var button = document.getElementById('toggleButton');
-
-            // Mostrar a mensagem
-            message.style.display = 'block';
-
-            // Esconder o botão de notificação
-            button.style.display = 'none';
-        });
-
-        document.getElementById('closeMessageButton').addEventListener('click', function() {
-            var message = document.getElementById('welcomeMessage');
-
-            // Esconder a mensagem de boas-vindas
-            message.style.display = 'none';
-        });
     </script>
 </body>
 
