@@ -236,6 +236,8 @@
 </style>
     
 <body>
+
+    </div>
     <div class="text-center mb-5">
         <img src="/img(s)/Bragola-logo-noBg.png" alt="" style="width: 70%">
     </div>

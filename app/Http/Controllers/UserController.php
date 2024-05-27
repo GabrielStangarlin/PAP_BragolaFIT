@@ -8,7 +8,55 @@ use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
 {
-    
+    //login mario
+    public function register(Request $request)
+    {
+        $user = new User();
+
+        $user->name = $request->registerName;
+        $user->address = $request->registerAddress;
+        $user->phone = $request->registerPhone;
+        $user->email = $request->registerEmail;
+        $user->password = bcrypt($request->registerPassword);
+
+        $user->save();
+
+        return redirect()->back()->with('registerSuccess', 'O registo foi feito com sucesso!');
+
+    }
+
+    public function logout(Request $request)
+    {
+        user::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->back()->with('logoutSuccess', 'Sessão terminada com sucesso');
+    }
+
+    public function login(Request $request)
+    {
+        //verificar se o utilizador está autenticado, se sim redirecionar para a homepage
+
+        $credentials = [
+            'email' => $request->loginEmail,
+            'password' => $request->loginPassword,
+
+        ];
+
+        if (user::attempt($credentials)) {
+            //Verificar se o usuário é um administrador
+            if (user::user()->isAdmin == 1) {
+                return redirect()->route('dashboard.show')->with('success', 'Administrador Logado');
+            } else {
+                return redirect('/store')->with('success', 'Usário Logado');
+            }
+        }
+
+        return redirect()->back()->with('error', 'Email or Passoword Errados');
+    }
+
 
     //dashboard:
     public function listUser()
