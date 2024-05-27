@@ -14,7 +14,7 @@
         <thead>
             <tr>
                 <th>Name</th>
-                <th>Category</th>
+                <th>Main category</th>
                 <th>Updated at</th>
                 <th>Actions</th>
             </tr>
