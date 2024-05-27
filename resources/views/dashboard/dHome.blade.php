@@ -49,7 +49,7 @@
     </div>
 
     <div class="alert alert-light shadow welcome-message" id="welcomeMessage">
-        Bem-vindo à nossa loja!
+        Welcome to the Bragola Dashboard!
         <button type="button" class="btn-close" id="closeMessageButton" aria-label="Close"></button>
     </div>
 
@@ -61,4 +61,23 @@
         </span>
     </button>
 
+    <script>
+        document.getElementById('toggleButton').addEventListener('click', function() {
+            var message = document.getElementById('welcomeMessage');
+            var button = document.getElementById('toggleButton');
+
+            // Mostrar a mensagem
+            message.style.display = 'block';
+
+            // Esconder o botão de notificação
+            button.style.display = 'none';
+        });
+
+        document.getElementById('closeMessageButton').addEventListener('click', function() {
+            var message = document.getElementById('welcomeMessage');
+
+            // Esconder a mensagem de boas-vindas
+            message.style.display = 'none';
+        });
+    </script>
 @endsection
