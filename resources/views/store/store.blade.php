@@ -19,8 +19,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href='resources/css/style.css'>
 </head>
 
@@ -75,21 +74,31 @@
             display: none;
             position: absolute;
             top: 100%;
-            left: 0;
+            left: 0%;
             background-color: white;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             z-index: 1000;
             padding: 20px;
             width: 800px; /* Ajuste a largura conforme necessário */
+            border-radius: 5px;
         }
 
     .nav-item:hover .submenu {
             display: block;
+            position: absolute;
+            background-color: white;
+            border: 1px solid #ddd;
+            padding: 1rem;
+        }
+
+    .offcanvas-submenu .nav-item {
+            margin-bottom: 1rem;
         }
 
     .submenu .container {
             display: flex;
             justify-content: space-between;
+            
         }
 
     .submenu .container a {
@@ -146,8 +155,18 @@
             width: 100%;
             right: 0;
         }
-        
-        
+
+    @media (max-width: 992px) {
+            .navbar-nav {
+                display: none;
+            }
+            .submenu {
+                display: none !important;
+            }
+        }
+    .cor-a{
+        color:#000;
+    }  
 </style>
 
 <body>
@@ -157,7 +176,9 @@
             <!-- Parte superior da div -->
             <div class="d-flex justify-content-between align-items-center w-100">
                 <!-- Logo -->
-                <a href="/" class="navbar-brand mb-0"><img src="img(s)/Bragola-Logo.png" style="max-width: 150px; height: auto;"></a>
+                <a href="/" class="navbar-brand mb-0">
+                    <img src="img(s)/Bragola-Logo.png" style="max-width: 150px; height: auto;">
+                </a>
                 <!-- Barra de Pesquisa -->
                 <form class="d-flex position-relative" style="width: 550px;">
                     <input class="form-control me-2" type="search" placeholder="Encontre o melhor suplemento pra ti" aria-label="Search">
@@ -165,57 +186,30 @@
                         <i class="fas fa-search"></i>
                     </button>
                 </form>
+                @auth
+                <button class="btn bg-white" type="button" style="margin-left: 25%">
+                    <i class="fas fa-user"></i> {{ user()->name }}
+                </button>
+                @endauth
+                <button class="btn bg-white" type="button" style="margin-left: 25%">
+                    <i class="fas fa-user"></i> Entrar
+                </button>
                 <!-- Carrinho -->
-                <button class="btn bg-white" type="submit" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+                <button class="btn bg-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
                     <i class="bi-cart-fill me-1"></i>
                     Cart
                     <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
                 </button>
             </div>
             <!-- Parte inferior da div -->
-                <div class="d-flex align-items-center justify-content-center">
-                    <ul class="nav justify-content-center">
-                        <li class="nav-item">
-                            <button class="nav-link text-black active" aria-current="page" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExamplemenu" aria-controls="offcanvasExample"><i class="fa-solid fa-bars"></i> MENU</button>
-                        </li>
-                        <li class="nav-item">
-                            <p class="nav-link text-black">SUPLEMENTOS</p>
-                            <div class="submenu">
-                                <div class="container">
-                                    <!-- Adicione seus subitens de menu aqui -->
-                                    <div>
-                                        <a href="#" class="fw-bold">Proteínas</a>
-                                        <a href="#">Proteínas</a>
-                                        <a href="#">Isolada</a>
-                                        <a href="#">Proteína Vegetal</a>
-                                        <a href="#">protein</a>
-                                    </div>
-                                    <div>
-                                        <a href="#" class="fw-bold">Proteína</a>
-                                        <a href="#">2 Hot</a>
-                                        <a href="#">Fire Black</a>
-                                        <a href="#">Carnitina</a>
-                                        <a href="#">Shot Dry</a>
-                                        <a href="#">Max Cut</a>
-                                    </div>
-                                    <div>
-                                        <a href="#" class="fw-bold">Hipercalóricos</a>
-                                        <a href="#">Refil 3kg</a>
-                                        <a href="#">Refil 1,4kg</a>
-                                        <a href="#">Refil 2,4kg zero Lactose</a>
-                                    </div>
-                                    <div class="image">
-                                        <img src="https://www.esportelandia.com.br/wp-content/uploads/2023/06/93222e8d-1678-4893-ba07-437863974ce6___a50bb6152fb8007ba71e99f6ad444bfa-e1687531158319.jpg" alt="Imagem" class="img-fluid">
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <p class="nav-link text-black">PROTEINAS</p>
-                            <div class="submenu">
-                                <div class="container">
-                                   <!-- Adicione seus subitens de menu aqui -->
-                                   <div>
+            <div class="d-none d-lg-flex align-items-center justify-content-center w-100">
+                <ul class="nav justify-content-center">
+                    <li class="nav-item">
+                        <a class="nav-link text-black active" aria-current="page" href="#">SUPLEMENTOS</a>
+                        <div class="submenu">
+                            <div class="container">
+                                <!-- Adicione seus subitens de menu aqui -->
+                                <div>
                                     <a href="#" class="fw-bold">Proteínas</a>
                                     <a href="#">Proteínas</a>
                                     <a href="#">Isolada</a>
@@ -236,50 +230,17 @@
                                     <a href="#">Refil 1,4kg</a>
                                     <a href="#">Refil 2,4kg zero Lactose</a>
                                 </div>
-                                    <div class="image">
-                                        <img src="https://saudeguia.com/wp-content/uploads/produtos-growth.jpg" alt="Imagem" class="img-fluid">
-                                    </div>
+                                <div class="image">
+                                    <img src="https://www.esportelandia.com.br/wp-content/uploads/2023/06/93222e8d-1678-4893-ba07-437863974ce6___a50bb6152fb8007ba71e99f6ad444bfa-e1687531158319.jpg" alt="Imagem" class="img-fluid">
                                 </div>
                             </div>
-                        </li>
-                        <li class="nav-item">
-                            <p class="nav-link text-black">PRÉ TREINOS</p>
-                            <div class="submenu">
-                                <div class="container">
-                                    <!-- Adicione seus subitens de menu aqui -->
-                                    <div>
-                                        <a href="#" class="fw-bold">Proteínas</a>
-                                        <a href="#">Proteínas</a>
-                                        <a href="#">Isolada</a>
-                                        <a href="#">Proteína Vegetal</a>
-                                        <a href="#">protein</a>
-                                    </div>
-                                    <div>
-                                        <a href="#" class="fw-bold">Proteína</a>
-                                        <a href="#">2 Hot</a>
-                                        <a href="#">Fire Black</a>
-                                        <a href="#">Carnitina</a>
-                                        <a href="#">Shot Dry</a>
-                                        <a href="#">Max Cut</a>
-                                    </div>
-                                    <div>
-                                        <a href="#" class="fw-bold">Hipercalóricos</a>
-                                        <a href="#">Refil 3kg</a>
-                                        <a href="#">Refil 1,4kg</a>
-                                        <a href="#">Refil 2,4kg zero Lactose</a>
-                                    </div>
-                                    <div class="image">
-                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpNkyYofEow7FKJUiC-RuFha29I_v6opGTuw&usqp=CAU" alt="Imagem" class="img-fluid">
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <p class="nav-link text-black">CREATINA</p>
-                            <div class="submenu">
-                                <div class="container">
-                                   <!-- Adicione seus subitens de menu aqui -->
-                                   <div>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-black" href="#">PROTEINAS</a>
+                        <div class="submenu">
+                            <div class="container">
+                                <div>
                                     <a href="#" class="fw-bold">Proteínas</a>
                                     <a href="#">Proteínas</a>
                                     <a href="#">Isolada</a>
@@ -300,30 +261,179 @@
                                     <a href="#">Refil 1,4kg</a>
                                     <a href="#">Refil 2,4kg zero Lactose</a>
                                 </div>
-                                    <div class="image">
-                                        <img src="https://i0.wp.com/naturvida.com.br/wp-content/uploads/2023/08/Pre-Treino.webp?fit=1170%2C650&ssl=1" alt="Imagem" class="img-fluid">
-                                    </div>
+                                <div class="image">
+                                    <img src="https://saudeguia.com/wp-content/uploads/produtos-growth.jpg" alt="Imagem" class="img-fluid">
                                 </div>
                             </div>
-                        </li>
-                    </ul>
-                </div>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-black" href="#">PRÉ TREINOS</a>
+                        <div class="submenu">
+                            <div class="container">
+                                <div>
+                                    <a href="#" class="fw-bold">Proteínas</a>
+                                    <a href="#">Proteínas</a>
+                                    <a href="#">Isolada</a>
+                                    <a href="#">Proteína Vegetal</a>
+                                    <a href="#">protein</a>
+                                </div>
+                                <div>
+                                    <a href="#" class="fw-bold">Proteína</a>
+                                    <a href="#">2 Hot</a>
+                                    <a href="#">Fire Black</a>
+                                    <a href="#">Carnitina</a>
+                                    <a href="#">Shot Dry</a>
+                                    <a href="#">Max Cut</a>
+                                </div>
+                                <div>
+                                    <a href="#" class="fw-bold">Hipercalóricos</a>
+                                    <a href="#">Refil 3kg</a>
+                                    <a href="#">Refil 1,4kg</a>
+                                    <a href="#">Refil 2,4kg zero Lactose</a>
+                                </div>
+                                <div class="image">
+                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpNkyYofEow7FKJUiC-RuFha29I_v6opGTuw&usqp=CAU" alt="Imagem" class="img-fluid">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-black" href="#">CREATINA</a>
+                        <div class="submenu">
+                            <div class="container">
+                                <div>
+                                    <a href="#" class="fw-bold">Proteínas</a>
+                                    <a href="#">Proteínas</a>
+                                    <a href="#">Isolada</a>
+                                    <a href="#">Proteína Vegetal</a>
+                                    <a href="#">protein</a>
+                                </div>
+                                <div>
+                                    <a href="#" class="fw-bold">Proteína</a>
+                                    <a href="#">2 Hot</a>
+                                    <a href="#">Fire Black</a>
+                                    <a href="#">Carnitina</a>
+                                    <a href="#">Shot Dry</a>
+                                    <a href="#">Max Cut</a>
+                                </div>
+                                <div>
+                                    <a href="#" class="fw-bold">Hipercalóricos</a>
+                                    <a href="#">Refil 3kg</a>
+                                    <a href="#">Refil 1,4kg</a>
+                                    <a href="#">Refil 2,4kg zero Lactose</a>
+                                </div>
+                                <div class="image">
+                                    <img src="https://i0.wp.com/naturvida.com.br/wp-content/uploads/2023/08/Pre-Treino.webp?fit=1170%2C650&ssl=1" alt="Imagem" class="img-fluid">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
-    
-    <!--offcanvas Menu-->
-    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExamplemenu" aria-labelledby="offcanvasExampleLabel">
+
+    <!-- Offcanvas do Menu para telas menores -->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasMenu" aria-labelledby="offcanvasMenuLabel">
         <div class="offcanvas-header">
-          <h5 class="offcanvas-title" id="offcanvasExampleLabel">MENU</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            <h5 class="offcanvas-title" id="offcanvasMenuLabel">Menu</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-            <div class="text-center">
-                <i class="fa-solid fa-box fa-bounce"></i>
-            </div>
+            <ul class="nav flex-column offcanvas-submenu">
+                <li class="nav-item">
+                    <details>
+                        <summary class="nav-link">SUPLEMENTOS<i class="fa-solid fa-caret-down fa-sm"></i></summary>
+                        <hr>
+                        <div>
+                            <a href="#" class="fw-bold cor-a">Proteínas</a>
+                        </div>
+                        <hr>
+                        <div>
+                            <p><a href="#" class="fw-bold cor-a">Proteína</a></p>
+                        </div>
+                        <hr>
+                        <div>
+                            <p><a href="#" class="fw-bold cor-a">Hipercalóricos</a></p>
+                        </div>
+                        <hr>
+                    </details>
+                </li>
+                <li class="nav-item">
+                    <details>
+                        <summary class="nav-link">PROTEINAS <i class="fa-solid fa-caret-down fa-sm"></i></summary>
+                        <hr>
+                        <div>
+                            <a href="#" class="fw-bold cor-a">Proteínas</a>
+                        </div>
+                        <hr>
+                        <div>
+                            <a href="#" class="fw-bold cor-a">Proteína</a>
+                        </div>
+                        <hr>
+                        <div>
+                            <a href="#" class="fw-bold cor-a">Hipercalóricos</a>
+                        </div>
+                        <hr>
+                    </details>
+                </li>
+                <li class="nav-item">
+                    <details>
+                        <summary class="nav-link">PRÉ TREINOS<i class="fa-solid fa-caret-down fa-sm"></i></summary>
+                        <hr>
+                        <div>
+                            <a href="#" class="fw-bold cor-a">Proteínas</a>
+                        </div>
+                        <hr>
+                        <div>
+                            <a href="#" class="fw-bold cor-a">Proteína</a>
+                        </div>
+                        <hr>    
+                        <div>
+                            <a href="#" class="fw-bold cor-a">Hipercalóricos</a>
+                        </div>
+                        <hr>
+                    </details>
+                </li>
+                <li class="nav-item">
+                    <details>
+                        <summary class="nav-link">CREATINA<i class="fa-solid fa-caret-down fa-sm"></i></summary>
+                        <hr>
+                        <div>
+                            <a href="#" class="fw-bold cor-a">Proteínas</a>
+                        </div>
+                        <hr>
+                        <div>
+                            <a href="#" class="fw-bold cor-a">Proteína</a>
+                        </div>
+                        <hr>
+                        <div>
+                            <a href="#" class="fw-bold cor-a">Hipercalóricos</a>
+                        </div>
+                        <hr>
+                    </details>
+                </li>
+            </ul>
+            
         </div>
-      </div>
+    </div>
+
+    <!-- Offcanvas do Carrinho -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCart" aria-labelledby="offcanvasCartLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasCartLabel">Carrinho</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <p>Seu carrinho está vazio.</p>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
     
 
 <!--offcanvas carrinho-->
@@ -370,10 +480,14 @@
 
 
     <!-- Main Content -->
+    <!-- Botão do Menu para telas menores -->
+    <button class="btn bg-white d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu" aria-controls="offcanvasMenu">
+        <i class="fa-solid fa-bars"></i> MENU
+    </button>
     <div class="col">
         <!-- Section for product-->
         <section class="py-5 mt-5">
-            <h1 class="text-center">NOVOS LANÇAMENTOS</h1>
+            <h1 class="text-center">LANÇAMENTOS</h1>
               <hr>
 
             <!--CARROSSEL CARDS-->
@@ -866,7 +980,7 @@
                     
                 </div>
             </div>
-            <p class="mb-0">© 2024 Todos os direitos reservados BRAGOLA FIT | Site by Gabriel Stangarlin &
+            <p class="mb-0 text-center" style="color: #ffffff;">© 2024 Todos os direitos reservados BRAGOLA FIT | Site by Gabriel Stangarlin &
                 Mário
                 Figueiredo.</p>
         </div>
@@ -885,7 +999,27 @@
             document.body.scrollTop = 0; // Para Safari
             document.documentElement.scrollTop = 0; // Para Chrome, Firefox, IE e Opera
         }
+
+
+        //Script JavaScript para os details
+        document.addEventListener('DOMContentLoaded', function() {
+            const detailsElements = document.querySelectorAll('details');
+
+            detailsElements.forEach((detail) => {
+                detail.addEventListener('toggle', function() {
+                    if (this.open) {
+                        detailsElements.forEach((otherDetail) => {
+                            if (otherDetail !== this) {
+                                otherDetail.removeAttribute('open');
+                            }
+                        });
+                    }
+                });
+            });
+        });
     </script>
+
+
 </body>
 
 </html>
