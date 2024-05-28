@@ -47,11 +47,11 @@ class UserController extends Controller
 
         if (user::attempt($credentials)) {
             //Verificar se o usuário é um administrador
-            if (user::user()->isAdmin == 1) {
-                return redirect()->route('dashboard.show')->with('success', 'Administrador Logado');
-            } else {
+            //if (user::user()->isAdmin == 1) {
+               // return redirect()->route('dashboard.show')->with('success', 'Administrador Logado');
+           // } else {
                 return redirect('/store')->with('success', 'Usário Logado');
-            }
+            //}
         }
 
         return redirect()->back()->with('error', 'Email or Passoword Errados');
