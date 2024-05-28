@@ -191,9 +191,9 @@
                     <i class="fas fa-user"></i> {{ user()->name }}
                 </button>
                 @endauth
-                <button class="btn bg-white" type="button" style="margin-left: 25%">
+                <a href="/login" style="margin-left: 25%"><button class="btn bg-white" type="button" >
                     <i class="fas fa-user"></i> Entrar
-                </button>
+                </button></a>
                 <!-- Carrinho -->
                 <button class="btn bg-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
                     <i class="bi-cart-fill me-1"></i>
