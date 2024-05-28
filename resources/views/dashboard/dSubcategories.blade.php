@@ -42,12 +42,53 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="categorySelect" class="form-label">Categories</label>
-                                        <select class="form-select" name="categorySelect" id="categorySelectAdd"></select>
+                                        <label for="categorySelect" class="form-label">Category:</label>
+                                        <select class="form-select" name="category_id" id="categorySelectAdd">
+                                            <option value="" selected disabled>Selecione uma categoria</option>
+                                        </select>
                                     </div>
 
                                     <div class="model-footer d-flex mt-1" style="justify-content:flex-end">
                                         <button type="button" id="btn-save" class="btn btn-primary">Save</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editSubcategoryModal" tabindex="-1" aria-labelledby="editSubcategoryModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="editSubcategoryModalLabel">Edit Subcategory</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-md-12">
+                                <form class="p-3" id="editSubcategoryForm">
+                                    @csrf
+                                    <input type="hidden" id="id" name="id">
+                                    <div class="form-group">
+                                        <label for="nameEdit" class="form-label">Name:</label>
+                                        <input type="text" id="name" name="name" class="form-control" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="categorySelect" class="form-label">Category:</label>
+                                        <select class="form-select" name="category_id" id="categorySelectEdit" required>
+                                            <option value="" selected disabled>Selecione uma categoria</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="model-footer d-flex mt-1" style="justify-content:flex-end">
+                                        <button type="button" id="btn-update" class="btn btn-primary">Update</button>
                                     </div>
                                 </form>
                             </div>
@@ -82,6 +123,9 @@
                     success: function(response) {
                         var categorySelect = $(selectElementId);
                         categorySelect.empty(); // Clear any existing options
+                        categorySelect.append(
+                            '<option value="" selected disabled>Selecione uma categoria</option>'
+                        ); // Add default option
                         response.forEach(function(category) {
                             categorySelect.append(new Option(category.name, category.id));
                         });
@@ -99,7 +143,7 @@
 
             // Trigger when the edit subcategory modal is shown
             $('#editSubcategoryModal').on('shown.bs.modal', function() {
-                loadCategories('#editSubcategoryModal #categorySelect');
+                loadCategories('#editSubcategoryModal #categorySelectEdit');
             });
         });
 
@@ -131,14 +175,15 @@
         let addModal = $('#addSubcategoryModal');
 
         $(document).on('click', '#btn-save', function() {
-            var id = addModal.find('')
             var name = addModal.find('#nameAdd').val();
+            var category_id = addModal.find('#categorySelectAdd').val();
 
             $.ajax({
                 type: 'POST',
                 url: "/subcategory/add",
                 data: {
-                    name: name
+                    name: name,
+                    category_id: category_id
                 },
                 dataType: 'json',
                 success: (data) => {
@@ -149,6 +194,74 @@
                 }
             });
         });
+
+        let editModal = $('#editSubcategoryModal');
+
+        function editFunc(id) {
+            $.ajax({
+                type: 'POST',
+                url: "/subcategory/informations/edit",
+                data: {
+                    id: id
+                },
+                dataType: 'json',
+                success: function(res) {
+                    editModal.find('#id').val(res.id);
+                    editModal.find('#name').val(res.name);
+
+                    editModal.modal('show');
+                }
+            });
+        }
+
+        $(document).on('click', '#btn-update', function() {
+            var id = editModal.find('#id').val();
+            var name = editModal.find('#name').val();
+            var category_id = editModal.find('#categorySelectEdit').val();
+
+            // Frontend validation to check if category is selected
+            if (category_id === null || category_id === "") {
+                alert('Por favor, selecione uma categoria.');
+                return; // Stop the function if validation fails
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: "/subcategory/update",
+                data: {
+                    id: id,
+                    name: name,
+                    category_id: category_id,
+                },
+                dataType: 'json',
+                success: function(data) {
+                    editModal.modal('hide');
+                    $("#btn-update").html('Submit');
+                    $("#btn-update").attr("disabled", false);
+                    table.ajax.reload();
+                },
+                error: function(xhr, status, error) {
+                    console.error('An error occurred:', error);
+                }
+            });
+        });
+
+        function deleteFunction(id) {
+            if (confirm("Do you really want do delete?") == true) {
+                var id = id;
+                $.ajax({
+                    type: "POST",
+                    url: "/subcategory/delete",
+                    data: {
+                        id: id
+                    },
+                    dataType: 'json',
+                    success: function(res) {
+                        table.ajax.reload();
+                    }
+                });
+            }
+        }
     </script>
 
 @endsection

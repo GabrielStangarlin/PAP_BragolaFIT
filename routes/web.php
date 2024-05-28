@@ -50,3 +50,7 @@ Route::post('/category/edit', [CategoryController::class, 'editCategory']);
 //Subcategory
 Route::get('/categories/all/select', [CategoryController::class, 'getCategoryToSelect']);
 Route::get('/db/list/subcategory', [SubcategoryController::class, 'listSubcategory'])->name('dashboard.subcategory');
+Route::post('/subcategory/add', [SubcategoryController::class, 'addSubcategory']);
+Route::post('/subcategory/delete', [SubcategoryController::class, 'destroy']);
+Route::post('/subcategory/update', [SubcategoryController::class, 'editSubcategory']);
+Route::post('/subcategory/informations/edit', [SubcategoryController::class, 'showInformation']);

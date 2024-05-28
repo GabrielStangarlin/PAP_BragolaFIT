@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Subcategory;
+use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class SubcategoryController extends Controller
@@ -26,5 +27,47 @@ class SubcategoryController extends Controller
         }
 
         return view('dashboard/dSubcategories');
+    }
+
+    public function addSubcategory(Request $request)
+    {
+        $subcategory = Subcategory::create([
+            'name' => $request->name,
+            'category_id' => $request->category_id,
+        ]);
+
+        return response()->json($subcategory);
+    }
+
+    public function editSubcategory(Request $request)
+    {
+        // Encontrar a subcategoria pelo ID
+        $subcategory = Subcategory::find($request->id);
+
+        if (! $subcategory) {
+            return response()->json(['error' => 'Categoria não encontrada.'], 404);
+        }
+
+        // Atualizar os dados da subcategoria
+        $subcategory->name = $request->name;
+        $subcategory->category_id = $request->category_id;
+        $subcategory->save();
+
+        return response()->json($subcategory);
+    }
+
+    public function showInformation(Request $request)
+    {
+        $where = ['id' => $request->id];
+        $subcategory = Subcategory::where($where)->first();
+
+        return response()->json($subcategory);
+    }
+
+    public function destroy(Request $request)
+    {
+        $subcategory = Subcategory::where('id', $request->id)->delete();
+
+        return response()->json($subcategory);
     }
 }
