@@ -30,6 +30,9 @@ Route::get('/login', function () {
     return view('login.login');
 });
 
+Route::post('/register', [UserController::class, 'register'])->name('user.register');
+Route::post('/login', [UserController::class, 'login'])->name('user.login');
+
 //Dashboard (Gabriel)
 Route::get('/db', [SiteController::class, 'dashboardHome'])->name('dashboard.home');
 
