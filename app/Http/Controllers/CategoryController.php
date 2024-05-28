@@ -66,4 +66,11 @@ class CategoryController extends Controller
 
         return response()->json($category);
     }
+
+    public function getCategoryToSelect()
+    {
+        $categories = Category::all();
+
+        return response()->json($categories);
+    }
 }

@@ -27,7 +27,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add Category</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add Subcategory</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -42,7 +42,8 @@
                                     </div>
 
                                     <div class="form-group">
-
+                                        <label for="categorySelect" class="form-label">Categories</label>
+                                        <select class="form-select" name="categorySelect" id="categorySelectAdd"></select>
                                     </div>
 
                                     <div class="model-footer d-flex mt-1" style="justify-content:flex-end">
@@ -72,6 +73,36 @@
             $('#addSubcategoryModal').modal('show');
         });
 
+        $(document).ready(function() {
+            // Function to load categories into a select element
+            function loadCategories(selectElementId) {
+                $.ajax({
+                    url: '/categories/all/select',
+                    method: 'GET',
+                    success: function(response) {
+                        var categorySelect = $(selectElementId);
+                        categorySelect.empty(); // Clear any existing options
+                        response.forEach(function(category) {
+                            categorySelect.append(new Option(category.name, category.id));
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('An error occurred:', error);
+                    }
+                });
+            }
+
+            // Trigger when the add subcategory modal is shown
+            $('#addSubcategoryModal').on('shown.bs.modal', function() {
+                loadCategories('#addSubcategoryModal #categorySelectAdd');
+            });
+
+            // Trigger when the edit subcategory modal is shown
+            $('#editSubcategoryModal').on('shown.bs.modal', function() {
+                loadCategories('#editSubcategoryModal #categorySelect');
+            });
+        });
+
         let table = $('#subcategory-datatable').DataTable({
             processing: true,
             serverSide: true,
@@ -95,6 +126,28 @@
                     searchable: false
                 }
             ]
+        });
+
+        let addModal = $('#addSubcategoryModal');
+
+        $(document).on('click', '#btn-save', function() {
+            var id = addModal.find('')
+            var name = addModal.find('#nameAdd').val();
+
+            $.ajax({
+                type: 'POST',
+                url: "/subcategory/add",
+                data: {
+                    name: name
+                },
+                dataType: 'json',
+                success: (data) => {
+                    addModal.modal('hide');
+                    $("#btn-save").html('Submit');
+                    $("#btn-save").attr("disabled", false);
+                    table.ajax.reload();
+                }
+            });
         });
     </script>
 

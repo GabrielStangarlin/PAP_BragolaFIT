@@ -48,4 +48,5 @@ Route::post('/category/informations/edit', [CategoryController::class, 'showInfo
 Route::post('/category/edit', [CategoryController::class, 'editCategory']);
 
 //Subcategory
+Route::get('/categories/all/select', [CategoryController::class, 'getCategoryToSelect']);
 Route::get('/db/list/subcategory', [SubcategoryController::class, 'listSubcategory'])->name('dashboard.subcategory');
