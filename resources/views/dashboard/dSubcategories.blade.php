@@ -1,10 +1,10 @@
 @extends('dashboard.dTemplate')
 
-@section('title', 'Dashboard Subcategory')
+@section('title', 'Dashboard | Subcategory')
 
 @section('dContent')
 
-    <h1 class="text-white">All Subcategories</h1>
+    <h1>All Subcategories</h1>
     <a class="btn btn-success gap-2 mb-2 openAddModal" id="openAddModal">
         <ion-icon name="add-circle-outline"></ion-icon>
         Add Subcategory
@@ -175,8 +175,8 @@
         let addModal = $('#addSubcategoryModal');
 
         $(document).on('click', '#btn-save', function() {
-            var name = addModal.find('#nameAdd').val();
-            var category_id = addModal.find('#categorySelectAdd').val();
+            var name = $('#addSubcategoryModal').find('#nameAdd').val();
+            var category_id = $('#addSubcategoryModal').find('#categorySelectAdd').val();
 
             $.ajax({
                 type: 'POST',
@@ -187,7 +187,7 @@
                 },
                 dataType: 'json',
                 success: (data) => {
-                    addModal.modal('hide');
+                    $('#addSubcategoryModal').modal('hide');
                     $("#btn-save").html('Submit');
                     $("#btn-save").attr("disabled", false);
                     table.ajax.reload();
@@ -206,18 +206,18 @@
                 },
                 dataType: 'json',
                 success: function(res) {
-                    editModal.find('#id').val(res.id);
-                    editModal.find('#name').val(res.name);
+                    $('#editSubcategoryModal').find('#id').val(res.id);
+                    $('#editSubcategoryModal').find('#name').val(res.name);
 
-                    editModal.modal('show');
+                    $('#editSubcategoryModal').modal('show');
                 }
             });
         }
 
         $(document).on('click', '#btn-update', function() {
-            var id = editModal.find('#id').val();
-            var name = editModal.find('#name').val();
-            var category_id = editModal.find('#categorySelectEdit').val();
+            var id = $('#editSubcategoryModal').find('#id').val();
+            var name = $('#editSubcategoryModal').find('#name').val();
+            var category_id = $('#editSubcategoryModal').find('#categorySelectEdit').val();
 
             // Frontend validation to check if category is selected
             if (category_id === null || category_id === "") {
@@ -235,7 +235,7 @@
                 },
                 dataType: 'json',
                 success: function(data) {
-                    editModal.modal('hide');
+                    $('#editSubcategoryModal').modal('hide');
                     $("#btn-update").html('Submit');
                     $("#btn-update").attr("disabled", false);
                     table.ajax.reload();

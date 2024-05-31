@@ -1,6 +1,6 @@
 @extends('dashboard.dTemplate')
 
-@section('title', 'Dashboard Home')
+@section('title', 'Dashboard | Home')
 
 @section('dContent')
 
@@ -47,37 +47,4 @@
             </div>
         </div>
     </div>
-
-    <div class="alert alert-light shadow welcome-message" id="welcomeMessage">
-        Welcome to the Bragola Dashboard!
-        <button type="button" class="btn-close" id="closeMessageButton" aria-label="Close"></button>
-    </div>
-
-    <button class="btn position-fixed bottom-0 end-0 m-4" id="toggleButton" style="position: relative;">
-        <i class="fas fa-bell text-primary"></i>
-        <span class="position-absolute top-0 start-0 translate-middle badge rounded-pill bg-danger">
-            1
-            <span class="visually-hidden">unread messages</span>
-        </span>
-    </button>
-
-    <script>
-        document.getElementById('toggleButton').addEventListener('click', function() {
-            var message = document.getElementById('welcomeMessage');
-            var button = document.getElementById('toggleButton');
-
-            // Mostrar a mensagem
-            message.style.display = 'block';
-
-            // Esconder o botão de notificação
-            button.style.display = 'none';
-        });
-
-        document.getElementById('closeMessageButton').addEventListener('click', function() {
-            var message = document.getElementById('welcomeMessage');
-
-            // Esconder a mensagem de boas-vindas
-            message.style.display = 'none';
-        });
-    </script>
 @endsection
