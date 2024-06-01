@@ -30,6 +30,28 @@
 
     @vite('resources/css/styles.css')
 
+    <style>
+        .card-custom {
+            border-left: 5px solid #630303;
+            padding: 10px;
+            transition: transform 0.2s;
+        }
+
+        .card-custom:hover {
+            transform: scale(1.05);
+        }
+
+        .card-icon {
+            font-size: 2rem;
+            color: #d1d5db;
+        }
+
+        .card-link {
+            text-decoration: none;
+            color: inherit;
+        }
+    </style>
+
 </head>
 
 <body id="page-top">

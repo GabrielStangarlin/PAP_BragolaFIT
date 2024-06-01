@@ -74,8 +74,9 @@
                                     </div>
 
                                     <div class="form-group mt-1">
-                                        <label for="isAdmin" class="form-label">Admin:</label>
-                                        <input type="checkbox" class="form-check-input" id="isAdminAdd">
+                                        <label for="isAdmin" class="form-check-label">Admin:</label>
+                                        <input type="checkbox" class="form-check-input" id="isAdminAdd"
+                                            style="margin-left: 2px;">
                                     </div>
 
                                     <div class="model-footer d-flex mt-1" style="justify-content:flex-end">
