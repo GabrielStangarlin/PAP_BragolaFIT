@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class ProductsController extends Controller
@@ -21,5 +22,13 @@ class ProductsController extends Controller
         }
 
         return view('dashboard/dProducts');
+    }
+
+    public function addProduct(Request $request){
+        $product = Product::create([
+            'name'=> $request->name,
+        ]);
+
+        return response()->json([$product]);
     }
 }

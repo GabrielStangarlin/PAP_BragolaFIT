@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\UserController;
@@ -57,3 +58,6 @@ Route::post('/subcategory/add', [SubcategoryController::class, 'addSubcategory']
 Route::post('/subcategory/delete', [SubcategoryController::class, 'destroy']);
 Route::post('/subcategory/update', [SubcategoryController::class, 'editSubcategory']);
 Route::post('/subcategory/informations/edit', [SubcategoryController::class, 'showInformation']);
+
+//Products
+Route::get('/db/list/product', [ProductsController::class,'listProducts'])->name('dashboard.products');

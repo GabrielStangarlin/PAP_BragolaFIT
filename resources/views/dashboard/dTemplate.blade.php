@@ -88,7 +88,7 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Related to products:</h6>
-                        <a class="collapse-item" href="#">
+                        <a class="collapse-item" href="{{ route('dashboard.products') }}">
                             <i class="fa-solid fa-boxes-stacked"></i>
                             Products
                         </a>
