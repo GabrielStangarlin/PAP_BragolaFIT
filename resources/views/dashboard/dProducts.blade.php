@@ -40,7 +40,10 @@
             columns: [{
                     data: 'photo_1',
                     name: 'photo_1',
-                    orderable: false
+                    orderable: false,
+                    render: function(data, type, row) {
+                        return '<img src="' + data + '" alt="Photo" style="max-width:60px;height:auto;"/>';
+                    }
                 },
                 {
                     data: 'name',
