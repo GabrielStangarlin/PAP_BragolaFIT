@@ -62,6 +62,7 @@
             style="background-color: rgb(4, 4, 112)">
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
+                <i class="fa-solid fa-dumbbell"></i>
                 <div class="sidebar-brand-text mx-3">Bragola <sup>fit</sup></div>
             </a>
             <!-- Divider -->

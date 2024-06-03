@@ -10,7 +10,7 @@
         Add Product
     </a>
 
-    <table class="table table-striped" id="product-datatable">
+    <table class="table" id="product-datatable">
         <thead>
             <tr>
                 <th>Photo_1</th>
