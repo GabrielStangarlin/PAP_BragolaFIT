@@ -24,9 +24,16 @@ class ProductsController extends Controller
         return view('dashboard/dProducts');
     }
 
-    public function addProduct(Request $request){
+    public function addProduct(Request $request)
+    {
         $product = Product::create([
-            'name'=> $request->name,
+            'name' => $request->name,
+            'description' => $request->description,
+            'price' => $request->price,
+            'photo_1' => $request->photo_1,
+            'photo_2' => $request->photo_2,
+            'quantity' => $request->quantity,
+            'discount_id' => $request->discount_id,
         ]);
 
         return response()->json([$product]);
