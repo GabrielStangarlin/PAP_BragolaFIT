@@ -23,6 +23,37 @@
         </tbody>
     </table>
 
+    <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add Product</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-md-12">
+                                <form class="p-3">
+                                    @csrf
+                                    <div class="form-group">
+                                        <label for="name" class="form-label">Name:</label>
+                                        <input type="text" id="nameAdd" name="nameAdd" class="form-control">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="description" class="form-label">Descrição:</label>
+                                        <input type="text" id="descriptionAdd" name="descriptionAdd"
+                                            class="form-control">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
         $(document).ready(function() {
@@ -66,6 +97,12 @@
             order: [
                 [0, 'desc']
             ]
+        });
+
+        $(document).on('click', '.openAddModal', function() {
+            $('#nameAdd').val('');
+
+            $('#addModal').modal('show');
         });
     </script>
 @endsection
