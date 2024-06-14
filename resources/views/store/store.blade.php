@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 
 <head>
     <meta charset="utf-8" />
@@ -191,7 +191,7 @@
                     <i class="fas fa-user"></i> {{ user()->name }}
                 </button>
                 @endauth
-                <a href="/login" style="margin-left: 25%"><button class="btn bg-white" type="button" >
+                <a href="/login" style="margin-left: 12%"><button class="btn bg-white" type="button" >
                     <i class="fas fa-user"></i> Entrar
                 </button></a>
                 <!-- Carrinho -->

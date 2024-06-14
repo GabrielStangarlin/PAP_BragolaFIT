@@ -243,21 +243,26 @@
     </div>
     <div class="container" id="container">
         <div class="form-container sign-up">
-            <form>
+            <form method="POST" action="{{ route('user.register') }}">
+                @csrf
                 <h1>Criar conta</h1>
                 <div class="social-icons">
                     <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
                     <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
                 </div>
                 <span>ou use seu e-mail para cadastro</span>
-                <input type="text" placeholder="Name">
-                <input type="email" placeholder="Email">
-                <input type="password" placeholder="Password">
+                <input type="text" name="name" placeholder="Name" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <input type="text" name="address" placeholder="Address" required>
+                <input type="text" name="phone" placeholder="Phone" required>
+
                 <button>Registrar</button>
             </form>
         </div>
         <div class="form-container sign-in">
-            <form>
+            <form method="POST" action="{{ route('user.login') }}">
+                @csrf
                 <h1>Login</h1>
                 <div class="social-icons">
                     <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>

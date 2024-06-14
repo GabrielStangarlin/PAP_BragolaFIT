@@ -28,10 +28,12 @@ Route::get('/show_product', function () {
 });
 Route::get('/login', function () {
     return view('login.login');
-});
+})->name('login');
+
 
 Route::post('/register', [UserController::class, 'register'])->name('user.register');
 Route::post('/login', [UserController::class, 'login'])->name('user.login');
+Route::post('/logout', [UserController::class, 'logout'])->name('user.logout');
 
 //Dashboard (Gabriel)
 Route::get('/db', [SiteController::class, 'dashboardHome'])->name('dashboard.home');
