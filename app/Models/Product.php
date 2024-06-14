@@ -9,9 +9,18 @@ class Product extends Model
 {
     use HasFactory;
 
-    public function category()
+    protected $fillable = [
+        'name',
+        'description',
+        'price',
+        'photo_1',
+        'photo_2',
+        'quantity',
+    ];
+
+    public function subcategories()
     {
-        return $this->belongsToMany(Category::class);
+        return $this->belongsToMany(Subcategory::class, 'products_subcategories');
     }
 
     public function wishlist()

@@ -1,9 +1,9 @@
 @extends('dashboard.dTemplate')
 
-@section('title', 'Dashboard Users')
+@section('title', 'Dashboard | Users')
 
 @section('dContent')
-    <h1 class="text-white">All Users</h1>
+    <h1>All Users</h1>
 
     <a class="btn btn-success gap-2 mb-2 openAddModal" id="openAddModal">
         <ion-icon name="add-circle-outline"></ion-icon>
@@ -74,8 +74,9 @@
                                     </div>
 
                                     <div class="form-group mt-1">
-                                        <label for="isAdmin" class="form-label">Admin:</label>
-                                        <input type="checkbox" class="form-check-input" id="isAdminAdd">
+                                        <label for="isAdmin" class="form-check-label">Admin:</label>
+                                        <input type="checkbox" class="form-check-input" id="isAdminAdd"
+                                            style="margin-left: 2px;">
                                     </div>
 
                                     <div class="model-footer d-flex mt-1" style="justify-content:flex-end">
@@ -148,6 +149,13 @@
     <script>
         $(document).on('click', '.openAddModal', function() {
             $('#addUserModal').modal('show');
+            $('#nameAdd').val('');
+            $('#addresAdd').val('');
+            $('#phoneAdd').val('');
+            $('#vat_numberAdd').val('');
+            $('#emailAdd').val('');
+            $('#passwordAdd').val('');
+            $('#adminAdd').val('');
         });
 
         $(document).ready(function() {
@@ -223,7 +231,7 @@
                 },
                 dataType: 'json',
                 success: (data) => {
-                    addUserModal.modal('hide');
+                    $('#addUserModal').modal('hide');
                     $("#btn-save").html('Submit');
                     $("#btn-save").attr("disabled", false);
                     table.ajax.reload();
@@ -251,7 +259,7 @@
                     editUserModal.find('#email').val(res.email);
                     editUserModal.find('#isAdmin').prop('checked', res.isAdmin == 1);
 
-                    editUserModal.modal('show');
+                    $('#editUserModal').modal('show');
 
                 }
             });
@@ -282,7 +290,7 @@
                 },
                 dataType: 'json',
                 success: (data) => {
-                    editUserModal.modal('hide');
+                    $('#editUserModal').modal('hide');
                     $("#btn-save-edit").html('Submit');
                     $("#btn-save-edit").attr("disabled", false);
                     table.ajax.reload();

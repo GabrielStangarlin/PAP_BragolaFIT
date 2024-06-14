@@ -1,9 +1,9 @@
 @extends('dashboard.dTemplate')
 
-@section('title', 'Dashboard Category')
+@section('title', 'Dashboard | Category')
 
 @section('dContent')
-    <h1 class="text-white">All Categories</h1>
+    <h1>All Categories</h1>
     <a class="btn btn-success gap-2 mb-2 openAddModal" id="openAddModal">
         <ion-icon name="add-circle-outline"></ion-icon>
         Add Category
@@ -121,10 +121,9 @@
             ]
         });
 
-        let addModal = $('#addCategoryModal');
 
         $(document).on('click', '#btn-save', function() {
-            var name = addModal.find('#nameAdd').val();
+            var name = $('#addCategoryModal').find('#nameAdd').val();
 
             $.ajax({
                 type: 'POST',
@@ -134,15 +133,13 @@
                 },
                 dataType: 'json',
                 success: (data) => {
-                    addModal.modal('hide');
+                    $('#addCategoryModal').modal('hide');
                     $("#btn-save").html('Submit');
                     $("#btn-save").attr("disabled", false);
                     table.ajax.reload();
                 }
             });
         });
-
-        let editModal = $('#editCategoryModal');
 
         function editFunc(id) {
             $.ajax({
@@ -153,17 +150,17 @@
                 },
                 dataType: 'json',
                 success: function(res) {
-                    editModal.find('#id').val(res.id);
-                    editModal.find('#name').val(res.name);
+                    $('#editCategoryModal').find('#id').val(res.id);
+                    $('#editCategoryModal').find('#name').val(res.name);
 
-                    editModal.modal('show');
+                    $('#editCategoryModal').modal('show');
                 }
             });
         }
 
         $(document).on('click', '#btn-save-edit', function() {
-            var id = editModal.find('#id').val();
-            var name = editModal.find('#name').val();
+            var id = $('#editCategoryModal').find('#id').val();
+            var name = $('#editCategoryModal').find('#name').val();
 
             $.ajax({
                 type: 'POST',
@@ -174,7 +171,7 @@
                 },
                 dataType: 'json',
                 success: (data) => {
-                    editModal.modal('hide');
+                    $('#editCategoryModal').modal('hide');
                     $("#btn-save-edit").html('Submit');
                     $("#btn-save-edit").attr("disabled", false);
                     table.ajax.reload();
@@ -199,4 +196,5 @@
             }
         }
     </script>
+
 @endsection

@@ -70,4 +70,11 @@ class SubcategoryController extends Controller
 
         return response()->json($subcategory);
     }
+
+    public function getSubCategoryToSelect()
+    {
+        $subcategories = SubCategory::all();
+
+        return response()->json($subcategories);
+    }
 }
