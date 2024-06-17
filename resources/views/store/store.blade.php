@@ -188,7 +188,7 @@
                 </form>
                 @auth
                 <button class="btn bg-white" type="button" style="margin-left: 25%">
-                    <i class="fas fa-user"></i> {{ user()->name }}
+                    <i class="fas fa-user"></i><!--aqui apareça o name do user se estiver autenticado-->
                 </button>
                 @endauth
                 <a href="/login" style="margin-left: 12%"><button class="btn bg-white" type="button" >

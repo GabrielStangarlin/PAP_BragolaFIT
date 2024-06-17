@@ -250,7 +250,7 @@
     </div>
     <div class="container" id="container">
         <div class="form-container sign-up">
-            <form method="POST" action="{{ route('user.register') }}">
+            <form method="POST" action="">
                 @csrf
                 <h1>Criar conta</h1>
                 <div class="social-icons">
@@ -268,7 +268,7 @@
             </form>
         </div>
         <div class="form-container sign-in">
-            <form method="POST" action="{{ route('user.login') }}">
+            <form method="POST" action="{{ route('login') }}">
                 @csrf
                 <h1>Login</h1>
                 <div class="social-icons">
@@ -278,8 +278,9 @@
                 <span>ou use o seu email e password</span>
                 <input type="email" placeholder="Email">
                 <input type="password" placeholder="Password">
+                <input type="hidden" name="username" id="username">
                 <a href="#">Esqueceu sua password?</a>
-                <button>Iniciar Sessão</button>
+                <button type="submit">Iniciar Sessão</button>
             </form>
         </div>
         <div class="toggle-container">
