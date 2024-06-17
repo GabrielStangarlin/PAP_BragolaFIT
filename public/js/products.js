@@ -55,6 +55,10 @@ let table = $('#product-datatable').DataTable({
         name: 'price'
     },
     {
+        data: 'subcategories',
+        name: 'subcategories'
+    },
+    {
         data: 'action',
         name: 'action',
         orderable: false
@@ -153,16 +157,65 @@ function editFunc(id) {
         },
         dataType: 'json',
         success: function (res) {
-            $('#editModal').find('#id').val(res.id);
-            $('#editModal').find('#nameEdit').val(res.name);
-            $('#editModal').find('#descriptionEdit').val(res.description);
-            $('#editModal').find('#priceEdit').val(res.price);
-            $('#editModal').find('#quantityEdit').val(res.quantity);
-            $('#editModal').find('#subcategoryEdit').val(res.subcategory_id);
-            $('#editModal').find('#photo1Edit').val(res.photo_1);
-            $('#editModal').find('#photo2Edit').val(res.photo_2);
+            const product = res.product;
+            const subcategories = res.subcategories;
+            const selectedSubcategory = res.selected_subcategory[0]; // Supondo que apenas uma subcategoria será selecionada
+
+            $('#editModal').find('#id').val(product.id);
+            $('#editModal').find('#nameEdit').val(product.name);
+            $('#editModal').find('#descriptionEdit').val(product.description);
+            $('#editModal').find('#priceEdit').val(product.price);
+            $('#editModal').find('#quantityEdit').val(product.quantity);
+            $('#editModal').find('#photo1Edit').val(product.photo_1);
+            $('#editModal').find('#photo2Edit').val(product.photo_2);
+
+            // Preencher o select de subcategorias
+            const $subcategoryEdit = $('#editModal').find('#subcategoryEdit');
+            $subcategoryEdit.empty(); // Limpar as opções atuais
+            $.each(subcategories, function (index, subcategory) {
+                $subcategoryEdit.append(
+                    $('<option>', {
+                        value: subcategory.id,
+                        text: subcategory.name,
+                        selected: subcategory.id == selectedSubcategory // Selecionar se for a subcategoria correta
+                    })
+                );
+            });
 
             $('#editModal').modal('show');
         }
     });
 }
+
+$(document).on('click', '#btn-update', function () {
+    var id = $('#editModal').find('#id').val();
+    var nameEdit = $('#editModal').find('#nameEdit').val();
+    var descriptionEdit = $('#editModal').find('#descriptionEdit').val();
+    var priceEdit = $('#editModal').find('#priceEdit').val();
+    var quantityEdit = $('#editModal').find('#quantityEdit').val();
+    var subcategory_idEdit = $('#editModal').find('#subcategorySelectEdit').val();
+    var photo_1Edit = $('#editModal').find('#photo1Edit').val();
+    var photo_2Edit = $('#editModal').find('#photo2Edit').val();
+
+    $.ajax({
+        type: 'POST',
+        url: "/product/edit",
+        data: {
+            id: id,
+            name: nameEdit,
+            description: descriptionEdit,
+            price: priceEdit,
+            quantity: quantityEdit,
+            subcategory_id: subcategory_idEdit,
+            photo_1: photo_1Edit,
+            photo_2: photo_2Edit
+        },
+        dataType: 'json',
+        success: (data) => {
+            $('#editModal').hide();
+            $("#btn-update").html('Submit');
+            $("#btn-update").attr("disabled", false);
+            table.ajax.reload();
+        }
+    });
+});

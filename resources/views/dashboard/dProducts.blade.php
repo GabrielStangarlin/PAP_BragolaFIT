@@ -17,6 +17,7 @@
                 <th>Name</th>
                 <th>Quantity</th>
                 <th>Price</th>
+                <th>Subcategories</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -158,7 +159,7 @@
                                         style="margin-top: 10px; display: none;" alt="Image Preview2">
 
                                     <div class="model-footer d-flex mt-1" style="justify-content:flex-end">
-                                        <button type="button" id="btn-save" class="btn btn-primary">Save</button>
+                                        <button type="button" id="btn-update" class="btn btn-primary">Save</button>
                                     </div>
                                 </form>
                             </div>

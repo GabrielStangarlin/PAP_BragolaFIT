@@ -25,7 +25,7 @@
                 </a>
             </div>
             <div class="col-md-4">
-                <a href="#" class="card-link">
+                <a href="{{ route('dashboard.products') }}" class="card-link">
                     <div class="card card-custom">
                         <div class="card-body d-flex justify-content-between align-items-center">
                             <div>

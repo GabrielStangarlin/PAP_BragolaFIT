@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Subcategory;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -12,12 +13,18 @@ class ProductsController extends Controller
     public function listProducts()
     {
         if (request()->ajax()) {
-            return DataTables::of(Product::all())
+            $products = Product::with('subcategories')->get();
+
+            return DataTables::of($products)
+                ->addColumn('subcategories', function ($product) {
+                    // Assuming you want to show all subcategories related to the product
+                    return $product->subcategories->pluck('name')->join(', ');
+                })
                 ->addColumn('action', function ($product) {
                     return '<a href="javascript:void(0)" data-toggle="tooltip" onClick="editFunc('.$product->id.')" data-original-title="Edit" class="edit btn btn-primary edit openEditModal" id="openEditModal"><i class="fa-regular fa-pen-to-square"></i></a>
                             <a href="javascript:void(0);" id="delete-company" onClick="deleteFunction('.$product->id.')" data-toggle="tooltip" data-original-title="Delete" class="delete btn btn-danger"><i class="fa-solid fa-trash-can"></i></a>';
                 })
-                ->rawColumns(['action'])
+                ->rawColumns(['action', 'subcategories'])
                 ->make(true);
         }
 
@@ -54,9 +61,42 @@ class ProductsController extends Controller
     }
 
     public function showOnEdit(Request $request){
-        $where = ['id' => $request->id];
-        $product = Product::where($where)->first();
+        $product = Product::with('subcategories')->findOrFail($request->id);
+        $subcategories = Subcategory::all(); // Para enviar todas as subcategorias disponíveis
 
-        return response()->json($product);
+        return response()->json([
+            'product' => $product,
+            'subcategories' => $subcategories,
+            'selected_subcategory' => $product->subcategories->pluck('id') // Supondo que um produto pode ter várias subcategorias
+        ]);
+    }
+
+    public function editProduct(Request $request){
+        $id = $request->id;
+
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'price' => 'required|numeric',
+            'photo_1' => 'nullable|string',
+            'photo_2' => 'nullable|string',
+            'quantity' => 'required|integer',
+            'subcategory_id' => 'required|exists:subcategories,id' // Validação para garantir que o subcategory_id exista
+        ]);
+
+        $product = Product::findOrFail($id);
+
+        $product->update([
+            'name' => $validatedData['name'],
+            'description' => $validatedData['description'],
+            'price' => $validatedData['price'],
+            'photo_1' => $validatedData['photo_1'],
+            'photo_2' => $validatedData['photo_2'],
+            'quantity' => $validatedData['quantity'],
+        ]);
+
+        $product->subcategories()->sync($validatedData['subcategory_id']);
+
+        return response()->json([$product]);
     }
 }

@@ -65,5 +65,6 @@ Route::post('/subcategory/informations/edit', [SubcategoryController::class, 'sh
 Route::get('/db/list/product', [ProductsController::class,'listProducts'])->name('dashboard.products');
 Route::get('/subcategories/all/select', [SubCategoryController::class, 'getSubCategoryToSelect']);
 Route::post('/product/add', [ProductsController::class, 'addProduct']);
+Route::post('/product/edit', [ProductsController::class, 'editProduct']);
 Route::post('/product/informations/edit', [ProductsController::class, 'showOnEdit']);
 
