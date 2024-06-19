@@ -16,7 +16,7 @@ class UserController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->back()->with('logoutSuccess', 'Sessão terminada com sucesso');
+        return redirect()->back()->with('success', 'Sessão terminada com sucesso');
     }
 
     public function register(Request $request)
@@ -46,16 +46,19 @@ class UserController extends Controller
             'password' => 'required',
         ]);
 
-        $credentials = $request->only('email', 'password');
+        $credentials = [
+            'email' => $request->loginEmail,
+            'password' => $request->loginPassword,
+        ];
 
         if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-            return redirect()->intended('/store')->with('success', 'Login Feito');
+            if (Auth::user()->isAdmin == 1) {
+                return redirect('/db')->with('success', 'Usuário Administrador Logado');
+            }
+            return redirect('/store')->with('success', 'Usuário Logado');
         }
 
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ]);
+        return redirect()->back()->with('error', 'Email ou Senha Errados');
     }
 
 

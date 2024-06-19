@@ -6,7 +6,7 @@ $(document).ready(function () {
     });
 });
 
-document.getElementById('photo1Add').addEventListener('input', function () {
+document.getElementById('photo1Add', 'photo1Edit').addEventListener('input', function () {
     const imageUrl = this.value;
     const imagePreview = document.getElementById('imagePreview');
 
@@ -18,7 +18,7 @@ document.getElementById('photo1Add').addEventListener('input', function () {
     }
 });
 
-document.getElementById('photo2Add').addEventListener('input', function () {
+document.getElementById('photo2Add', 'photo2Edit').addEventListener('input', function () {
     const imageUrl = this.value;
     const imagePreview = document.getElementById('imagePreview2');
 
@@ -66,7 +66,8 @@ let table = $('#product-datatable').DataTable({
     ],
     order: [
         [0, 'desc']
-    ]
+    ],
+    onClick: editFunc()
 });
 
 $(document).on('click', '.openAddModal', function () {

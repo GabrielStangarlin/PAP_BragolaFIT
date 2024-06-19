@@ -250,35 +250,26 @@
     </div>
     <div class="container" id="container">
         <div class="form-container sign-up">
-            <form method="POST" action="">
+            <form action="{{ route('user.register') }}" method="POST">
                 @csrf
                 <h1>Criar conta</h1>
-                <div class="social-icons">
-                    <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
-                </div>
                 <span>ou use seu e-mail para cadastro</span>
-                <input type="text" name="name" placeholder="Name" required>
-                <input type="email" name="email" placeholder="Email" required>
-                <input type="password" name="password" placeholder="Password" required>
-                <input type="text" name="address" placeholder="Address" required>
-                <input type="text" name="phone" placeholder="Phone" required>
+                <input type="text" id="name" name="name" placeholder="Name" required>
+                <input type="email" id="email" name="email" placeholder="Email" required>
+                <input type="password" id="password" name="password" placeholder="Password" required>
+                <input type="text" id="address" name="address" placeholder="Address" required>
+                <input type="text" id="phone" name="phone" placeholder="Phone" required>
 
                 <button>Registrar</button>
             </form>
         </div>
         <div class="form-container sign-in">
-            <form method="POST" action="{{ route('login') }}">
+            <form action="{{ route('user.login') }}" method="POST">
                 @csrf
                 <h1>Login</h1>
-                <div class="social-icons">
-                    <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
-                </div>
                 <span>ou use o seu email e password</span>
-                <input type="email" placeholder="Email">
-                <input type="password" placeholder="Password">
-                <input type="hidden" name="username" id="username">
+                <input type="email" id="loginEmail" name="email" placeholder="Email">
+                <input type="password" id="loginPassword" name="password" placeholder="Password">
                 <a href="#">Esqueceu sua password?</a>
                 <button type="submit">Iniciar Sessão</button>
             </form>
