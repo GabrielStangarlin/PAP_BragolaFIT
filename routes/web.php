@@ -40,6 +40,9 @@ Route::get('/login', [AuthController::class, 'login'])->name('user.login');
 Route::post('/loginPost', [AuthController::class, 'loginPost'])->name('user.loginPost');
 Route::get('/logout', [AuthController::class, 'logout'])->name('user.logout');
 
+Route::post('/register', [UserController::class, 'register'])->name('user.register');
+Route::post('/login', [UserController::class, 'login'])->name('user.login');
+Route::get('/logout', [UserController::class, 'logout'])->name('user.logout');
 
 //Dashboard (Gabriel)
 Route::get('/db', [SiteController::class, 'dashboardHome'])->name('dashboard.home');

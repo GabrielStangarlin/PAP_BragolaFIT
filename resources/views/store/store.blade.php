@@ -13,7 +13,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
     <!-- Core theme CSS (includes Bootstrap)-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,7 +20,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href='resources/css/style.css'>
 </head>
 
 <style>
@@ -183,6 +181,17 @@
     .cor-a {
         color: #000;
     }
+
+    #successModal {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        width: 300px;
+        background-color: rgb(79, 255, 79);
+        color: white;
+        display: none;
+        z-index: 1050;
+    }
 </style>
 
 <body>
@@ -204,22 +213,30 @@
                     </button>
                 </form>
                 @auth
-                <button class="btn bg-white" type="button" style="margin-left: 25%">
-                    <i class="fas fa-user"></i>{{ Auth::user()->name }}
-                </button>
-                @else
-                <a href="{{ route('user.login') }}" style="margin-left: 12%"><button class="btn bg-white" type="button">
-                        <i class="fas fa-user"></i> Entrar
-                    </button></a>
-
+                    <div class="dropdown" style="margin-left: 25%">
+                        <button class="btn bg-white" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-user"></i>
+                            {{ Auth::user()->name }}
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="{{ route('user.logout') }}"><i
+                                    class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
+                        </div>
+                    </div>
+                    <!-- Carrinho -->
+                    <button class="btn bg-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart"
+                        aria-controls="offcanvasCart">
+                        <i class="bi-cart-fill me-1"></i>
+                        Cart
+                        <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                    </button>
                 @endauth
-                <!-- Carrinho -->
-                <button class="btn bg-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart"
-                    aria-controls="offcanvasCart">
-                    <i class="bi-cart-fill me-1"></i>
-                    Cart
-                    <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                </button>
+                @if (!Auth::check())
+                    <a href="/login" style="margin-left: 12%"><button class="btn bg-white" type="button">
+                            <i class="fas fa-user"></i> Entrar
+                        </button></a>
+                @endif
             </div>
             <!-- Parte inferior da div -->
             <div class="d-none d-lg-flex align-items-center justify-content-center w-100">
@@ -355,6 +372,12 @@
                     </li>
                 </ul>
             </div>
+        </div>
+    </div>
+
+    <div id="successModal" class="modal-content p-3 mt-5">
+        <div class="modal-body">
+            <p id="successMessage"></p>
         </div>
     </div>
 
@@ -1052,6 +1075,22 @@
                     }
                 });
             });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Verifica se a mensagem de sucesso está presente
+            const successMessage = '{{ session('success') }}';
+            if (successMessage) {
+                // Define a mensagem no modal
+                document.getElementById('successMessage').textContent = successMessage;
+                // Mostra o modal
+                const successModal = document.getElementById('successModal');
+                successModal.style.display = 'block';
+                // Esconde o modal após 2 segundos
+                setTimeout(function() {
+                    successModal.style.display = 'none';
+                }, 2000);
+            }
         });
     </script>
 
