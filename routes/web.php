@@ -6,6 +6,8 @@ use App\Http\Controllers\SiteController;
 use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +20,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::get('/', [SiteController::class, 'index'])->name('index');
+
 
 Route::get('/store', function () {
     return view('store.store');
@@ -27,14 +31,15 @@ Route::get('/store', function () {
 Route::get('/show_product', function () {
     return view('store.show_product');
 });
-Route::get('/login', function () {
-    return view('login.login');
-})->name('login');
 
 
-Route::post('/register', [UserController::class, 'register'])->name('user.register');
-Route::post('/login', [UserController::class, 'login'])->name('user.login');
-Route::post('/logout', [UserController::class, 'logout'])->name('user.logout');
+//login
+
+Route::post('/register', [AuthController::class, 'registerPost'])->name('user.register');
+Route::get('/login', [AuthController::class, 'login'])->name('user.login');
+Route::post('/loginPost', [AuthController::class, 'loginPost'])->name('user.loginPost');
+Route::get('/logout', [AuthController::class, 'logout'])->name('user.logout');
+
 
 //Dashboard (Gabriel)
 Route::get('/db', [SiteController::class, 'dashboardHome'])->name('dashboard.home');
@@ -67,4 +72,7 @@ Route::get('/subcategories/all/select', [SubCategoryController::class, 'getSubCa
 Route::post('/product/add', [ProductsController::class, 'addProduct']);
 Route::post('/product/edit', [ProductsController::class, 'editProduct']);
 Route::post('/product/informations/edit', [ProductsController::class, 'showOnEdit']);
+
+
+
 

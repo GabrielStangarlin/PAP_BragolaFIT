@@ -241,8 +241,6 @@
 </style>
 
 <body>
-
-    </div>
     <div class="text-center mb-5">
         <a href="/store">
             <img src="/img(s)/Bragola-logo-noBg.png" alt="" style="width: 70%">
@@ -250,7 +248,7 @@
     </div>
     <div class="container" id="container">
         <div class="form-container sign-up">
-            <form method="POST" action="">
+            <form method="POST" action="{{ route('user.register') }}">
                 @csrf
                 <h1>Criar conta</h1>
                 <div class="social-icons">
@@ -258,29 +256,27 @@
                     <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
                 </div>
                 <span>ou use seu e-mail para cadastro</span>
-                <input type="text" name="name" placeholder="Name" required>
+                <input type="text" name="name" placeholder="Nome" required>
                 <input type="email" name="email" placeholder="Email" required>
-                <input type="password" name="password" placeholder="Password" required>
-                <input type="text" name="address" placeholder="Address" required>
-                <input type="text" name="phone" placeholder="Phone" required>
-
-                <button>Registrar</button>
+                <input type="password" name="password" placeholder="Senha" required>
+                <input type="text" name="address" placeholder="Endereço" required>
+                <input type="text" name="phone" placeholder="Telefone" required>
+                <button type="submit">Registrar</button>
             </form>
         </div>
         <div class="form-container sign-in">
-            <form method="POST" action="{{ route('login') }}">
+            <form method="POST" action="{{ route('user.loginPost') }}">
                 @csrf
                 <h1>Login</h1>
                 <div class="social-icons">
                     <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
                     <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
                 </div>
-                <span>ou use o seu email e password</span>
-                <input type="email" placeholder="Email">
-                <input type="password" placeholder="Password">
-                <input type="hidden" name="username" id="username">
-                <a href="#">Esqueceu sua password?</a>
-                <button type="submit">Iniciar Sessão</button>
+                <span>ou use o seu email e senha</span>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Senha" required>
+                <a href="#">Esqueceu sua senha?</a>
+                <button >Iniciar Sessão</button>
             </form>
         </div>
         <div class="toggle-container">
@@ -288,20 +284,17 @@
                 <div class="toggle-panel toggle-left">
                     <h1>Bem vindo de volta!</h1>
                     <p>Introduza os seus dados pessoais para usar todos os recursos do site</p>
-                    <button class="hidden" id="login">Iniciar Sessão</button>
+                    <button id="login">Iniciar Sessão</button>
                 </div>
                 <div class="toggle-panel toggle-right">
                     <h1>Olá, Amigo!</h1>
                     <p>Registre-se com seus dados pessoais para usar todos os recursos do site</p>
-                    <button class="hidden" id="register">Criar conta</button>
+                    <button id="register">Criar conta</button>
                 </div>
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-    </script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         const container = document.getElementById('container');
         const registerBtn = document.getElementById('register');
@@ -316,5 +309,6 @@
         });
     </script>
 </body>
+
 
 </html>

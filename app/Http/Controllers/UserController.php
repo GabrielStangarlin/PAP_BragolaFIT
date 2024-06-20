@@ -10,54 +10,6 @@ use Yajra\DataTables\Facades\DataTables;
 class UserController extends Controller
 {
     //login mario
-    public function logout(Request $request)
-    {
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return redirect()->back()->with('logoutSuccess', 'Sessão terminada com sucesso');
-    }
-
-    public function register(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-            'address' => 'required|string|max:255',
-            'phone' => 'required|string|max:15',
-        ]);
-
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = bcrypt($request->password);
-        $user->address = $request->address;
-        $user->phone = $request->phone;
-        $user->save();
-        return redirect('/login')->with('success', 'Register successfully');
-    }
-
-    public function login(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
-
-        $credentials = $request->only('email', 'password');
-
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-            return redirect()->intended('/store')->with('success', 'Login Feito');
-        }
-
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ]);
-    }
-
 
 
     //dashboard:

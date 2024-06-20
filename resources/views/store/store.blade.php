@@ -205,12 +205,14 @@
                 </form>
                 @auth
                 <button class="btn bg-white" type="button" style="margin-left: 25%">
-                    <i class="fas fa-user"></i><!--aqui apareça o name do user se estiver autenticado-->
+                    <i class="fas fa-user"></i>{{ Auth::user()->name }}
                 </button>
-                @endauth
-                <a href="/login" style="margin-left: 12%"><button class="btn bg-white" type="button">
+                @else
+                <a href="{{ route('user.login') }}" style="margin-left: 12%"><button class="btn bg-white" type="button">
                         <i class="fas fa-user"></i> Entrar
                     </button></a>
+
+                @endauth
                 <!-- Carrinho -->
                 <button class="btn bg-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart"
                     aria-controls="offcanvasCart">

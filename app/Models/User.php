@@ -38,8 +38,7 @@ class User extends Authenticatable
         'address',
         'phone',
         'password',
-        'isAdmin',
-        'vat_number',
+        
     ];
 
     /**
