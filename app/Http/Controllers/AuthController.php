@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use App\Models\User;
-
 
 class AuthController extends Controller
 {
     public function login()
     {
         return view('login.login');
-    }   
+    }
 
     public function loginPost(Request $request)
     {
@@ -31,6 +30,7 @@ class AuthController extends Controller
             if (Auth::user()->isAdmin == 1) {
                 return redirect('/db')->with('success', 'Usuário Administrador Logado');
             }
+
             return redirect('/store')->with('success', 'Usuário Logado');
         }
 
@@ -39,7 +39,8 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        $request->validate([
+        dd($request->all());
+        $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
@@ -47,15 +48,13 @@ class AuthController extends Controller
             'phone' => 'required|string|max:15',
         ]);
 
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->address = $request->address;
-        $user->phone = $request->phone;
-        $user->save();
-
-       
+        $user = User::create([
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+            'password' => Hash::make($validatedData['password']),
+            'address' => $validatedData['address'],
+            'phone' => $validatedData['phone'],
+        ]);
 
         return redirect('/login')->with('success', 'Register successfully');
     }
@@ -86,6 +85,7 @@ class AuthController extends Controller
         $user->address = $request->address;
         $user->phone = $request->phone;
         $user->save();
+
         return redirect('/login')->with('success', 'Register successfully');
     }
 }

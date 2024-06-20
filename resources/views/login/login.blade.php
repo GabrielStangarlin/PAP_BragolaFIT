@@ -243,7 +243,7 @@
 <body>
     <div class="text-center mb-5">
         <a href="/store">
-            <img src="/img(s)/Bragola-logo-noBg.png" alt="" style="width: 70%">
+            <img src="/img(s)/Bragola-logo-noBg.png" alt="" class="img-fluid" style="width: 70%;">
         </a>
     </div>
     <div class="container" id="container">
@@ -255,14 +255,16 @@
                 <input type="text" id="name" name="name" placeholder="Name" required>
                 <input type="email" id="email" name="email" placeholder="Email" required>
                 <input type="password" id="password" name="password" placeholder="Password" required>
+                <input type="password" id="password_confirmation" name="password_confirmation"
+                    placeholder="Confirm Password" required>
                 <input type="text" id="address" name="address" placeholder="Address" required>
                 <input type="text" id="phone" name="phone" placeholder="Phone" required>
 
-                <button>Registrar</button>
+                <button type="submit">Registrar</button>
             </form>
         </div>
         <div class="form-container sign-in">
-            <form action="{{ route('user.login') }}" method="POST">
+            <form action="{{ route('user.loginPost') }}" method="POST">
                 @csrf
                 <h1>Login</h1>
                 <span>ou use o seu email e password</span>

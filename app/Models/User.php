@@ -17,6 +17,15 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    protected $fillable = [
+        'name',
+        'email',
+        'address',
+        'phone',
+        'password',
+        'vat_number',
+    ];
+
     public function cart()
     {
         return $this->hasMany(Cart::class);
@@ -31,15 +40,6 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Role::class);
     }
-
-    protected $fillable = [
-        'name',
-        'email',
-        'address',
-        'phone',
-        'password',
-        
-    ];
 
     /**
      * The attributes that should be hidden for serialization.
