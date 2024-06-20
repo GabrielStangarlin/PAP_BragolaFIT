@@ -17,17 +17,24 @@ class AuthController extends Controller
 
     public function loginPost(Request $request)
     {
-        
-        $credentials = [    
-            'email' => $request->email,
-            'password' => $request->password,
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        $credentials = [
+            'email' => $request->loginEmail,
+            'password' => $request->loginPassword,
         ];
 
         if (Auth::attempt($credentials)) {
-            return redirect('/store')->with('success', 'Login Feito');
+            if (Auth::user()->isAdmin == 1) {
+                return redirect('/db')->with('success', 'Usuário Administrador Logado');
+            }
+            return redirect('/store')->with('success', 'Usuário Logado');
         }
 
-        return back()->with('error', 'Email or Password Errado');
+        return redirect()->back()->with('error', 'Email ou Senha Errados');
     }
 
     public function register(Request $request)
@@ -53,9 +60,32 @@ class AuthController extends Controller
         return redirect('/login')->with('success', 'Register successfully');
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
         Auth::logout();
-        return redirect('/store');
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->back()->with('success', 'Sessão terminada com sucesso');
+    }
+
+    public function registerPost(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+            'address' => 'required|string|max:255',
+            'phone' => 'required|string|max:15',
+        ]);
+
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = bcrypt($request->password);
+        $user->address = $request->address;
+        $user->phone = $request->phone;
+        $user->save();
+        return redirect('/login')->with('success', 'Register successfully');
     }
 }
