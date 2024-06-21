@@ -82,7 +82,7 @@ class SubCategorySeeder extends Seeder
                 'category_id' => 5,
             ],
             [
-                'name' => 'Coqueteleira',
+                'name' => 'Shaker',
                 'category_id' => 5,
             ],
             [
