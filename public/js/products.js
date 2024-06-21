@@ -81,6 +81,7 @@ $(document).on('click', '.openAddModal', function () {
     $('#imagePreview2').hide();
 
     $('#addModal').modal('show');
+    $('#addModal').trigger('reset');
 });
 
 //list subcategories
@@ -109,11 +110,6 @@ $(document).ready(function () {
     // Trigger when the add product modal is shown
     $('#addModal').on('shown.bs.modal', function () {
         loadCategories('#addModal #subcategorySelectAdd');
-    });
-
-    // Trigger when the edit product modal is shown
-    $('#editModal').on('shown.bs.modal', function () {
-        loadCategories('#editModal #subcategorySelectEdit');
     });
 });
 
@@ -171,18 +167,20 @@ function editFunc(id) {
             $('#editModal').find('#photo2Edit').val(product.photo_2);
 
             // Preencher o select de subcategorias
-            const $subcategoryEdit = $('#editModal').find('#subcategoryEdit');
+            const $subcategoryEdit = $('#editModal').find('#subcategorySelectEdit');
             $subcategoryEdit.empty(); // Limpar as opções atuais
             $.each(subcategories, function (index, subcategory) {
                 $subcategoryEdit.append(
                     $('<option>', {
                         value: subcategory.id,
                         text: subcategory.name,
-                        selected: subcategory.id == selectedSubcategory // Selecionar se for a subcategoria correta
                     })
                 );
+
             });
 
+            console.log($subcategoryEdit)
+            $subcategoryEdit.val(product.subcategories[0].id);
             $('#editModal').modal('show');
         }
     });
@@ -213,7 +211,7 @@ $(document).on('click', '#btn-update', function () {
         },
         dataType: 'json',
         success: (data) => {
-            $('#editModal').hide();
+            $('#editModal').modal('toggle');
             $("#btn-update").html('Submit');
             $("#btn-update").attr("disabled", false);
             table.ajax.reload();
