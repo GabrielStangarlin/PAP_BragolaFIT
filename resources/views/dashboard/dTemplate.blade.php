@@ -50,6 +50,17 @@
             text-decoration: none;
             color: inherit;
         }
+
+        #successModal {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 300px;
+            background-color: rgb(0, 153, 0);
+            color: white;
+            display: none;
+            z-index: 1000;
+        }
     </style>
 
 </head>
@@ -151,7 +162,9 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">
                                     <i class="fa-regular fa-circle-user text-gray-400"></i>
-                                    NOME DO USER
+                                    @auth
+                                        {{ Auth::user()->name }}
+                                    @endauth
                                 </span>
                             </a>
                             <!-- Dropdown - User Information -->
@@ -161,7 +174,7 @@
                                     <i class="fa-solid fa-user text-gray-400"></i>
                                     Profile
                                 </a>
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="{{ route('user.logout') }}">
                                     <i class="fa-solid fa-right-from-bracket text-gray-400"></i>
                                     Loggout
                                 </a>
@@ -172,6 +185,11 @@
                 <!-- End of Topbar -->
                 <!-- HOME -->
                 <div class="container-fluid">
+                    <div id="successModal" class="modal-content p-3 mt-5">
+                        <div class="modal-body">
+                            <p id="successMessage"></p>
+                        </div>
+                    </div>
                     @yield('dContent')
                 </div>
                 <!-- Footer -->
@@ -208,6 +226,21 @@
 
 <script>
     var csrf = '{{ csrf_token() }}';
+    document.addEventListener('DOMContentLoaded', function() {
+        // Verifica se a mensagem de sucesso está presente
+        const successMessage = '{{ session('success') }}';
+        if (successMessage) {
+            // Define a mensagem no modal
+            document.getElementById('successMessage').textContent = successMessage;
+            // Mostra o modal
+            const successModal = document.getElementById('successModal');
+            successModal.style.display = 'block';
+            // Esconde o modal após 2 segundos
+            setTimeout(function() {
+                successModal.style.display = 'none';
+            }, 2000);
+        }
+    });
 </script>
 
 </html>

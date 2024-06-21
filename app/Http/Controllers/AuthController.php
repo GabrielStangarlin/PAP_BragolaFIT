@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -22,8 +21,8 @@ class AuthController extends Controller
         ]);
 
         $credentials = [
-            'email' => $request->loginEmail,
-            'password' => $request->loginPassword,
+            'email' => $request->email, // Corrigido para capturar o campo 'email'
+            'password' => $request->password, // Corrigido para capturar o campo 'password'
         ];
 
         if (Auth::attempt($credentials)) {
@@ -37,35 +36,13 @@ class AuthController extends Controller
         return redirect()->back()->with('error', 'Email ou Senha Errados');
     }
 
-    public function register(Request $request)
-    {
-        dd($request->all());
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-            'address' => 'required|string|max:255',
-            'phone' => 'required|string|max:15',
-        ]);
-
-        $user = User::create([
-            'name' => $validatedData['name'],
-            'email' => $validatedData['email'],
-            'password' => Hash::make($validatedData['password']),
-            'address' => $validatedData['address'],
-            'phone' => $validatedData['phone'],
-        ]);
-
-        return redirect('/login')->with('success', 'Register successfully');
-    }
-
     public function logout(Request $request)
     {
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->back()->with('success', 'Sessão terminada com sucesso');
+        return redirect('/store')->with('success', 'Sessão terminada com sucesso');
     }
 
     public function registerPost(Request $request)
@@ -86,6 +63,8 @@ class AuthController extends Controller
         $user->phone = $request->phone;
         $user->save();
 
-        return redirect('/login')->with('success', 'Register successfully');
+        Auth::login($user);
+
+        return redirect('/store')->with('success', 'Usuário criado com sucesso');
     }
 }

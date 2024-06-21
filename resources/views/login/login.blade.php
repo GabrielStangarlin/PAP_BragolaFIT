@@ -238,9 +238,26 @@
     .container.active .toggle-right {
         transform: translateX(200%);
     }
+
+    .error-container {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background-color: red;
+        color: black;
+        padding: 10px 20px;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+    }
 </style>
 
 <body>
+    <!-- Modal -->
+    <div id="errorContainer" class="error-container" style="display: none;">
+        <p id="errorMessage"></p>
+    </div>
+
     <div class="text-center mb-5">
         <a href="/store">
             <img src="/img(s)/Bragola-logo-noBg.png" alt="" class="img-fluid" style="width: 70%;">
@@ -301,6 +318,18 @@
 
         loginBtn.addEventListener('click', () => {
             container.classList.remove("active");
+        });
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const errorMessage = '{{ session('error') }}';
+            if (errorMessage) {
+                const errorContainer = document.getElementById('errorContainer');
+                document.getElementById('errorMessage').textContent = errorMessage;
+                errorContainer.style.display = 'block';
+                setTimeout(() => {
+                    errorContainer.style.display = 'none';
+                }, 3000);
+            }
         });
     </script>
 </body>

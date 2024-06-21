@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Loja</title>
+    <title>Bragola Fit | Store</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Bootstrap icons-->
@@ -187,10 +187,10 @@
         top: 20px;
         right: 20px;
         width: 300px;
-        background-color: rgb(79, 255, 79);
+        background-color: rgb(0, 153, 0);
         color: white;
         display: none;
-        z-index: 1050;
+        z-index: 1000;
     }
 </style>
 
@@ -213,29 +213,34 @@
                     </button>
                 </form>
                 @auth
-                    <div class="dropdown" style="margin-left: 25%">
-                        <button class="btn bg-white" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-user"></i>
-                            {{ Auth::user()->name }}
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="{{ route('user.logout') }}"><i
-                                    class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
+                    <div class="d-flex justify-content-end align-items-center w-900 mt-3">
+                        <!-- Usuário -->
+                        <div class="dropdown me-3">
+                            <button class="btn bg-white" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-user"></i> {{ Auth::user()->name }}
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="{{ route('user.logout') }}">
+                                    <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+                                </a>
+                            </div>
                         </div>
+
+                        <!-- Carrinho -->
+                        <button class="btn bg-white" type="button" data-bs-toggle="offcanvas"
+                            data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
+                            <i class="bi-cart-fill me-1"></i>
+                            Cart
+                        </button>
                     </div>
-                    <!-- Carrinho -->
-                    <button class="btn bg-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart"
-                        aria-controls="offcanvasCart">
-                        <i class="bi-cart-fill me-1"></i>
-                        Cart
-                        <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                    </button>
                 @endauth
                 @if (!Auth::check())
-                    <a href="/login" style="margin-left: 12%"><button class="btn bg-white" type="button">
-                            <i class="fas fa-user"></i> Entrar
-                        </button></a>
+                    <a href="/login" style="margin-left: 12%">
+                        <button class="btn bg-white" type="button">
+                            <i class="fas fa-user"></i>Entrar
+                        </button>
+                    </a>
                 @endif
             </div>
             <!-- Parte inferior da div -->
