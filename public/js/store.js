@@ -18,21 +18,21 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-// document.addEventListener('DOMContentLoaded', function () {
-//     // Verifica se a mensagem de sucesso está presente
+document.addEventListener('DOMContentLoaded', function () {
+    // Verifica se a mensagem de sucesso está presente
     
-//     if (successMessage) {
-//         // Define a mensagem no modal
-//         document.getElementById('successMessage').textContent = successMessage;
-//         // Mostra o modal
-//         const successModal = document.getElementById('successModal');
-//         successModal.style.display = 'block';
-//         // Esconde o modal após 2 segundos
-//         setTimeout(function () {
-//             successModal.style.display = 'none';
-//         }, 2000);
-//     }
-// });
+    if (successMessage) {
+        // Define a mensagem no modal
+        document.getElementById('successMessage').textContent = successMessage;
+        // Mostra o modal
+        const successModal = document.getElementById('successModal');
+        successModal.style.display = 'block';
+        // Esconde o modal após 2 segundos
+        setTimeout(function () {
+            successModal.style.display = 'none';
+        }, 2000);
+    }
+});
 
 
 //script para alternar conteudo perfil

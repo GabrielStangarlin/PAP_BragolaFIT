@@ -79,11 +79,12 @@
         </div>
     </div>
 
+<div id="successModal" class="modal-content p-3 mt-5">
     {{-- <div id="successModal" class="modal-content p-3 mt-5">
                         <div class="modal-body">
                             <p id="successMessage"></p>
                         </div>
-                    </div> --}}
+                    </div>
 
 
     <div class="container main-container">
@@ -96,11 +97,11 @@
         </div>
         <div class="right-column">
             <div id="perfil" class="content-section">
-                {{-- @if (session('success'))
+                @if (session('success'))
                 <script>
                     const successMessage = "{{ session('success') }}";
                 </script>
-            @endif --}}
+            @endif
                 <div class="card p-4">
                     <form method="POST">
                         @csrf
