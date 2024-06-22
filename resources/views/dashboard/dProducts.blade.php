@@ -63,7 +63,8 @@
 
                                     <div class="form-group">
                                         <label for="subcategorySelect" class="form-label">Subcategory:</label>
-                                        <select class="form-select" name="subcategory_id" id="subcategorySelectAdd">
+                                        <select class="form-select" name="subcategory_id" id="subcategorySelectAdd"
+                                            multiple="multiple">
                                             <option value="" style="color: lightgray;" selected disabled>
                                                 Selecione uma subcategoria</option>
                                         </select>
@@ -136,7 +137,8 @@
 
                                     <div class="form-group">
                                         <label for="subcategorySelect" class="form-label">Subcategory:</label>
-                                        <select class="form-select" name="subcategory_id" id="subcategorySelectEdit">
+                                        <select class="form-select" name="subcategory_id" id="subcategorySelectEdit"
+                                            multiple="multiple">
                                             <option value="" style="color: lightgray;" selected disabled>
                                                 Selecione uma subcategoria</option>
                                         </select>
@@ -169,6 +171,7 @@
             </div>
         </div>
     </div>
+
 
     <script src="/js/products.js"></script>
 @endsection

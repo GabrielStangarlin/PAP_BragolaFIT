@@ -99,4 +99,11 @@ class ProductsController extends Controller
 
         return response()->json([$product]);
     }
+
+    public function deleteProduct(Request $request)
+    {
+        $product = Product::where('id', $request->id)->delete();
+
+        return response()->json($product);
+    }
 }
