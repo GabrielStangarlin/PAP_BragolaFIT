@@ -33,38 +33,38 @@
                 </a>
 
                 @auth
-                <div class="d-flex justify-content-end align-items-center w-900 ">
-                    <!-- Usuário -->
-                    <div class="dropdown me-3">
-                        <button class="btn bg-white" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-user"></i> {{ Auth::user()->name }}
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="{{ route('user.profile') }}">
-                                <i class="fa-solid fa-user"></i>
-                                Perfil
-                            </a>
-                            <a class="dropdown-item" href="{{ route('user.logout') }}">
-                                <i class="fa-solid fa-arrow-right-from-bracket"></i> Sair
-                            </a>
+                    <div class="d-flex justify-content-end align-items-center w-900 ">
+                        <!-- Usuário -->
+                        <div class="dropdown me-3">
+                            <button class="btn bg-white" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-user"></i> {{ Auth::user()->name }}
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="{{ route('user.profile') }}">
+                                    <i class="fa-solid fa-user"></i>
+                                    Perfil
+                                </a>
+                                <a class="dropdown-item" href="{{ route('user.logout') }}">
+                                    <i class="fa-solid fa-arrow-right-from-bracket"></i> Sair
+                                </a>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- Carrinho -->
-                    <button class="btn bg-white" type="button" data-bs-toggle="offcanvas"
-                        data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
-                        <i class="bi-cart-fill me-1"></i>
-                        Carrinho
-                    </button>
-                </div>
+                        <!-- Carrinho -->
+                        <button class="btn bg-white" type="button" data-bs-toggle="offcanvas"
+                            data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
+                            <i class="bi-cart-fill me-1"></i>
+                            Carrinho
+                        </button>
+                    </div>
                 @endauth
                 @if (!Auth::check())
-                <a href="/login" style="margin-left: 12%">
-                    <button class="btn bg-white" type="button">
-                        <i class="fas fa-user"></i>Entrar
-                    </button>
-                </a>
+                    <a href="/login" style="margin-left: 12%">
+                        <button class="btn bg-white" type="button">
+                            <i class="fas fa-user"></i>Entrar
+                        </button>
+                    </a>
                 @endif
             </div>
         </div>
@@ -79,7 +79,7 @@
         </div>
     </div>
 
-{{-- <div id="successModal" class="modal-content p-3 mt-5">
+    {{-- <div id="successModal" class="modal-content p-3 mt-5">
                         <div class="modal-body">
                             <p id="successMessage"></p>
                         </div>
@@ -102,7 +102,7 @@
                 </script>
             @endif --}}
                 <div class="card p-4">
-                    <form action="{{ route('user.updateProfile') }}" method="POST">
+                    <form method="POST">
                         @csrf
                         <div class="form-group mb-3">
                             <label for="name">Nome</label>
@@ -117,12 +117,13 @@
                             <input type="email" id="email" class="form-control" value="{{ $user->email }}">
                         </div>
                         <div class="form-group mb-3">
-                            <label for="phone">phone</label>
+                            <label for="phone">Phone</label>
                             <input type="text" id="phone" class="form-control" value="{{ $user->phone }}">
                         </div>
                         <div class="form-group mb-3">
                             <label for="vat_number">Nif</label>
-                            <input type="text" id="vat_number" class="form-control" value="{{ $user->vat_number }}">
+                            <input type="text" id="vat_number" class="form-control"
+                                value="{{ $user->vat_number }}">
                         </div>
                         <button class="btn btn btn-primary">GUARDAR</button>
                     </form>
@@ -175,6 +176,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Script JavaScript Botão Topo -->
     <script src="/js/store.js"></script>
+    <script src="/js/profile.js"></script>
 </body>
 
 </html>
