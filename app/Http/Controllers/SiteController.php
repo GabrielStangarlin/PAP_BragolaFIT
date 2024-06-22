@@ -16,7 +16,9 @@ class SiteController extends Controller
     public function store()
     {
         $categories = Category::all();
-        return view('store.store', compact('categories'));
+        $newProducts = Product::orderBy('id', 'desc')->take(8)->get();
+
+        return view('store.store', compact('categories', 'newProducts'));
     }
 
     public function dashboardHome()
