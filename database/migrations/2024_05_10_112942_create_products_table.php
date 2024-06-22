@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('photo_1');
             $table->string('photo_2')->nullable();
             $table->integer('quantity');
-            $table->foreignIdFor(Discount::class)->nullable();
             $table->timestamps();
         });
     }
