@@ -9,8 +9,9 @@ use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
 {
-    
-
+    public function profile(){
+        return view('profile.profile');
+    }
 
 
     //dashboard:

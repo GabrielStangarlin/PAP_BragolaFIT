@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Bragola Fit | Store</title>
+    <title>BragolaFIT | Store</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Bootstrap icons-->
@@ -20,179 +20,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="/css/store.css">
 </head>
-
-<style>
-    /* Estilo do rodapé */
-    .footer {
-        width: 100%;
-        background-color: #f1f1f1;
-        text-align: center;
-        padding: 10px;
-        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-        position: relative;
-    }
-
-    /* Estilo da div que contém o botão */
-    .top-btn-container {
-        margin-right: 200px;
-        bottom: 20px;
-        right: 30px;
-        z-index: 99;
-    }
-
-    /* Estilo do botão */
-    #topBtn {
-        border: none;
-        /* Sem borda */
-        outline: none;
-        /* Sem contorno */
-        background-color: #000;
-        /* Cor de fundo do botão */
-        color: white;
-        /* Cor do texto do botão */
-        cursor: pointer;
-        /* Cursor do mouse em forma de mão */
-        padding: 10px 20px;
-        /* Espaçamento interno do botão */
-        border-radius: 5px;
-        /* Cantos arredondados */
-    }
-
-    #topBtn:hover {
-        background-color: #555;
-        /* Cor de fundo do botão ao passar o mouse */
-    }
-
-    .fa-box {
-        font-size: 40px;
-    }
-
-    .nav-item:hover .submenu {
-        display: block;
-    }
-
-    /* Adicione estilos CSS personalizados aqui */
-    .nav-item {
-        position: relative;
-        cursor: pointer;
-    }
-
-    .submenu {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0%;
-        background-color: white;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        z-index: 1000;
-        padding: 20px;
-        width: 800px;
-        /* Ajuste a largura conforme necessário */
-        border-radius: 5px;
-    }
-
-    .nav-item:hover .submenu {
-        display: block;
-        position: absolute;
-        background-color: white;
-        border: 1px solid #ddd;
-        padding: 1rem;
-    }
-
-    .offcanvas-submenu .nav-item {
-        margin-bottom: 1rem;
-    }
-
-    .submenu .container {
-        display: flex;
-        justify-content: space-between;
-
-    }
-
-    .submenu .container a {
-        display: block;
-        margin-bottom: 5px;
-        color: black;
-        text-decoration: none;
-    }
-
-    .submenu .container a:hover {
-        text-decoration: underline;
-    }
-
-    .submenu .image {
-        width: 300px;
-        /* Ajuste a largura da imagem conforme necessário */
-        margin-left: 20px;
-    }
-
-    .card {
-        transition: transform 0.3s, box-shadow 0.3s;
-    }
-
-    .card:hover {
-        transform: scale(1.05);
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-    }
-
-    .card-img-top {
-        transition: opacity 0.3s;
-    }
-
-    .card:hover .card-img-top {
-        opacity: 0.7;
-    }
-
-    .nav-link {
-        position: relative;
-        display: inline-block;
-        color: black;
-        text-decoration: none;
-    }
-
-    .nav-link::after {
-        content: '';
-        position: absolute;
-        width: 0;
-        height: 2px;
-        display: block;
-        margin-top: 5px;
-        right: 0;
-        background: black;
-        transition: width 0.3s ease, right 0.3s ease;
-    }
-
-    .nav-link:hover::after {
-        width: 100%;
-        right: 0;
-    }
-
-    @media (max-width: 992px) {
-        .navbar-nav {
-            display: none;
-        }
-
-        .submenu {
-            display: none !important;
-        }
-    }
-
-    .cor-a {
-        color: #000;
-    }
-
-    #successModal {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        width: 300px;
-        background-color: rgb(0, 153, 0);
-        color: white;
-        display: none;
-        z-index: 1000;
-    }
-</style>
 
 <body>
     <!-- Navigation-->
@@ -221,6 +51,10 @@
                                 <i class="fas fa-user"></i> {{ Auth::user()->name }}
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="{{ route('user.profile') }}">
+                                    <i class="fa-solid fa-user"></i>
+                                    Profile
+                                </a>
                                 <a class="dropdown-item" href="{{ route('user.logout') }}">
                                     <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
                                 </a>
@@ -246,135 +80,26 @@
             <!-- Parte inferior da div -->
             <div class="d-none d-lg-flex align-items-center justify-content-center w-100">
                 <ul class="nav justify-content-center">
-                    <li class="nav-item">
-                        <a class="nav-link text-black active" aria-current="page" href="#">SUPLEMENTOS</a>
-                        <div class="submenu">
-                            <div class="container">
-                                <!-- Adicione seus subitens de menu aqui -->
-                                <div>
-                                    <a href="#" class="fw-bold">Proteínas</a>
-                                    <a href="#">Proteínas</a>
-                                    <a href="#">Isolada</a>
-                                    <a href="#">Proteína Vegetal</a>
-                                    <a href="#">protein</a>
-                                </div>
-                                <div>
-                                    <a href="#" class="fw-bold">Proteína</a>
-                                    <a href="#">2 Hot</a>
-                                    <a href="#">Fire Black</a>
-                                    <a href="#">Carnitina</a>
-                                    <a href="#">Shot Dry</a>
-                                    <a href="#">Max Cut</a>
-                                </div>
-                                <div>
-                                    <a href="#" class="fw-bold">Hipercalóricos</a>
-                                    <a href="#">Refil 3kg</a>
-                                    <a href="#">Refil 1,4kg</a>
-                                    <a href="#">Refil 2,4kg zero Lactose</a>
-                                </div>
-                                <div class="image">
-                                    <img src="https://www.esportelandia.com.br/wp-content/uploads/2023/06/93222e8d-1678-4893-ba07-437863974ce6___a50bb6152fb8007ba71e99f6ad444bfa-e1687531158319.jpg"
-                                        alt="Imagem" class="img-fluid">
+                    @foreach ($categories as $category)
+                        <li class="nav-item">
+                            <a class="nav-link text-black active" aria-current="page"
+                                href="#">{{ $category->name }}</a>
+                            <div class="submenu">
+                                <div class="container">
+                                    <!-- Adicione seus subitens de menu aqui -->
+                                    <div>
+                                        @foreach ($category->subcategories as $subcategory)
+                                            <a href="#">{{ $subcategory->name }}</a>
+                                        @endforeach
+                                    </div>
+                                    <div class="image">
+                                        <img src="https://i0.wp.com/naturvida.com.br/wp-content/uploads/2023/08/Pre-Treino.webp?fit=1170%2C650&ssl=1"
+                                            alt="Imagem" class="img-fluid">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-black" href="#">PROTEINAS</a>
-                        <div class="submenu">
-                            <div class="container">
-                                <div>
-                                    <a href="#" class="fw-bold">Proteínas</a>
-                                    <a href="#">Proteínas</a>
-                                    <a href="#">Isolada</a>
-                                    <a href="#">Proteína Vegetal</a>
-                                    <a href="#">protein</a>
-                                </div>
-                                <div>
-                                    <a href="#" class="fw-bold">Proteína</a>
-                                    <a href="#">2 Hot</a>
-                                    <a href="#">Fire Black</a>
-                                    <a href="#">Carnitina</a>
-                                    <a href="#">Shot Dry</a>
-                                    <a href="#">Max Cut</a>
-                                </div>
-                                <div>
-                                    <a href="#" class="fw-bold">Hipercalóricos</a>
-                                    <a href="#">Refil 3kg</a>
-                                    <a href="#">Refil 1,4kg</a>
-                                    <a href="#">Refil 2,4kg zero Lactose</a>
-                                </div>
-                                <div class="image">
-                                    <img src="https://saudeguia.com/wp-content/uploads/produtos-growth.jpg"
-                                        alt="Imagem" class="img-fluid">
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-black" href="#">PRÉ TREINOS</a>
-                        <div class="submenu">
-                            <div class="container">
-                                <div>
-                                    <a href="#" class="fw-bold">Proteínas</a>
-                                    <a href="#">Proteínas</a>
-                                    <a href="#">Isolada</a>
-                                    <a href="#">Proteína Vegetal</a>
-                                    <a href="#">protein</a>
-                                </div>
-                                <div>
-                                    <a href="#" class="fw-bold">Proteína</a>
-                                    <a href="#">2 Hot</a>
-                                    <a href="#">Fire Black</a>
-                                    <a href="#">Carnitina</a>
-                                    <a href="#">Shot Dry</a>
-                                    <a href="#">Max Cut</a>
-                                </div>
-                                <div>
-                                    <a href="#" class="fw-bold">Hipercalóricos</a>
-                                    <a href="#">Refil 3kg</a>
-                                    <a href="#">Refil 1,4kg</a>
-                                    <a href="#">Refil 2,4kg zero Lactose</a>
-                                </div>
-                                <div class="image">
-                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpNkyYofEow7FKJUiC-RuFha29I_v6opGTuw&usqp=CAU"
-                                        alt="Imagem" class="img-fluid">
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-black" href="#">CREATINA</a>
-                        <div class="submenu">
-                            <div class="container">
-                                <div>
-                                    <a href="#" class="fw-bold">Proteínas</a>
-                                    <a href="#">Proteínas</a>
-                                    <a href="#">Isolada</a>
-                                    <a href="#">Proteína Vegetal</a>
-                                    <a href="#">protein</a>
-                                </div>
-                                <div>
-                                    <a href="#" class="fw-bold">Proteína</a>
-                                    <a href="#">2 Hot</a>
-                                    <a href="#">Fire Black</a>
-                                    <a href="#">Carnitina</a>
-                                    <a href="#">Shot Dry</a>
-                                    <a href="#">Max Cut</a>
-                                </div>
-                                <div>
-                                    <a href="#" class="fw-bold">Hipercalóricos</a>
-                                    <a href="#">Refil 3kg</a>
-                                    <a href="#">Refil 1,4kg</a>
-                                    <a href="#">Refil 2,4kg zero Lactose</a>
-                                </div>
-                                <div class="image">
-                                    <img src="https://i0.wp.com/naturvida.com.br/wp-content/uploads/2023/08/Pre-Treino.webp?fit=1170%2C650&ssl=1"
-                                        alt="Imagem" class="img-fluid">
-                                </div>
-                            </div>
-                        </div>
-                    </li>
+                        </li>
+                    @endforeach
                 </ul>
             </div>
         </div>
@@ -481,30 +206,6 @@
         </div>
         <div class="offcanvas-body">
             <p>Seu carrinho está vazio.</p>
-        </div>
-    </div>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-
-
-    <!--offcanvas carrinho-->
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample"
-        aria-labelledby="offcanvasExampleLabel">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Carrinho</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <hr>
-        <div class="offcanvas-body">
-            <div class="text-center">
-                <i class="fa-solid fa-box fa-bounce"></i>
-            </div>
-            <div class="text-center fw-bold">
-                De momento o seu carrinho esta vazio.
-            </div>
         </div>
     </div>
 
@@ -1057,49 +758,17 @@
 
 
     <!-- Script JavaScript Botão Topo -->
+    <script src="/js/store.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         // Quando o usuário clicar no botão, rolar para o topo do documento
         function topFunction() {
             document.body.scrollTop = 0; // Para Safari
             document.documentElement.scrollTop = 0; // Para Chrome, Firefox, IE e Opera
         }
-
-
-        //Script JavaScript para os details
-        document.addEventListener('DOMContentLoaded', function() {
-            const detailsElements = document.querySelectorAll('details');
-
-            detailsElements.forEach((detail) => {
-                detail.addEventListener('toggle', function() {
-                    if (this.open) {
-                        detailsElements.forEach((otherDetail) => {
-                            if (otherDetail !== this) {
-                                otherDetail.removeAttribute('open');
-                            }
-                        });
-                    }
-                });
-            });
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            // Verifica se a mensagem de sucesso está presente
-            const successMessage = '{{ session('success') }}';
-            if (successMessage) {
-                // Define a mensagem no modal
-                document.getElementById('successMessage').textContent = successMessage;
-                // Mostra o modal
-                const successModal = document.getElementById('successModal');
-                successModal.style.display = 'block';
-                // Esconde o modal após 2 segundos
-                setTimeout(function() {
-                    successModal.style.display = 'none';
-                }, 2000);
-            }
-        });
     </script>
-
-
 </body>
 
 </html>

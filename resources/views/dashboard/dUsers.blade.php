@@ -205,17 +205,15 @@
             ]
         });
 
-        let addUserModal = $('#addUserModal');
-
         $(document).on('click', '#btn-save', function() {
 
-            var name = addUserModal.find('#nameAdd').val();
-            var address = addUserModal.find('#addressAdd').val();
-            var email = addUserModal.find('#emailAdd').val();
-            var phone = addUserModal.find('#phoneAdd').val();
-            var password = addUserModal.find('#passwordAdd').val();
-            var vat_number = addUserModal.find('#vat_numberAdd').val();
-            var isAdmin = addUserModal.find('#isAdminAdd').is(':checked') ? 1 : 0;
+            var name = $('#addUserModal').find('#nameAdd').val();
+            var address = $('#addUserModal').find('#addressAdd').val();
+            var email = $('#addUserModal').find('#emailAdd').val();
+            var phone = $('#addUserModal').find('#phoneAdd').val();
+            var password = $('#addUserModal').find('#passwordAdd').val();
+            var vat_number = $('#addUserModal').find('#vat_numberAdd').val();
+            var isAdmin = $('#addUserModal').find('#isAdminAdd').is(':checked') ? 1 : 0;
 
             $.ajax({
                 type: 'POST',
@@ -239,8 +237,6 @@
             });
         });
 
-        let editUserModal = $('#editUserModal');
-
         function editFunc(id) {
             $.ajax({
                 type: "POST",
@@ -251,13 +247,13 @@
                 dataType: 'json',
                 success: function(res) {
 
-                    editUserModal.find('#id').val(res.id);
-                    editUserModal.find('#name').val(res.name);
-                    editUserModal.find('#phone').val(res.phone);
-                    editUserModal.find('#address').val(res.address);
-                    editUserModal.find('#vat_number').val(res.vat_number);
-                    editUserModal.find('#email').val(res.email);
-                    editUserModal.find('#isAdmin').prop('checked', res.isAdmin == 1);
+                    $('#editUserModal').find('#id').val(res.id);
+                    $('#editUserModal').find('#name').val(res.name);
+                    $('#editUserModal').find('#phone').val(res.phone);
+                    $('#editUserModal').find('#address').val(res.address);
+                    $('#editUserModal').find('#vat_number').val(res.vat_number);
+                    $('#editUserModal').find('#email').val(res.email);
+                    $('#editUserModal').find('#isAdmin').prop('checked', res.isAdmin == 1);
 
                     $('#editUserModal').modal('show');
 
@@ -266,14 +262,14 @@
         }
 
         $(document).on('click', '#btn-save-edit', function() {
-            var id = editUserModal.find('#id').val();
-            var name = editUserModal.find('#name').val();
-            var address = editUserModal.find('#address').val();
-            var email = editUserModal.find('#email').val();
-            var phone = editUserModal.find('#phone').val();
-            var password = editUserModal.find('#password').val();
-            var vat_number = editUserModal.find('#vat_number').val();
-            var isAdmin = editUserModal.find('#isAdmin').is(':checked') ? 1 : 0;
+            var id = $('#editUserModal').find('#id').val();
+            var name = $('#editUserModal').find('#name').val();
+            var address = $('#editUserModal').find('#address').val();
+            var email = $('#editUserModal').find('#email').val();
+            var phone = $('#editUserModal').find('#phone').val();
+            var password = $('#editUserModal').find('#password').val();
+            var vat_number = $('#editUserModal').find('#vat_number').val();
+            var isAdmin = $('#editUserModal').find('#isAdmin').is(':checked') ? 1 : 0;
 
             $.ajax({
                 type: 'POST',
