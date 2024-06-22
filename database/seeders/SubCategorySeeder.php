@@ -66,27 +66,27 @@ class SubCategorySeeder extends Seeder
                 'category_id' => 4,
             ],
             [
-                'name' => 'Carnitina',
+                'name' => 'Carnitina',//14
                 'category_id' => 4,
             ],
             [
-                'name' => 'Pré-treino',
+                'name' => 'Pré-treino',//15
                 'category_id' => 5,
             ],
             [
-                'name' => 'Pós-treino',
+                'name' => 'Pós-treino',//16
                 'category_id' => 5,
             ],
             [
-                'name' => 'Omega 3',
+                'name' => 'Omega 3',//17
                 'category_id' => 5,
             ],
             [
-                'name' => 'Shaker',
+                'name' => 'Shaker',//18
                 'category_id' => 5,
             ],
             [
-                'name' => 'Cafeína',
+                'name' => 'Cafeína',//19
                 'category_id' => 5,
             ],
         ];
