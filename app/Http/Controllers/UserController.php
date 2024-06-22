@@ -5,13 +5,59 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
+
 
 class UserController extends Controller
 {
     public function profile(){
-        return view('profile.profile');
+        $user = Auth::user();
+        return view('profile.profile', compact('user'));
     }
+
+    //site
+    public function updateProfile(Request $request)
+    {
+       
+    
+        // Obtém o usuário autenticado
+        $user = Auth::user();
+    
+        // Verifica se $user é uma instância válida de User
+        if (!$user instanceof User) {
+            return redirect()->route('login')->with('error', 'User authentication failed.');
+        }
+    
+        // Validação dos dados de entrada
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'address' => 'nullable|string',
+            'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
+            'phone' => 'required|string|max:15',
+            'password' => 'nullable|string|min:8|confirmed',
+            'vat_number' => 'nullable|string|max:10',
+        ]);
+    
+        // Atualiza os dados do usuário
+        $user->name = $request->input('name');
+        $user->address = $request->input('address');
+        $user->email = $request->input('email');
+        $user->phone = $request->input('phone');
+        $user->vat_number = $request->input('vat_number');
+    
+        // Apenas atualize a senha se um novo valor foi fornecido
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->input('password'));
+        }
+    
+        $user->save();
+    
+        return redirect()->route('profile.profile')->with('success','Profile updated successfully.');
+    }
+    
+    
+   
 
 
     //dashboard:

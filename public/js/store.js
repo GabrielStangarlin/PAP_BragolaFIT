@@ -18,18 +18,31 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-document.addEventListener('DOMContentLoaded', function () {
-    // Verifica se a mensagem de sucesso está presente
-    const successMessage = '{{ session('success') }}';
-    if (successMessage) {
-        // Define a mensagem no modal
-        document.getElementById('successMessage').textContent = successMessage;
-        // Mostra o modal
-        const successModal = document.getElementById('successModal');
-        successModal.style.display = 'block';
-        // Esconde o modal após 2 segundos
-        setTimeout(function () {
-            successModal.style.display = 'none';
-        }, 2000);
-    }
-});
+// document.addEventListener('DOMContentLoaded', function () {
+//     // Verifica se a mensagem de sucesso está presente
+    
+//     if (successMessage) {
+//         // Define a mensagem no modal
+//         document.getElementById('successMessage').textContent = successMessage;
+//         // Mostra o modal
+//         const successModal = document.getElementById('successModal');
+//         successModal.style.display = 'block';
+//         // Esconde o modal após 2 segundos
+//         setTimeout(function () {
+//             successModal.style.display = 'none';
+//         }, 2000);
+//     }
+// });
+
+
+//script para alternar conteudo perfil
+function showContent(section) {
+    // Esconde todas as seções de conteúdo
+    const sections = document.querySelectorAll('.content-section');
+    sections.forEach(function (section) {
+        section.style.display = 'none';
+    });
+
+    // Mostra a seção selecionada
+    document.getElementById(section).style.display = 'block';
+}

@@ -8,7 +8,7 @@
     position: relative;
 }
 
-/* Estilo da div que contém o botão */
+Estilo da div que contém o botão
 .top-btn-container {
     margin-right: 200px;
     bottom: 20px;
@@ -167,3 +167,47 @@
     display: none;
     z-index: 1000;
 }
+
+
+.left-column {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 20px;
+   
+}
+
+
+
+.right-column {
+    width: 100%;
+}
+
+.main-container {
+    display: flex;
+    gap: 20px;
+}
+
+.left-column ul {
+    list-style: none;
+    padding: 0;
+}
+
+.left-column ul li {
+    margin-bottom: 10px;
+}
+
+.left-column ul li a {
+    text-decoration: none;
+    color: black;
+}
+
+.navbar {
+    margin-bottom: 20px;
+}
+
+.dropdown .dropdown-menu {
+    right: 0;
+    left: auto;
+}
+

@@ -768,6 +768,8 @@
             document.body.scrollTop = 0; // Para Safari
             document.documentElement.scrollTop = 0; // Para Chrome, Firefox, IE e Opera
         }
+
+        const successMessage = '{{ session('success') }}'
     </script>
 </body>
 
