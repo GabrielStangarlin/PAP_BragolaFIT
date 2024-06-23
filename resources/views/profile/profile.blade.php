@@ -79,8 +79,7 @@
         </div>
     </div>
 
-<div id="successModal" class="modal-content p-3 mt-5">
-    {{-- <div id="successModal" class="modal-content p-3 mt-5">
+ <div id="successModal" class="modal-content p-3 mt-5">
                         <div class="modal-body">
                             <p id="successMessage"></p>
                         </div>

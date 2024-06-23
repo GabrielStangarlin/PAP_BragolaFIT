@@ -83,7 +83,7 @@
                     @foreach ($categories as $category)
                         <li class="nav-item">
                             <a class="nav-link text-black active" aria-current="page"
-                                href="#">{{ $category->name }}</a>
+                                href="{{ route('category.products', ['id' => $category->id]) }}">{{ $category->name }}</a>
                             <div class="submenu">
                                 <div class="container">
                                     <!-- Adicione seus subitens de menu aqui -->

@@ -82,7 +82,7 @@
                 <ul class="nav justify-content-center">
                     @foreach ($categories as $category)
                         <li class="nav-item">
-                            <a class="nav-link text-black active" aria-current="page"href="#">{{ $category->name }}</a>
+                            <a class="nav-link text-black active" aria-current="page"href="{{ route('category.products', ['id' => $category->id]) }}">{{ $category->name }}</a>
                             <div class="submenu">
                                 <div class="container">
                                     <!-- Adicione seus subitens de menu aqui -->
@@ -122,7 +122,7 @@
                 <li class="nav-item">
                     @foreach ($categories as $category)
                     <details>
-                        <summary class="nav-link">{{ $category->name }}<i class="fa-solid fa-caret-down fa-sm"></i></summary>
+                        <a href="{{ route('category.products', ['id' => $category->id]) }}"><summary class="nav-link">{{ $category->name }}<i class="fa-solid fa-caret-down fa-sm"></i></summary></a>
                         <hr>
                         @foreach ($category->subcategories as $subcategory)
                         <div>
@@ -196,278 +196,63 @@
             <!--CARROSSEL CARDS-->
             <div id="carouselExamplecards" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
-                    <div class="carousel-item active">
-
-                        <div class="container px-4 px-lg-5 mt-5">
-                            <div
-                                class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-
-                                <div class="col mb-5">
-                                    <div class="card h-100">
-                                        <!-- Product image-->
-                                        <a href="/show_product"><img class="card-img-top" src="/img(s)/card1.png"
-                                                alt="..." /></a>
-                                        <!-- Product details-->
-                                        <div class="card-body p-4">
-                                            <div class="text-center">
-                                                <!-- Product name-->
-                                                <h5 class="fw-bolder">Fancy Product</h5>
-                                                <!-- Product price-->
-                                                <!-- Product reviews-->
-                                                <div class="d-flex justify-content-center small text-warning mb-2">
-                                                    <div class="bi-star-fill"></div>
-                                                    <div class="bi-star-fill"></div>
-                                                    <div class="bi-star-fill"></div>
-                                                    <div class="bi-star-fill"></div>
-                                                    <div class="bi-star-fill"></div>
+                    @foreach ($newProducts->chunk(4) as $productChunk) <!-- Agrupando os produtos em subconjuntos de 4 -->
+                        <div class="carousel-item @if ($loop->first) active @endif">
+                            <div class="container px-4 px-lg-5 mt-5">
+                                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                                    @foreach ($productChunk as $product)
+                                    <div class="col mb-5">
+                                        <div class="card h-100">
+                                            <!-- Product image-->
+                                            <img class="card-img-top img-fluid mx-auto d-block" style="width: 50%"
+                                                src="{{ $product->photo_1 }}" alt="..." />
+                                            <!-- Product details-->
+                                            <div class="card-body p-4">
+                                                <div class="text-center">
+                                                    <!-- Product name-->
+                                                    <h5 class="fw-bolder">{{ $product->name }}</h5>
+                                                    <br>
+                                                    @if ($product->quantity > 6)
+                                                        <span class="availability-status"
+                                                            style="color: green; font-size: 0.9rem;">
+                                                            <i class="fa-solid fa-circle availability-icon"
+                                                                style="color: green; font-size: 0.6rem;"></i>
+                                                            <strong>Em estoque</strong>
+                                                        </span>
+                                                    @elseif ($product->quantity >= 1 && $product->quantity <= 6)
+                                                        <span class="availability-status"
+                                                            style="color: orange; font-size: 0.9rem;">
+                                                            <i class="fa-solid fa-circle availability-icon"
+                                                                style="color: orange; font-size: 0.6rem;"></i>
+                                                            <strong>Poucas unidades</strong>
+                                                        </span>
+                                                    @else
+                                                        <span class="availability-status" style="color: red; font-size: 0.9rem;">
+                                                            <i class="fa-solid fa-circle availability-icon"
+                                                                style="color: red; font-size: 0.6rem;"></i>
+                                                            <strong>Fora de estoque</strong>
+                                                        </span>
+                                                    @endif
                                                 </div>
-                                                $40.00 - $80.00
                                             </div>
-                                        </div>
-                                        <!-- Product actions-->
-                                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                            <div class="text-center"><a class="btn btn-outline-dark mt-auto"
-                                                    href="#">View options</a></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col mb-5">
-                                    <div class="card h-100">
-                                        <!-- Sale badge-->
-                                        <div class="badge bg-dark text-white position-absolute"
-                                            style="top: 0.5rem; right: 0.5rem">Saldo</div>
-                                        <!-- Product image-->
-                                        <a href="/show_product"><img class="card-img-top" src="/img(s)/card1.png"
-                                                alt="..." /></a>
-                                        <!-- Product details-->
-                                        <div class="card-body p-4">
-                                            <div class="text-center">
-                                                <!-- Product name-->
-                                                <h5 class="fw-bolder">Special Item</h5>
-                                                <!-- Product price-->
-                                                <!-- Product reviews-->
-                                                <div class="d-flex justify-content-center small text-warning mb-2">
-                                                    <div class="bi-star-fill"></div>
-                                                    <div class="bi-star-fill"></div>
-                                                    <div class="bi-star-fill"></div>
-                                                    <div class="bi-star-fill"></div>
-                                                    <div class="bi-star-fill"></div>
-                                                </div>
-                                                <span class="text-muted text-decoration-line-through">$20.00</span>
-                                                $18.00
-                                                <!-- Product actions-->
-                                                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                                    <div class="text-center"><a class="btn btn-outline-dark mt-auto"
-                                                            href="#">View options</a></div>
+                                            <!-- Product actions-->
+                                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                                <div class="text-center">
+                                                    <h6 class="fw-bolder" style="color: #050e88">
+                                                        {{ number_format($product->price, 2, ',', '.') }} €
+                                                    </h6>
+                                                    <a class="btn btn-outline-success mt-auto" href="#">
+                                                        Adicionar ao <i class="fa-solid fa-cart-plus"></i>
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col mb-5">
-                                    <div class="card h-100">
-                                        <!-- Sale badge-->
-                                        <div class="badge bg-dark text-white position-absolute"
-                                            style="top: 0.5rem; right: 0.5rem">Saldo</div>
-                                        <!-- Product image-->
-                                        <a href="/show_product"><img class="card-img-top" src="/img(s)/card1.png"
-                                                alt="..." /></a>
-                                        <!-- Product details-->
-                                        <div class="card-body p-4">
-                                            <div class="text-center">
-                                                <!-- Product name-->
-                                                <h5 class="fw-bolder">Special Item</h5>
-                                                <!-- Product price-->
-                                                <!-- Product reviews-->
-                                                <div class="d-flex justify-content-center small text-warning mb-2">
-                                                    <div class="bi-star-fill"></div>
-                                                    <div class="bi-star-fill"></div>
-                                                    <div class="bi-star-fill"></div>
-                                                    <div class="bi-star-fill"></div>
-                                                    <div class="bi-star-fill"></div>
-                                                </div>
-                                                <span class="text-muted text-decoration-line-through">$20.00</span>
-                                                $18.00
-                                                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                                    <div class="text-center"><a class="btn btn-outline-dark mt-auto"
-                                                            href="#">View options</a></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col mb-5">
-                                    <div class="card h-100">
-                                        <!-- Sale badge-->
-                                        <div class="badge bg-dark text-white position-absolute"
-                                            style="top: 0.5rem; right: 0.5rem">Saldo</div>
-                                        <!-- Product image-->
-                                        <a href="/show_product"><img class="card-img-top" src="/img(s)/card1.png"
-                                                alt="..." /></a>
-                                        <!-- Product details-->
-                                        <div class="card-body p-4">
-                                            <div class="text-center">
-                                                <!-- Product name-->
-                                                <h5 class="fw-bolder">Special Item</h5>
-                                                <!-- Product reviews-->
-                                                <div class="d-flex justify-content-center small text-warning mb-2">
-                                                    <div class="bi-star-fill"></div>
-                                                    <div class="bi-star-fill"></div>
-                                                    <div class="bi-star-fill"></div>
-                                                    <div class="bi-star-fill"></div>
-                                                    <div class="bi-star-fill"></div>
-                                                </div>
-                                                <!-- Product price-->
-                                                <span class="text-muted text-decoration-line-through">$20.00</span>
-                                                $18.00
-                                                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                                    <div class="text-center"><a class="btn btn-outline-dark mt-auto"
-                                                            href="#">View options</a></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
-
-                    </div>
-                    <div class="carousel-item">
-
-                        <div class="container px-4 px-lg-5 mt-5">
-                            <div
-                                class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-
-                                <div class="col mb-5">
-                                    <div class="card h-100">
-                                        <!-- Product image-->
-                                        <a href="/show_product"><img class="card-img-top" src="/img(s)/card1.png"
-                                                alt="..." /></a>
-                                        <!-- Product details-->
-                                        <div class="card-body p-4">
-                                            <div class="text-center">
-                                                <!-- Product name-->
-                                                <h5 class="fw-bolder">Fancy Product</h5>
-                                                <!-- Product reviews-->
-                                                <div class="d-flex justify-content-center small text-warning mb-2">
-                                                    <div class="bi-star-fill"></div>
-                                                    <div class="bi-star-fill"></div>
-                                                    <div class="bi-star-fill"></div>
-                                                    <div class="bi-star-fill"></div>
-                                                    <div class="bi-star-fill"></div>
-                                                </div>
-                                                <!-- Product price-->
-                                                $40.00 - $80.00
-                                            </div>
-                                        </div>
-                                        <!-- Product actions-->
-                                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                            <div class="text-center"><a class="btn btn-outline-dark mt-auto"
-                                                    href="#">View
-                                                    options</a></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col mb-5">
-                                    <div class="card h-100">
-                                        <!-- Sale badge-->
-                                        <div class="badge bg-dark text-white position-absolute"
-                                            style="top: 0.5rem; right: 0.5rem">Sale</div>
-                                        <!-- Product image-->
-                                        <a href="/show_product"><img class="card-img-top" src="/img(s)/card1.png"
-                                                alt="..." /></a>
-                                        <!-- Product details-->
-                                        <div class="card-body p-4">
-                                            <div class="text-center">
-                                                <!-- Product name-->
-                                                <h5 class="fw-bolder">Special Item</h5>
-                                                <!-- Product reviews-->
-                                                <div class="d-flex justify-content-center small text-warning mb-2">
-                                                    <div class="bi-star-fill"></div>
-                                                    <div class="bi-star-fill"></div>
-                                                    <div class="bi-star-fill"></div>
-                                                    <div class="bi-star-fill"></div>
-                                                    <div class="bi-star-fill"></div>
-                                                </div>
-                                                <!-- Product price-->
-                                                <span class="text-muted text-decoration-line-through">$20.00</span>
-                                                $18.00
-                                                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                                    <div class="text-center"><a class="btn btn-outline-dark mt-auto"
-                                                            href="#">View options</a></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col mb-5">
-                                    <div class="card h-100">
-                                        <!-- Sale badge-->
-                                        <div class="badge bg-dark text-white position-absolute"
-                                            style="top: 0.5rem; right: 0.5rem">Saldo</div>
-                                        <!-- Product image-->
-                                        <a href="/show_product"><img class="card-img-top" src="/img(s)/card1.png"
-                                                alt="..." /></a>
-                                        <!-- Product details-->
-                                        <div class="card-body p-4">
-                                            <div class="text-center">
-                                                <!-- Product name-->
-                                                <h5 class="fw-bolder">Special Item</h5>
-                                                <!-- Product reviews-->
-                                                <div class="d-flex justify-content-center small text-warning mb-2">
-                                                    <div class="bi-star-fill"></div>
-                                                    <div class="bi-star-fill"></div>
-                                                    <div class="bi-star-fill"></div>
-                                                    <div class="bi-star-fill"></div>
-                                                    <div class="bi-star-fill"></div>
-                                                </div>
-                                                <!-- Product price-->
-                                                <span class="text-muted text-decoration-line-through">$20.00</span>
-                                                $18.00
-                                                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                                    <div class="text-center"><a class="btn btn-outline-dark mt-auto"
-                                                            href="#">View options</a></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col mb-5">
-                                    <div class="card h-100">
-                                        <!-- Sale badge-->
-                                        <div class="badge bg-dark text-white position-absolute"
-                                            style="top: 0.5rem; right: 0.5rem">Saldo</div>
-                                        <!-- Product image-->
-                                        <a href="/show_product"><img class="card-img-top" src="/img(s)/card1.png"
-                                                alt="..." /></a>
-                                        <!-- Product details-->
-                                        <div class="card-body p-4">
-                                            <div class="text-center">
-                                                <!-- Product name-->
-                                                <h5 class="fw-bolder">Special Item</h5>
-                                                <!-- Product reviews-->
-                                                <div class="d-flex justify-content-center small text-warning mb-2">
-                                                    <div class="bi-star-fill"></div>
-                                                    <div class="bi-star-fill"></div>
-                                                    <div class="bi-star-fill"></div>
-                                                    <div class="bi-star-fill"></div>
-                                                    <div class="bi-star-fill"></div>
-                                                </div>
-                                                <!-- Product price-->
-                                                <span class="text-muted text-decoration-line-through">$20.00</span>
-                                                $18.00
-                                                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                                    <div class="text-center"><a class="btn btn-outline-dark mt-auto"
-                                                            href="#">View options</a></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
+                    @endforeach
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExamplecards"
                     data-bs-slide="prev">

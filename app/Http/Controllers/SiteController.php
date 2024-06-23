@@ -18,6 +18,7 @@ class SiteController extends Controller
     {
         $categories = Category::all();
         $newProducts = Product::orderBy('id', 'desc')->take(8)->get();
+        
 
         return view('store.store', compact('categories', 'newProducts'));
     }
@@ -44,6 +45,28 @@ class SiteController extends Controller
     
         return view('store.store_showctg', compact('categories', 'products', 'subcategory'));
     }
+
+    public function filterByCategory($id)
+    {
+        $categories = Category::all();
+
+        // Busca a categoria pelo ID
+        $category = Category::findOrFail($id);
+
+        // Busca todas as subcategorias da categoria
+        $subcategories = $category->subcategories;
+
+        // Usando Eloquent para buscar os produtos relacionados à categoria e suas subcategorias
+        $products = Product::whereHas('subcategories', function ($query) use ($id) {
+            $query->whereHas('category', function ($query) use ($id) {
+                $query->where('categories.id', $id);
+            });
+        })->get();
+
+        return view('store.store_showctg1', compact('categories', 'products', 'category', 'subcategories'));
+    }
+
+
     
     public function dashboardHome()
     {
