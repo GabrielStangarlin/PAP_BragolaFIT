@@ -1,3 +1,4 @@
+
 $(document).ready(function () {
     $.ajaxSetup({
         headers: {
@@ -80,7 +81,7 @@ $(document).on('click', '.openAddModal', function () {
     $('#imagePreview').hide();
     $('#imagePreview2').hide();
 
-    $('#addModal').modal('show');
+    $('#addModal').modal('toggle');
     $('#addModal').trigger('reset');
 });
 
@@ -137,10 +138,14 @@ $(document).on('click', '#btn-save', function () {
         },
         dataType: 'json',
         success: (data) => {
-            $('#addModal').hide();
-            $("#btn-save").html('Submit');
-            $("#btn-save").attr("disabled", false);
+            $('#addModal').modal('toggle');
             table.ajax.reload();
+            Swal.fire({
+                icon: "success",
+                title: "Produto Adicionado!",
+                showConfirmButton: false,
+                timer: 1500
+            });
         }
     });
 });
@@ -181,7 +186,7 @@ function editFunc(id) {
 
             console.log($subcategoryEdit)
             $subcategoryEdit.val(product.subcategories[0].id);
-            $('#editModal').modal('show');
+            $('#editModal').modal('toggle');
         }
     });
 }
@@ -218,3 +223,45 @@ $(document).on('click', '#btn-update', function () {
         }
     });
 });
+
+function deleteFunction(id) {
+    // Exibe um SweetAlert de confirmação
+    Swal.fire({
+        title: 'Tem certeza?',
+        text: 'Você não será capaz de reverter isso!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sim, deletar!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Se confirmado, faz a requisição AJAX para deletar o produto
+            $.ajax({
+                url: '/product/delete', // Substitua pela URL do seu controller
+                type: 'POST',
+                data: { id: id },
+                success: function (response) {
+                    // Se a requisição foi bem sucedida, exibe um SweetAlert de sucesso
+                    Swal.fire(
+                        'Deletado!',
+                        'O produto foi deletado com sucesso.',
+                        'success'
+                    ).then(() => {
+                        // Atualize a página ou faça outra ação necessária após deletar
+                        location.reload(); // Exemplo: recarregar a página
+                    });
+                },
+                error: function (xhr, status, error) {
+                    // Se houver um erro na requisição, exibe um SweetAlert de erro
+                    Swal.fire(
+                        'Erro!',
+                        'Ocorreu um erro ao deletar o produto.',
+                        'error'
+                    );
+                }
+            });
+        }
+    });
+}
+
