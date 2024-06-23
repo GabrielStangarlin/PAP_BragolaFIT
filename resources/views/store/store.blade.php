@@ -82,14 +82,13 @@
                 <ul class="nav justify-content-center">
                     @foreach ($categories as $category)
                         <li class="nav-item">
-                            <a class="nav-link text-black active" aria-current="page"
-                                href="#">{{ $category->name }}</a>
+                            <a class="nav-link text-black active" aria-current="page"href="#">{{ $category->name }}</a>
                             <div class="submenu">
                                 <div class="container">
                                     <!-- Adicione seus subitens de menu aqui -->
                                     <div>
                                         @foreach ($category->subcategories as $subcategory)
-                                            <a href="#">{{ $subcategory->name }}</a>
+                                            <a href="{{ route('subcategory.products', ['id' => $subcategory->id]) }}">{{ $subcategory->name }}</a>
                                         @endforeach
                                     </div>
                                     <div class="image">
@@ -121,79 +120,20 @@
         <div class="offcanvas-body">
             <ul class="nav flex-column offcanvas-submenu">
                 <li class="nav-item">
+                    @foreach ($categories as $category)
                     <details>
-                        <summary class="nav-link">SUPLEMENTOS<i class="fa-solid fa-caret-down fa-sm"></i></summary>
+                        <summary class="nav-link">{{ $category->name }}<i class="fa-solid fa-caret-down fa-sm"></i></summary>
                         <hr>
+                        @foreach ($category->subcategories as $subcategory)
                         <div>
-                            <a href="#" class="fw-bold cor-a">Proteínas</a>
+                            <a href="{{ route('subcategory.products', ['id' => $subcategory->id]) }}">{{ $subcategory->name }}</a>
                         </div>
                         <hr>
-                        <div>
-                            <p><a href="#" class="fw-bold cor-a">Proteína</a></p>
-                        </div>
-                        <hr>
-                        <div>
-                            <p><a href="#" class="fw-bold cor-a">Hipercalóricos</a></p>
-                        </div>
-                        <hr>
+                        @endforeach
                     </details>
-                </li>
-                <li class="nav-item">
-                    <details>
-                        <summary class="nav-link">PROTEINAS <i class="fa-solid fa-caret-down fa-sm"></i></summary>
-                        <hr>
-                        <div>
-                            <a href="#" class="fw-bold cor-a">Proteínas</a>
-                        </div>
-                        <hr>
-                        <div>
-                            <a href="#" class="fw-bold cor-a">Proteína</a>
-                        </div>
-                        <hr>
-                        <div>
-                            <a href="#" class="fw-bold cor-a">Hipercalóricos</a>
-                        </div>
-                        <hr>
-                    </details>
-                </li>
-                <li class="nav-item">
-                    <details>
-                        <summary class="nav-link">PRÉ TREINOS<i class="fa-solid fa-caret-down fa-sm"></i></summary>
-                        <hr>
-                        <div>
-                            <a href="#" class="fw-bold cor-a">Proteínas</a>
-                        </div>
-                        <hr>
-                        <div>
-                            <a href="#" class="fw-bold cor-a">Proteína</a>
-                        </div>
-                        <hr>
-                        <div>
-                            <a href="#" class="fw-bold cor-a">Hipercalóricos</a>
-                        </div>
-                        <hr>
-                    </details>
-                </li>
-                <li class="nav-item">
-                    <details>
-                        <summary class="nav-link">CREATINA<i class="fa-solid fa-caret-down fa-sm"></i></summary>
-                        <hr>
-                        <div>
-                            <a href="#" class="fw-bold cor-a">Proteínas</a>
-                        </div>
-                        <hr>
-                        <div>
-                            <a href="#" class="fw-bold cor-a">Proteína</a>
-                        </div>
-                        <hr>
-                        <div>
-                            <a href="#" class="fw-bold cor-a">Hipercalóricos</a>
-                        </div>
-                        <hr>
-                    </details>
+                    @endforeach
                 </li>
             </ul>
-
         </div>
     </div>
 
@@ -205,7 +145,11 @@
                 aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-            <p>Seu carrinho está vazio.</p>
+            <hr>
+            <div class="d-flex flex-column align-items-center text-center">
+                <i class="fa-solid fa-box fa-bounce mb-2" style="font-size: 3rem;"></i>
+                <p class="text-muted">De momento o seu carrinho está vazio.</p>
+            </div>
         </div>
     </div>
 
@@ -215,15 +159,15 @@
     <div id="carouselExample" class="carousel slide">
         <div class="carousel-inner">
             <div class="carousel-item">
-                <img src="/img(s)/carrossel12.png" class="d-block w-100" alt="...">
+                <a href="{{ route('subcategory.products', ['id' => 1]) }}"><img src="/img(s)/carrossel12.png" class="d-block w-100" alt="..."></a>
             </div>
             <div class="carousel-item">
-                <img src="https://static.netshoes.com.br/bnn/l_netshoes/2024-01-08/3384_full-suplementos-desk.jpg"
-                    class="d-block w-100" alt="...">
+                <a href="{{ route('subcategory.products', ['id' => 15]) }}"><img src="https://static.netshoes.com.br/bnn/l_netshoes/2024-01-08/3384_full-suplementos-desk.jpg"
+                    class="d-block w-100" alt="..."></a>
             </div>
             <div class="carousel-item active">
-                <img src="https://acdn.mitiendanube.com/stores/001/046/066/themes/amazonas/1-slide-1626750131536-2845692359-8d0a34f5b31ecc3522a956e8567f76751626750182-1920-1920.png?1332177509"
-                    class="d-block w-100" alt="...">
+               <a href="{{ route('subcategory.products', ['id' => 9]) }}"><img src="https://acdn.mitiendanube.com/stores/001/046/066/themes/amazonas/1-slide-1626750131536-2845692359-8d0a34f5b31ecc3522a956e8567f76751626750182-1920-1920.png?1332177509"
+                class="d-block w-100" alt="..."></a>
             </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
@@ -600,66 +544,59 @@
     </div>
 
     <!-- Footer-->
-    <footer class="py-5 bg-dark mt-5" id="contatos" style="height: 350px">
+    <footer class="py-4 bg-dark mt-5">
         <div class="container">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-4 mb-4">
                     <h5 class="text-white"><span style="color: rgb(119, 0, 0)">LOCALIDADES</span></h5>
-                    <ul class="text-white">
+                    <ul class="list-unstyled text-white">
                         <li>LISBOA</li>
                         <li>BEJA</li>
                         <li>MADEIRA</li>
                         <li>AVEIRO</li>
                     </ul>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 mb-4">
                     <h5 class="text-white"><span style="color: rgb(119, 0, 0)">LINKS RÁPIDOS</span></h5>
-                    <ul class="text-white">
+                    <ul class="list-unstyled text-white">
                         <li>Preços</li>
                         <li>Blog</li>
                         <li>Política de Privacidade</li>
                     </ul>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 mb-4">
                     <h5 class="text-white"><span style="color: rgb(119, 0, 0)">REDES SOCIAIS</span></h5>
                     <!-- Aqui você pode adicionar seus ícones de mídia social -->
-                    <ul style="color: #f0f0f0">
-                        <li><i class="fa-brands fa-instagram fa-lg" style="color: #ffffff;"></i></li>
-                        <li><i class="fa-brands fa-youtube fa-lg" style="color: #ffffff;"></i></li>
-                        <li><i class="fa-brands fa-whatsapp fa-lg" style="color: #ffffff;"></i></li>
+                    <ul class="list-unstyled">
+                        <li><i class="fab fa-instagram fa-lg text-white mr-3"></i></li>
+                        <li><i class="fab fa-youtube fa-lg text-white mr-3"></i></li>
+                        <li><i class="fab fa-whatsapp fa-lg text-white mr-3"></i></li>
                     </ul>
-
-
-
                 </div>
             </div>
-            <p class="mb-0 text-center" style="color: #ffffff;">© 2024 Todos os direitos reservados BRAGOLA FIT | Site
-                by Gabriel Stangarlin &
-                Mário
-                Figueiredo.</p>
+            <p class="mb-0 text-center text-white">© 2024 Todos os direitos reservados BRAGOLA FIT | Site by Gabriel Stangarlin & Mário Figueiredo.</p>
         </div>
     </footer>
-
-    <!-- Bootstrap core JS-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Core theme JS-->
-    <script src="js/scripts.js"></script>
-
-
-    <!-- Script JavaScript Botão Topo -->
-    <script src="/js/store.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-        // Quando o usuário clicar no botão, rolar para o topo do documento
-        function topFunction() {
-            document.body.scrollTop = 0; // Para Safari
-            document.documentElement.scrollTop = 0; // Para Chrome, Firefox, IE e Opera
-        }
-
-        const successMessage = '{{ session('success') }}'
-    </script>
+    
 </body>
+ <!-- Bootstrap core JS-->
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+ <!-- Core theme JS-->
+ <script src="js/scripts.js"></script>
 
+
+ <!-- Script JavaScript Botão Topo -->
+ <script src="/js/store.js"></script>
+ <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+ <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+ <script>
+     // Quando o usuário clicar no botão, rolar para o topo do documento
+     function topFunction() {
+         document.body.scrollTop = 0; // Para Safari
+         document.documentElement.scrollTop = 0; // Para Chrome, Firefox, IE e Opera
+     }
+
+     const successMessage = '{{ session('success') }}'
+ </script>
 </html>
