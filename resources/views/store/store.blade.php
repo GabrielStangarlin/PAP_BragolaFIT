@@ -106,18 +106,11 @@
         </div>
     </div>
 
-    <div id="successModal" class="modal-content p-3 mt-5">
-        <div class="modal-body">
-            <p id="successMessage"></p>
-        </div>
-    </div>
-
     <!-- Offcanvas do Menu para telas menores -->
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasMenu" aria-labelledby="offcanvasMenuLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasMenuLabel">Menu</h5>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                aria-label="Close"></button>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
             <ul class="nav flex-column offcanvas-submenu">
@@ -159,6 +152,11 @@
         </div>
     </div>
 
+    <div id="successModal" class="modal-content p-3 mt-5">
+        <div class="modal-body">
+            <p id="successMessage"></p>
+        </div>
+    </div>
 
     <!-- Header-->
     <!--carrossel imagens-->
@@ -199,13 +197,13 @@
     <div class="col">
         <!-- Section for product-->
         <section class="py-5 mt-5">
-            <h1 class="text-center">LANÇAMENTOS</h1>
+            <h1 class="text-center">POPULARES</h1>
             <hr>
 
             <!--CARROSSEL CARDS-->
             <div id="carouselExamplecards" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
-                    @foreach ($newProducts->chunk(4) as $productChunk)
+                    @foreach ($bestSellers->chunk(4) as $productChunk)
                         <!-- Agrupando os produtos em subconjuntos de 4 -->
                         <div class="carousel-item @if ($loop->first) active @endif">
                             <div class="container px-4 px-lg-5 mt-5">
@@ -253,8 +251,10 @@
                                                         <h6 class="fw-bolder" style="color: #050e88">
                                                             {{ number_format($product->price, 2, ',', '.') }} €
                                                         </h6>
-                                                        <a class="btn btn-outline-success mt-auto" href="#">
-                                                            Adicionar ao <i class="fa-solid fa-cart-plus"></i>
+                                                        <a id="addToCart" class="btn btn-outline-success mt-auto"
+                                                            href="#" data-product-id="{{ $product->id }}">
+                                                            Adicionar ao
+                                                            <i class="fa-solid fa-cart-plus"></i>
                                                         </a>
                                                     </div>
                                                 </div>
@@ -323,8 +323,10 @@
                                         <h6 class="fw-bolder" style="color: #050e88">
                                             {{ number_format($product->price, 2, ',', '.') }} €
                                         </h6>
-                                        <a class="btn btn-outline-success mt-auto" href="#">
-                                            Adicionar ao <i class="fa-solid fa-cart-plus"></i>
+                                        <a id="addToCart" class="btn btn-outline-success mt-auto" href="#"
+                                            data-product-id="{{ $product->id }}">
+                                            Adicionar ao
+                                            <i class="fa-solid fa-cart-plus"></i>
                                         </a>
                                     </div>
                                 </div>
@@ -379,15 +381,16 @@
 </body>
 <!-- Bootstrap core JS-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Core theme JS-->
-<script src="js/scripts.js"></script>
 
 
 <!-- Script JavaScript Botão Topo -->
 <script src="/js/store.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
     // Quando o usuário clicar no botão, rolar para o topo do documento
     function topFunction() {
@@ -396,6 +399,31 @@
     }
 
     const successMessage = '{{ session('success') }}'
+
+    $(document).on('click', '#addToCart', function() {
+        var productId = $(this).data('product-id');
+
+        $.ajax({
+            type: 'POST',
+            url: '/add-to-cart',
+            data: {
+                _token: '{{ csrf_token() }}',
+                productId: productId
+            },
+            success: function(response) {
+                //updateCartContent(); // Atualizar o conteúdo do carrinho
+                Swal.fire({
+                    icon: "success",
+                    title: "Adicionado ao carrinho!",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            },
+            error: function(xhr) {
+                alert('Error: ' + xhr.responseJSON.error); // Exibir mensagem de erro
+            }
+        });
+    });
 </script>
 
 </html>

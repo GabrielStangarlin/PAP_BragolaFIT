@@ -11,26 +11,26 @@ class CartController extends Controller
 {
     public function addToCart(Request $request)
     {
-        if(!Auth::check()) {
+        if (! Auth::check()) {
             //User is not Logged in
-            return redirect('/login');
+            return redirect()->route('user.login');
         }
 
-        $productId = $request->input('product_id');
+        $productId = $request->input('productId');
         $userId = Auth::id();
 
         $product = Product::find($productId);
-        if(!$product){
+        if (! $product) {
             return redirect()->back();
         }
 
         $cart = Cart::where('user_id', $userId)->first();
 
-        if(!$cart){
+        if (! $cart) {
             $cart = Cart::create(['user_id' => $userId]);
         }
 
-        if($cart->products->contains($productId)){
+        if ($cart->products->contains($productId)) {
             $cartProduct = $cart->products()->find($productId);
             $cartProduct->pivot->quantity++;
             $cartProduct->pivot->save();
@@ -42,7 +42,6 @@ class CartController extends Controller
 
         return response()->json($cart);
     }
-
 
     public function getCartContent()
     {
