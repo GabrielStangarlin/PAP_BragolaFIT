@@ -72,7 +72,7 @@
                 @if (!Auth::check())
                     <a href="/login" style="margin-left: 12%">
                         <button class="btn bg-white" type="button">
-                            <i class="fas fa-user"></i>Entrar
+                            <i class="fas fa-user"></i> Entrar
                         </button>
                     </a>
                 @endif
@@ -82,13 +82,15 @@
                 <ul class="nav justify-content-center">
                     @foreach ($categories as $category)
                         <li class="nav-item">
-                            <a class="nav-link text-black active" aria-current="page"href="{{ route('category.products', ['id' => $category->id]) }}">{{ $category->name }}</a>
+                            <a class="nav-link text-black active"
+                                aria-current="page"href="{{ route('category.products', ['id' => $category->id]) }}">{{ $category->name }}</a>
                             <div class="submenu">
                                 <div class="container">
                                     <!-- Adicione seus subitens de menu aqui -->
                                     <div>
                                         @foreach ($category->subcategories as $subcategory)
-                                            <a href="{{ route('subcategory.products', ['id' => $subcategory->id]) }}">{{ $subcategory->name }}</a>
+                                            <a
+                                                href="{{ route('subcategory.products', ['id' => $subcategory->id]) }}">{{ $subcategory->name }}</a>
                                         @endforeach
                                     </div>
                                     <div class="image">
@@ -121,16 +123,20 @@
             <ul class="nav flex-column offcanvas-submenu">
                 <li class="nav-item">
                     @foreach ($categories as $category)
-                    <details>
-                        <a href="{{ route('category.products', ['id' => $category->id]) }}"><summary class="nav-link">{{ $category->name }}<i class="fa-solid fa-caret-down fa-sm"></i></summary></a>
-                        <hr>
-                        @foreach ($category->subcategories as $subcategory)
-                        <div>
-                            <a href="{{ route('subcategory.products', ['id' => $subcategory->id]) }}">{{ $subcategory->name }}</a>
-                        </div>
-                        <hr>
-                        @endforeach
-                    </details>
+                        <details>
+                            <a href="{{ route('category.products', ['id' => $category->id]) }}">
+                                <summary class="nav-link">{{ $category->name }}<i
+                                        class="fa-solid fa-caret-down fa-sm"></i></summary>
+                            </a>
+                            <hr>
+                            @foreach ($category->subcategories as $subcategory)
+                                <div>
+                                    <a
+                                        href="{{ route('subcategory.products', ['id' => $subcategory->id]) }}">{{ $subcategory->name }}</a>
+                                </div>
+                                <hr>
+                            @endforeach
+                        </details>
                     @endforeach
                 </li>
             </ul>
@@ -159,15 +165,18 @@
     <div id="carouselExample" class="carousel slide">
         <div class="carousel-inner">
             <div class="carousel-item">
-                <a href="{{ route('subcategory.products', ['id' => 1]) }}"><img src="/img(s)/carrossel12.png" class="d-block w-100" alt="..."></a>
+                <a href="{{ route('subcategory.products', ['id' => 1]) }}"><img src="/img(s)/carrossel12.png"
+                        class="d-block w-100" alt="..."></a>
             </div>
             <div class="carousel-item">
-                <a href="{{ route('subcategory.products', ['id' => 15]) }}"><img src="https://static.netshoes.com.br/bnn/l_netshoes/2024-01-08/3384_full-suplementos-desk.jpg"
-                    class="d-block w-100" alt="..."></a>
+                <a href="{{ route('subcategory.products', ['id' => 15]) }}"><img
+                        src="https://static.netshoes.com.br/bnn/l_netshoes/2024-01-08/3384_full-suplementos-desk.jpg"
+                        class="d-block w-100" alt="..."></a>
             </div>
             <div class="carousel-item active">
-               <a href="{{ route('subcategory.products', ['id' => 9]) }}"><img src="https://acdn.mitiendanube.com/stores/001/046/066/themes/amazonas/1-slide-1626750131536-2845692359-8d0a34f5b31ecc3522a956e8567f76751626750182-1920-1920.png?1332177509"
-                class="d-block w-100" alt="..."></a>
+                <a href="{{ route('subcategory.products', ['id' => 9]) }}"><img
+                        src="https://acdn.mitiendanube.com/stores/001/046/066/themes/amazonas/1-slide-1626750131536-2845692359-8d0a34f5b31ecc3522a956e8567f76751626750182-1920-1920.png?1332177509"
+                        class="d-block w-100" alt="..."></a>
             </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
@@ -196,58 +205,61 @@
             <!--CARROSSEL CARDS-->
             <div id="carouselExamplecards" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
-                    @foreach ($newProducts->chunk(4) as $productChunk) <!-- Agrupando os produtos em subconjuntos de 4 -->
+                    @foreach ($newProducts->chunk(4) as $productChunk)
+                        <!-- Agrupando os produtos em subconjuntos de 4 -->
                         <div class="carousel-item @if ($loop->first) active @endif">
                             <div class="container px-4 px-lg-5 mt-5">
-                                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                                <div
+                                    class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                                     @foreach ($productChunk as $product)
-                                    <div class="col mb-5">
-                                        <div class="card h-100">
-                                            <!-- Product image-->
-                                            <img class="card-img-top img-fluid mx-auto d-block" style="width: 50%"
-                                                src="{{ $product->photo_1 }}" alt="..." />
-                                            <!-- Product details-->
-                                            <div class="card-body p-4">
-                                                <div class="text-center">
-                                                    <!-- Product name-->
-                                                    <h5 class="fw-bolder">{{ $product->name }}</h5>
-                                                    <br>
-                                                    @if ($product->quantity > 6)
-                                                        <span class="availability-status"
-                                                            style="color: green; font-size: 0.9rem;">
-                                                            <i class="fa-solid fa-circle availability-icon"
-                                                                style="color: green; font-size: 0.6rem;"></i>
-                                                            <strong>Em estoque</strong>
-                                                        </span>
-                                                    @elseif ($product->quantity >= 1 && $product->quantity <= 6)
-                                                        <span class="availability-status"
-                                                            style="color: orange; font-size: 0.9rem;">
-                                                            <i class="fa-solid fa-circle availability-icon"
-                                                                style="color: orange; font-size: 0.6rem;"></i>
-                                                            <strong>Poucas unidades</strong>
-                                                        </span>
-                                                    @else
-                                                        <span class="availability-status" style="color: red; font-size: 0.9rem;">
-                                                            <i class="fa-solid fa-circle availability-icon"
-                                                                style="color: red; font-size: 0.6rem;"></i>
-                                                            <strong>Fora de estoque</strong>
-                                                        </span>
-                                                    @endif
+                                        <div class="col mb-5">
+                                            <div class="card h-100">
+                                                <!-- Product image-->
+                                                <img class="card-img-top img-fluid mx-auto d-block" style="width: 50%"
+                                                    src="{{ $product->photo_1 }}" alt="..." />
+                                                <!-- Product details-->
+                                                <div class="card-body p-4">
+                                                    <div class="text-center">
+                                                        <!-- Product name-->
+                                                        <h5 class="fw-bolder">{{ $product->name }}</h5>
+                                                        <br>
+                                                        @if ($product->quantity > 6)
+                                                            <span class="availability-status"
+                                                                style="color: green; font-size: 0.9rem;">
+                                                                <i class="fa-solid fa-circle availability-icon"
+                                                                    style="color: green; font-size: 0.6rem;"></i>
+                                                                <strong>Em estoque</strong>
+                                                            </span>
+                                                        @elseif ($product->quantity >= 1 && $product->quantity <= 6)
+                                                            <span class="availability-status"
+                                                                style="color: orange; font-size: 0.9rem;">
+                                                                <i class="fa-solid fa-circle availability-icon"
+                                                                    style="color: orange; font-size: 0.6rem;"></i>
+                                                                <strong>Poucas unidades</strong>
+                                                            </span>
+                                                        @else
+                                                            <span class="availability-status"
+                                                                style="color: red; font-size: 0.9rem;">
+                                                                <i class="fa-solid fa-circle availability-icon"
+                                                                    style="color: red; font-size: 0.6rem;"></i>
+                                                                <strong>Fora de estoque</strong>
+                                                            </span>
+                                                        @endif
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <!-- Product actions-->
-                                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                                <div class="text-center">
-                                                    <h6 class="fw-bolder" style="color: #050e88">
-                                                        {{ number_format($product->price, 2, ',', '.') }} €
-                                                    </h6>
-                                                    <a class="btn btn-outline-success mt-auto" href="#">
-                                                        Adicionar ao <i class="fa-solid fa-cart-plus"></i>
-                                                    </a>
+                                                <!-- Product actions-->
+                                                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                                    <div class="text-center">
+                                                        <h6 class="fw-bolder" style="color: #050e88">
+                                                            {{ number_format($product->price, 2, ',', '.') }} €
+                                                        </h6>
+                                                        <a class="btn btn-outline-success mt-auto" href="#">
+                                                            Adicionar ao <i class="fa-solid fa-cart-plus"></i>
+                                                        </a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
                                     @endforeach
                                 </div>
                             </div>
@@ -359,29 +371,31 @@
                     </ul>
                 </div>
             </div>
-            <p class="mb-0 text-center text-white">© 2024 Todos os direitos reservados BRAGOLA FIT | Site by Gabriel Stangarlin & Mário Figueiredo.</p>
+            <p class="mb-0 text-center text-white">© 2024 Todos os direitos reservados BRAGOLA FIT | Site by Gabriel
+                Stangarlin & Mário Figueiredo.</p>
         </div>
     </footer>
-    
+
 </body>
- <!-- Bootstrap core JS-->
- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
- <!-- Core theme JS-->
- <script src="js/scripts.js"></script>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="js/scripts.js"></script>
 
 
- <!-- Script JavaScript Botão Topo -->
- <script src="/js/store.js"></script>
- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
- <script>
-     // Quando o usuário clicar no botão, rolar para o topo do documento
-     function topFunction() {
-         document.body.scrollTop = 0; // Para Safari
-         document.documentElement.scrollTop = 0; // Para Chrome, Firefox, IE e Opera
-     }
+<!-- Script JavaScript Botão Topo -->
+<script src="/js/store.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    // Quando o usuário clicar no botão, rolar para o topo do documento
+    function topFunction() {
+        document.body.scrollTop = 0; // Para Safari
+        document.documentElement.scrollTop = 0; // Para Chrome, Firefox, IE e Opera
+    }
 
-     const successMessage = '{{ session('success') }}'
- </script>
+    const successMessage = '{{ session('success') }}'
+</script>
+
 </html>
