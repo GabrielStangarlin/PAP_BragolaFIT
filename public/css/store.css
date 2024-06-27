@@ -211,3 +211,6 @@ Estilo da div que contém o botão
     left: auto;
 }
 
+.icon-spacing {
+    margin-right: 50px; /* Ajuste o valor conforme necessário */
+}

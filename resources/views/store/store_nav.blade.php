@@ -34,50 +34,64 @@
                 <a href="/store" class="navbar-brand mb-0">
                     <img src="{{ asset('img(s)/Bragola-Logo.png') }}" style="max-width: 150px; height: auto;">
                 </a>
-                <!-- Barra de Pesquisa -->
-                <form class="d-flex position-relative" style="width: 550px;">
+
+                <!-- Barra de Pesquisa (para telas maiores) -->
+                <form class="d-none d-lg-flex position-relative" style="width: 550px;">
                     <input class="form-control me-2" type="search" placeholder="Encontre o melhor suplemento pra ti"
                         aria-label="Search">
                     <button class="btn border-0 position-absolute end-0 top-0 bottom-0" type="submit">
                         <i class="fas fa-search"></i>
                     </button>
                 </form>
-                @auth
-                    <div class="d-flex justify-content-end align-items-center w-900 mt-3">
-                        <!-- Usuário -->
-                        <div class="dropdown me-3">
-                            <button class="btn bg-white" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-user"></i> {{ Auth::user()->name }}
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="{{ route('user.profile') }}">
-                                    <i class="fa-solid fa-user"></i>
-                                    Profile
-                                </a>
-                                <a class="dropdown-item" href="{{ route('user.logout') }}">
-                                    <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
-                                </a>
-                            </div>
-                        </div>
 
-                        <!-- Carrinho -->
-                        <button class="btn bg-white" type="button" data-bs-toggle="offcanvas"
-                            data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
-                            <i class="bi-cart-fill me-1"></i>
-                            Cart
+                @auth
+                    <div class="dropdown me-3">
+                        <button class="btn bg-white" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-user"></i> {{ Auth::user()->name }}
                         </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="{{ route('user.profile') }}">
+                                <i class="fa-solid fa-user"></i>
+                                Profile
+                            </a>
+                            <a class="dropdown-item" href="{{ route('user.logout') }}">
+                                <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+                            </a>
+                        </div>
                     </div>
+
+                    <!-- Carrinho -->
+                    <button class="btn bg-white" type="button" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
+                        <i class="bi-cart-fill me-1"></i>
+                        Cart
+                    </button>
                 @endauth
+
+                <!-- Entrar (para telas menores) -->
                 @if (!Auth::check())
                     <a href="/login" style="margin-left: 12%">
-                        <button class="btn bg-white" type="button">
-                            <i class="fas fa-user"></i>Entrar
+                        <button class="btn bg-white d-lg-none" type="button">
+                            <i class="fas fa-user"></i> Entrar
                         </button>
                     </a>
                 @endif
             </div>
-            <!-- Parte inferior da div -->
+
+            <!-- Parte inferior da div (para telas menores) -->
+            <div class="d-lg-none align-items-center justify-content-center w-100">
+                <!-- Barra de Pesquisa (para telas menores) -->
+                <form class="position-relative mb-3" style="width: 80%;">
+                    <input class="form-control me-2" type="search" placeholder="Encontre o melhor suplemento pra ti"
+                        aria-label="Search">
+                    <button class="btn border-0 position-absolute end-0 top-0 bottom-0" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Parte inferior da div (para telas maiores) -->
             <div class="d-none d-lg-flex align-items-center justify-content-center w-100">
                 <ul class="nav justify-content-center">
                     @foreach ($categories as $category)
@@ -121,76 +135,19 @@
         <div class="offcanvas-body">
             <ul class="nav flex-column offcanvas-submenu">
                 <li class="nav-item">
-                    <details>
-                        <summary class="nav-link">SUPLEMENTOS<i class="fa-solid fa-caret-down fa-sm"></i></summary>
-                        <hr>
-                        <div>
-                            <a href="#" class="fw-bold cor-a">Proteínas</a>
-                        </div>
-                        <hr>
-                        <div>
-                            <p><a href="#" class="fw-bold cor-a">Proteína</a></p>
-                        </div>
-                        <hr>
-                        <div>
-                            <p><a href="#" class="fw-bold cor-a">Hipercalóricos</a></p>
-                        </div>
-                        <hr>
-                    </details>
-                </li>
-                <li class="nav-item">
-                    <details>
-                        <summary class="nav-link">PROTEINAS <i class="fa-solid fa-caret-down fa-sm"></i></summary>
-                        <hr>
-                        <div>
-                            <a href="#" class="fw-bold cor-a">Proteínas</a>
-                        </div>
-                        <hr>
-                        <div>
-                            <a href="#" class="fw-bold cor-a">Proteína</a>
-                        </div>
-                        <hr>
-                        <div>
-                            <a href="#" class="fw-bold cor-a">Hipercalóricos</a>
-                        </div>
-                        <hr>
-                    </details>
-                </li>
-                <li class="nav-item">
-                    <details>
-                        <summary class="nav-link">PRÉ TREINOS<i class="fa-solid fa-caret-down fa-sm"></i></summary>
-                        <hr>
-                        <div>
-                            <a href="#" class="fw-bold cor-a">Proteínas</a>
-                        </div>
-                        <hr>
-                        <div>
-                            <a href="#" class="fw-bold cor-a">Proteína</a>
-                        </div>
-                        <hr>
-                        <div>
-                            <a href="#" class="fw-bold cor-a">Hipercalóricos</a>
-                        </div>
-                        <hr>
-                    </details>
-                </li>
-                <li class="nav-item">
-                    <details>
-                        <summary class="nav-link">CREATINA<i class="fa-solid fa-caret-down fa-sm"></i></summary>
-                        <hr>
-                        <div>
-                            <a href="#" class="fw-bold cor-a">Proteínas</a>
-                        </div>
-                        <hr>
-                        <div>
-                            <a href="#" class="fw-bold cor-a">Proteína</a>
-                        </div>
-                        <hr>
-                        <div>
-                            <a href="#" class="fw-bold cor-a">Hipercalóricos</a>
-                        </div>
-                        <hr>
-                    </details>
+                    @foreach ($categories as $category)
+                        <details>
+                            <summary class="nav-link"><a href="{{ route('category.products', ['id' => $category->id]) }}">{{ $category->name }}</a><i class="fa-solid fa-caret-down fa-sm" style="margin-left: 8px;"></i></summary>
+                            <hr>
+                            @foreach ($category->subcategories as $subcategory)
+                                <div>
+                                    <a href="{{ route('subcategory.products', ['id' => $subcategory->id]) }}">{{ $subcategory->name }}</a>
+                                </div>
+                                <hr>
+                            @endforeach
+                        </details>
+                    @endforeach
+                
                 </li>
             </ul>
 
