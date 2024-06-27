@@ -252,7 +252,7 @@
                                                             {{ number_format($product->price, 2, ',', '.') }} €
                                                         </h6>
                                                         <a id="addToCart" class="btn btn-outline-success mt-auto"
-                                                            href="#" data-product-id="{{ $product->id }}">
+                                                            data-product-id="{{ $product->id }}">
                                                             Adicionar ao
                                                             <i class="fa-solid fa-cart-plus"></i>
                                                         </a>
@@ -323,7 +323,7 @@
                                         <h6 class="fw-bolder" style="color: #050e88">
                                             {{ number_format($product->price, 2, ',', '.') }} €
                                         </h6>
-                                        <a id="addToCart" class="btn btn-outline-success mt-auto" href="#"
+                                        <a id="addToCart" class="btn btn-outline-success mt-auto"
                                             data-product-id="{{ $product->id }}">
                                             Adicionar ao
                                             <i class="fa-solid fa-cart-plus"></i>
@@ -419,8 +419,8 @@
                     timer: 1500
                 });
             },
-            error: function(xhr) {
-                alert('Error: ' + xhr.responseJSON.error); // Exibir mensagem de erro
+            error: function(response) {
+                if (response.responseJSON.not_logged_id) window.location.href = '/login'
             }
         });
     });

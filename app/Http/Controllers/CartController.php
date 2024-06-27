@@ -11,13 +11,19 @@ class CartController extends Controller
 {
     public function addToCart(Request $request)
     {
+        $notLogged = false;
+
         if (! Auth::check()) {
-            //User is not Logged in
-            return redirect()->route('user.login');
+            $notLogged = true;
+
+            return response()->json([
+                'error' => 'User is not Logged in',
+                'not_logged_id' => $notLogged,
+            ], 403);
         }
 
         $productId = $request->input('productId');
-        $userId = Auth::id();
+        $userId = Auth::user()->id;
 
         $product = Product::find($productId);
         if (! $product) {
