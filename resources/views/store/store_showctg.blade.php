@@ -2,7 +2,7 @@
 @section('tittle', 'Bragola|Store')
 @section('content')
 
-    <h1 class="text-center">{{ $subcategory->name }}</h1>
+    <h1 class="text-center  custom-title" style="margin-left: 200px;">{{ $subcategory->name }}</h1>
     <hr>
 
 

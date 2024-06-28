@@ -188,11 +188,25 @@
                 <!-- End of Topbar -->
                 <!-- HOME -->
                 <div class="container-fluid">
-                    <div id="successModal" class="modal-content p-3 mt-5">
-                        <div class="modal-body">
-                            <p id="successMessage"></p>
-                        </div>
-                    </div>
+                    @if(session('success'))
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                Swal.fire({
+                                    toast: true,
+                                    icon: 'success',
+                                    title: '{{ session('success') }}',
+                                    showCloseButton: true,
+                                    showConfirmButton: false,
+                                    position: 'top-right',
+                                    timer: 2000,
+                                    timerProgressBar: true,
+                                    customClass: {
+                                        popup: 'swal2-toast',
+                                    },
+                                });
+                            });
+                        </script>
+                    @endif
                     @yield('dContent')
                 </div>
                 <!-- Footer -->

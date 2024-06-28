@@ -272,8 +272,9 @@
                 <input type="text" id="name" name="name" placeholder="Name" required>
                 <input type="email" id="email" name="email" placeholder="Email" required>
                 <input type="password" id="password" name="password" placeholder="Password" required>
-                <input type="password" id="password_confirmation" name="password_confirmation"
-                    placeholder="Confirm Password" required>
+                <i class="fas fa-eye-slash toggle-password" onclick="togglePassword('password')"></i>
+                <input type="password" id="password_confirmation" name="password_confirmation" placeholder="Confirm Password" required>
+                <i class="fas fa-eye-slash toggle-password" onclick="togglePassword('password_confirmation')"></i>
                 <input type="text" id="address" name="address" placeholder="Address" required>
                 <input type="text" id="phone" name="phone" placeholder="Phone" required>
 
@@ -287,6 +288,7 @@
                 <span>ou use o seu email e password</span>
                 <input type="email" id="loginEmail" name="email" placeholder="Email">
                 <input type="password" id="loginPassword" name="password" placeholder="Password">
+                <i class="fas fa-eye-slash toggle-password" onclick="togglePassword('password')"></i>
                 <a href="#">Esqueceu sua password?</a>
                 <button type="submit">Iniciar Sessão</button>
             </form>
@@ -331,6 +333,29 @@
                 }, 3000);
             }
         });
+
+        function togglePassword(id) {
+            const input = document.getElementById(id);
+            const icon = input.nextElementSibling;
+
+            if (input.type === "password") {
+                input.type = "text";
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+
+                // Reverte o tipo do input de volta para "password" após 2 segundos
+                setTimeout(() => {
+                    input.type = "password";
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                }, 500); // 2000 milissegundos = 2 segundos
+            } else {
+                input.type = "password";
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            }
+        }
+        
     </script>
 </body>
 

@@ -214,3 +214,40 @@ Estilo da div que contém o botão
 .icon-spacing {
     margin-right: 50px; /* Ajuste o valor conforme necessário */
 }
+
+.custom-title{
+    font-weight: bold; /* Deixa a letra em negrito */
+    text-align: left; /* Alinha o texto à esquerda */
+    padding-left: 15px; /* Ajusta o espaçamento à esquerda */
+    position: relative; /* Necessário para a barra vertical */
+    display: inline-block; /* Para garantir que a altura do título seja respeitada */
+}
+
+.custom-title::before {
+    content: ''; /* Adiciona um elemento antes do título */
+    position: absolute; /* Posicionamento absoluto relativo ao título */
+    left: 0; /* Posiciona à esquerda do título */
+    top: 0; /* Alinha com o topo do título */
+    height: 100%; /* Altura igual à do título */
+    width: 5px; /* Define a largura da barra */
+    background-color: rgb(90, 4, 4); /* Cor da barra */
+}
+
+.input-container {
+    position: relative;
+    width: 100%;
+}
+.input-container input {
+    width: 100%;
+    padding-right: 40px; /* Espaço para o ícone */
+}
+.input-container .toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #aaa;
+    
+}
+
