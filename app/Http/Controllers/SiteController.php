@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Subcategory;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class SiteController extends Controller
 {
@@ -20,7 +22,13 @@ class SiteController extends Controller
         $bestSellers = Product::orderBy('id', 'asc')->take(8)->get();
         $newProducts = Product::orderBy('id', 'desc')->take(8)->get();
 
-        return view('store.store', compact('categories', 'newProducts', 'bestSellers'));
+        if (Auth::check()) {
+            $cart = Cart::where('user_id', Auth::id())->first();
+        } else {
+            $cart = null;
+        }
+
+        return view('store.store', compact('categories', 'newProducts', 'bestSellers', 'cart'));
     }
 
     public function storectg()

@@ -42,6 +42,8 @@ Route::post('/profilepost', [UserController::class, 'updateProfile'])->name('use
 
 //Carrinho de compras
 Route::post('/add-to-cart', [CartController::class, 'addToCart'])->name('addToCart');
+Route::get('/cart-content', [CartController::class, 'getCartContent'])->name('cart.content');
+Route::post('/cart-update', [CartController::class, 'updateQuantity'])->name('cart.updateQuantity');
 
 //Dashboard (Gabriel)
 Route::get('/db', [SiteController::class, 'dashboardHome'])->name('dashboard.home');

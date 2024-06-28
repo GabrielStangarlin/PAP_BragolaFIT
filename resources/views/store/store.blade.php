@@ -131,11 +131,14 @@
                             @endforeach
                         </details>
                         <details>
-                            <summary class="nav-link"><a href="{{ route('category.products', ['id' => $category->id]) }}">{{ $category->name }}</a><i class="fa-solid fa-caret-down fa-sm" style="margin-left: 8px;"></i></summary>
+                            <summary class="nav-link"><a
+                                    href="{{ route('category.products', ['id' => $category->id]) }}">{{ $category->name }}</a><i
+                                    class="fa-solid fa-caret-down fa-sm" style="margin-left: 8px;"></i></summary>
                             <hr>
                             @foreach ($category->subcategories as $subcategory)
                                 <div>
-                                    <a href="{{ route('subcategory.products', ['id' => $subcategory->id]) }}">{{ $subcategory->name }}</a>
+                                    <a
+                                        href="{{ route('subcategory.products', ['id' => $subcategory->id]) }}">{{ $subcategory->name }}</a>
                                 </div>
                                 <hr>
                             @endforeach
@@ -153,16 +156,64 @@
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
                 aria-label="Close"></button>
         </div>
-        <div class="offcanvas-body">
-            <hr>
-            <div class="d-flex flex-column align-items-center text-center">
-                <i class="fa-solid fa-box fa-bounce mb-2" style="font-size: 3rem;"></i>
-                <p class="text-muted">De momento o seu carrinho está vazio.</p>
-            </div>
+        <div class="offcanvas-body" id="cart-content">
+            @if (isset($cart))
+                @if ($cart->products->count() > 0)
+                    @foreach ($cart->products as $product)
+                        <div class="container overflow-hidden text-center">
+                            <h6>{{ $product->name }}</h6>
+                            <div class="row gx-2">
+                                <div class="col">
+                                    <div class="p-3">
+                                        <img src="{{ $product->photo_1 }}" class="rounded" style="max-width: 50%">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="p-3">
+                                        <p class="text-muted">Preço:
+                                            {{ number_format($product->price, 2, ',', '.') }} €
+                                        </p>
+                                        <p class="text-muted">Quantidade: {{ $product->pivot->quantity }}</p>
+                                        <button class="btn btn-light decrease-quantity"
+                                            data-id="{{ $product->id }}}">-</button>
+                                        <button class="btn btn-light increase-quantity"
+                                            data-id="{{ $product->id }}}">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                    @endforeach
+                    <div class="pt-3">
+                        @php
+                            $totalPrice = 0;
+                            foreach ($cart->products as $product) {
+                                $totalPrice += $product->price * $product->pivot->quantity;
+                            }
+                        @endphp
+                        <h6>Preço Total do Carrinho: {{ number_format($totalPrice, 2, ',', '.') }} €</h6>
+                    </div>
+                    <div class="text-center">
+                        <a href="#" class="btn btn-primary">Ver Carrinho</a>
+                    </div>
+                @else
+                    <hr>
+                    <div class="d-flex flex-column align-items-center text-center">
+                        <i class="fa-solid fa-box fa-bounce mb-2" style="font-size: 3rem;"></i>
+                        <p class="text-muted">De momento o seu carrinho está vazio.</p>
+                    </div>
+                @endif
+            @else
+                <hr>
+                <div class="d-flex flex-column align-items-center text-center">
+                    <i class="fa-solid fa-box fa-bounce mb-2" style="font-size: 3rem;"></i>
+                    <p class="text-muted">De momento o seu carrinho está vazio.</p>
+                </div>
+            @endif
         </div>
     </div>
 
-    @if(session('success'))
+    @if (session('success'))
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 Swal.fire({
@@ -435,18 +486,102 @@
                 productId: productId
             },
             success: function(response) {
-                //updateCartContent(); // Atualizar o conteúdo do carrinho
                 Swal.fire({
                     icon: "success",
                     title: "Adicionado ao carrinho!",
                     showConfirmButton: false,
                     timer: 1500
                 });
+                updateCartContent(); // Atualizar o conteúdo do carrinho
             },
             error: function(response) {
                 if (response.responseJSON.not_logged_id) window.location.href = '/login'
             }
         });
+    });
+
+    function updateCartContent() {
+        $.ajax({
+            type: 'GET',
+            url: '{{ route('cart.content') }}',
+            success: function(response) {
+                let cartContent = '';
+
+                response.products.forEach(product => {
+                    cartContent += `
+                    <div class="container overflow-hidden text-center">
+                        <h6>${product.name}</h6>
+                        <div class="row gx-2">
+                            <div class="col">
+                                <div class="p-3">
+                                    <img src="${product.photo_1}" class="rounded" style="max-width: 50%">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="p-3">
+                                    <p class="text-muted">Preço: ${product.price} €</p>
+                                    <p class="text-muted">Quantidade: ${product.quantity}</p>
+                                    <button class="btn btn-dark decrease-quantity" data-id="${product.id}">-</button>
+                                    <button class="btn btn-dark increase-quantity" data-id="${product.id}">+</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div><br>
+                `;
+                });
+
+                cartContent += `
+                <div class="pt-3">
+                    <h6>Preço Total do Carrinho: ${response.totalPrice} €</h6>
+                </div>
+                <div class="text-center">
+                    <a href="#" class="btn btn-primary">Ver Carrinho</a>
+                </div>`;
+
+                $('#cart-content').html(cartContent);
+
+                $('.decrease-quantity').click(function() {
+                    const productId = $(this).data('id');
+                    updateQuantity(productId, -1);
+                });
+
+                $('.increase-quantity').click(function() {
+                    const productId = $(this).data('id');
+                    updateQuantity(productId, 1);
+                });
+            },
+            error: function(xhr) {
+                alert('Error: ' + xhr.responseJSON.error); // Exibir mensagem de erro
+            }
+        });
+    }
+
+    function updateQuantity(productId, change) {
+        $.ajax({
+            type: 'POST',
+            url: '{{ route('cart.updateQuantity') }}',
+            data: {
+                _token: '{{ csrf_token() }}',
+                product_id: productId,
+                change: change
+            },
+            success: function(response) {
+                updateCartContent();
+            },
+            error: function(xhr) {
+                alert('Error: ' + xhr.responseJSON.error); // Exibir mensagem de erro
+            }
+        });
+    }
+
+    $('.decrease-quantity').click(function() {
+        const productId = $(this).data('id');
+        updateQuantity(productId, -1);
+    });
+
+    $('.increase-quantity').click(function() {
+        const productId = $(this).data('id');
+        updateQuantity(productId, 1);
     });
 </script>
 
