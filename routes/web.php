@@ -75,3 +75,5 @@ Route::post('/product/add', [ProductsController::class, 'addProduct']);
 Route::post('/product/edit', [ProductsController::class, 'editProduct']);
 Route::post('/product/informations/edit', [ProductsController::class, 'showOnEdit']);
 Route::post('/product/delete', [ProductsController::class, 'deleteProduct']);
+
+Route::get('/search', [ProductsController::class, 'search'])->name('search');

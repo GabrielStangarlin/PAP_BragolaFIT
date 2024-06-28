@@ -36,7 +36,7 @@
                 </a>
 
                 <!-- Barra de Pesquisa (para telas maiores) -->
-                <form class="d-none d-lg-flex position-relative" style="width: 550px;">
+                <form class="d-none d-lg-flex position-relative" style="width: 550px;"id="search-form">
                     <input class="form-control me-2" type="search" placeholder="Encontre o melhor suplemento pra ti"
                         aria-label="Search">
                     <button class="btn border-0 position-absolute end-0 top-0 bottom-0" type="submit">

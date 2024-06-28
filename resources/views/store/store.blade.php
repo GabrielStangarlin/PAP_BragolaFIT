@@ -117,20 +117,6 @@
                 <li class="nav-item">
                     @foreach ($categories as $category)
                         <details>
-                            <a href="{{ route('category.products', ['id' => $category->id]) }}">
-                                <summary class="nav-link">{{ $category->name }}<i
-                                        class="fa-solid fa-caret-down fa-sm"></i></summary>
-                            </a>
-                            <hr>
-                            @foreach ($category->subcategories as $subcategory)
-                                <div>
-                                    <a
-                                        href="{{ route('subcategory.products', ['id' => $subcategory->id]) }}">{{ $subcategory->name }}</a>
-                                </div>
-                                <hr>
-                            @endforeach
-                        </details>
-                        <details>
                             <summary class="nav-link"><a href="{{ route('category.products', ['id' => $category->id]) }}">{{ $category->name }}</a><i class="fa-solid fa-caret-down fa-sm" style="margin-left: 8px;"></i></summary>
                             <hr>
                             @foreach ($category->subcategories as $subcategory)
@@ -141,6 +127,7 @@
                             @endforeach
                         </details>
                     @endforeach
+                       
                 </li>
             </ul>
         </div>
