@@ -217,9 +217,13 @@ $(document).on('click', '#btn-update', function () {
         dataType: 'json',
         success: (data) => {
             $('#editModal').modal('toggle');
-            $("#btn-update").html('Submit');
-            $("#btn-update").attr("disabled", false);
             table.ajax.reload();
+            Swal.fire({
+                icon: "success",
+                title: "Produto Editado!",
+                showConfirmButton: false,
+                timer: 1500
+            });
         }
     });
 });

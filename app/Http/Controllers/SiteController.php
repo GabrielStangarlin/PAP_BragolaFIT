@@ -17,32 +17,32 @@ class SiteController extends Controller
     public function store()
     {
         $categories = Category::all();
+        $bestSellers = Product::orderBy('id', 'asc')->take(8)->get();
         $newProducts = Product::orderBy('id', 'desc')->take(8)->get();
-        
 
-        return view('store.store', compact('categories', 'newProducts'));
+        return view('store.store', compact('categories', 'newProducts', 'bestSellers'));
     }
 
     public function storectg()
     {
         $categories = Category::all();
         $products = Product::orderBy('id', 'desc')->take(8)->get();
+
         return view('store.store_showctg', compact('categories', 'products'));
     }
-
 
     public function filterBySubcategory($id)
     {
         $categories = Category::all();
 
-         // Busca a subcategoria pelo ID
+        // Busca a subcategoria pelo ID
         $subcategory = Subcategory::findOrFail($id);
-        
+
         // Usando Eloquent para buscar os produtos relacionados à subcategoria
         $products = Product::whereHas('subcategories', function ($query) use ($id) {
             $query->where('subcategories.id', $id);
         })->get();
-    
+
         return view('store.store_showctg', compact('categories', 'products', 'subcategory'));
     }
 
@@ -66,8 +66,6 @@ class SiteController extends Controller
         return view('store.store_showctg1', compact('categories', 'products', 'category', 'subcategories'));
     }
 
-
-    
     public function dashboardHome()
     {
         $userCount = User::count();

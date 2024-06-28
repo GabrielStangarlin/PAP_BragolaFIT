@@ -187,10 +187,14 @@
                 },
                 dataType: 'json',
                 success: (data) => {
-                    $('#addSubcategoryModal').modal('hide');
-                    $("#btn-save").html('Submit');
-                    $("#btn-save").attr("disabled", false);
+                    $('#addSubcategoryModal').modal('toggle');
                     table.ajax.reload();
+                    Swal.fire({
+                        icon: "success",
+                        title: "Subcategoria Adicionado(a)!",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                 }
             });
         });
@@ -235,10 +239,14 @@
                 },
                 dataType: 'json',
                 success: function(data) {
-                    $('#editSubcategoryModal').modal('hide');
-                    $("#btn-update").html('Submit');
-                    $("#btn-update").attr("disabled", false);
+                    $('#editSubcategoryModal').modal('toggle');
                     table.ajax.reload();
+                    Swal.fire({
+                        icon: "success",
+                        title: "Subcategoria Editado(a)!",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                 },
                 error: function(xhr, status, error) {
                     console.error('An error occurred:', error);

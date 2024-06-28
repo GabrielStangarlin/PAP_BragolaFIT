@@ -1,13 +1,13 @@
 <?php
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -20,21 +20,15 @@ use App\Http\Controllers\AuthController;
 |
 */
 
-
 Route::get('/', [SiteController::class, 'index'])->name('index');
 
-
-Route::get('/store',[SiteController::class, 'store'])->name('store');
+Route::get('/store', [SiteController::class, 'store'])->name('store');
 Route::get('/subcategoria/{id}', [SiteController::class, 'filterBySubcategory'])->name('subcategory.products');
 Route::get('/categoria/{id}', [SiteController::class, 'filterByCategory'])->name('category.products');
-
-
-
 
 Route::get('/show_product', function () {
     return view('store.show_product');
 });
-
 
 //login
 
@@ -43,10 +37,11 @@ Route::get('/login', [AuthController::class, 'login'])->name('user.login');
 Route::post('/loginPost', [AuthController::class, 'loginPost'])->name('user.loginPost');
 Route::get('/logout', [AuthController::class, 'logout'])->name('user.logout');
 
-
 Route::get('/profile', [UserController::class, 'profile'])->name('user.profile');
 Route::post('/profilepost', [UserController::class, 'updateProfile'])->name('user.updateProfile');
 
+//Carrinho de compras
+Route::post('/add-to-cart', [CartController::class, 'addToCart'])->name('addToCart');
 
 //Dashboard (Gabriel)
 Route::get('/db', [SiteController::class, 'dashboardHome'])->name('dashboard.home');
@@ -74,14 +69,9 @@ Route::post('/subcategory/update', [SubcategoryController::class, 'editSubcatego
 Route::post('/subcategory/informations/edit', [SubcategoryController::class, 'showInformation']);
 
 //Products
-Route::get('/db/list/product', [ProductsController::class,'listProducts'])->name('dashboard.products');
+Route::get('/db/list/product', [ProductsController::class, 'listProducts'])->name('dashboard.products');
 Route::get('/subcategories/all/select', [SubCategoryController::class, 'getSubCategoryToSelect']);
 Route::post('/product/add', [ProductsController::class, 'addProduct']);
 Route::post('/product/edit', [ProductsController::class, 'editProduct']);
 Route::post('/product/informations/edit', [ProductsController::class, 'showOnEdit']);
 Route::post('/product/delete', [ProductsController::class, 'deleteProduct']);
-
-
-
-
-
