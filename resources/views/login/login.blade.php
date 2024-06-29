@@ -250,6 +250,14 @@
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         z-index: 1000;
     }
+
+    .error-message {
+        color: red;
+        font-size: 12px;
+        margin-bottom: 10px;
+        display: none;
+        /* inicialmente escondido */
+    }
 </style>
 
 <body>
@@ -272,9 +280,9 @@
                 <input type="text" id="name" name="name" placeholder="Name" required>
                 <input type="email" id="email" name="email" placeholder="Email" required>
                 <input type="password" id="password" name="password" placeholder="Password" required>
-                <i class="fas fa-eye-slash toggle-password" onclick="togglePassword('password')"></i>
-                <input type="password" id="password_confirmation" name="password_confirmation" placeholder="Confirm Password" required>
-                <i class="fas fa-eye-slash toggle-password" onclick="togglePassword('password_confirmation')"></i>
+                <div class="error-message" id="error-message">As senhas estão diferentes.</div>
+                <input type="password" id="password_confirmation" name="password_confirmation"
+                    placeholder="Confirm Password" required>
                 <input type="text" id="address" name="address" placeholder="Address" required>
                 <input type="text" id="phone" name="phone" placeholder="Phone" required>
 
@@ -288,7 +296,6 @@
                 <span>ou use o seu email e password</span>
                 <input type="email" id="loginEmail" name="email" placeholder="Email">
                 <input type="password" id="loginPassword" name="password" placeholder="Password">
-                <i class="fas fa-eye-slash toggle-password" onclick="togglePassword('password')"></i>
                 <a href="#">Esqueceu sua password?</a>
                 <button type="submit">Iniciar Sessão</button>
             </form>
@@ -334,28 +341,19 @@
             }
         });
 
-        function togglePassword(id) {
-            const input = document.getElementById(id);
-            const icon = input.nextElementSibling;
+        function validatePasswords() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('password_confirmation').value;
+            const errorMessage = document.getElementById('error-message');
 
-            if (input.type === "password") {
-                input.type = "text";
-                icon.classList.remove('fa-eye-slash');
-                icon.classList.add('fa-eye');
-
-                // Reverte o tipo do input de volta para "password" após 2 segundos
-                setTimeout(() => {
-                    input.type = "password";
-                    icon.classList.remove('fa-eye');
-                    icon.classList.add('fa-eye-slash');
-                }, 500); // 2000 milissegundos = 2 segundos
+            if (password !== confirmPassword) {
+                errorMessage.style.display = 'block';
             } else {
-                input.type = "password";
-                icon.classList.remove('fa-eye');
-                icon.classList.add('fa-eye-slash');
+                errorMessage.style.display = 'none';
             }
         }
-        
+
+        document.getElementById('password_confirmation').addEventListener('input', validatePasswords);
     </script>
 </body>
 

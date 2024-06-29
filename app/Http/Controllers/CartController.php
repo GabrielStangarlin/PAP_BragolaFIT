@@ -3,12 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
+    public function cartDetails(Request $request)
+    {
+        $categories = Category::all();
+        $cart = Cart::where('user_id', Auth::user()->id)->first();
+
+        return view('cart.cart_details', compact('cart', 'categories'));
+    }
+
     public function addToCart(Request $request)
     {
         $notLogged = false;
@@ -114,5 +123,26 @@ class CartController extends Controller
         }
 
         return response()->json(['success' => true]);
+    }
+
+    public function removeItem(Request $request)
+    {
+        $id = $request->productId;
+        $user = Auth::user();
+        $cart = $user->cart;
+
+        if (! $cart) {
+            return response()->json(['success' => false, 'message' => 'Carrinho não encontrado.']);
+        }
+
+        $product = $cart->products()->where('product_id', $id)->first();
+
+        if ($product) {
+            $cart->products()->detach($id);
+
+            return response()->json(['success' => true, 'message' => 'Item removido com sucesso!']);
+        }
+
+        return response()->json(['success' => false, 'message' => 'Produto não encontrado no carrinho.']);
     }
 }

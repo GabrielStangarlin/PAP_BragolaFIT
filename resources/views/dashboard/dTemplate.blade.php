@@ -75,7 +75,7 @@
         <ul class="navbar-nav bg-gradient sidebar sidebar-dark accordion" id="accordionSidebar"
             style="background-color: rgb(4, 4, 112)">
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/store">
                 <i class="fa-solid fa-dumbbell"></i>
                 <div class="sidebar-brand-text mx-3">Bragola <sup>fit</sup></div>
             </a>
@@ -188,7 +188,7 @@
                 <!-- End of Topbar -->
                 <!-- HOME -->
                 <div class="container-fluid">
-                    @if(session('success'))
+                    @if (session('success'))
                         <script>
                             document.addEventListener('DOMContentLoaded', function() {
                                 Swal.fire({

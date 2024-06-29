@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\Category;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\Subcategory;
 use App\Models\User;
@@ -78,7 +79,8 @@ class SiteController extends Controller
     {
         $userCount = User::count();
         $productCount = Product::count();
+        $orderCount = Order::count();
 
-        return view('dashboard.dHome', compact('userCount', 'productCount'));
+        return view('dashboard.dHome', compact('userCount', 'productCount', 'orderCount'));
     }
 }

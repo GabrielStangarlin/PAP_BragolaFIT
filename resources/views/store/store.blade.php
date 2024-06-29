@@ -181,7 +181,7 @@
                         <h6>Preço Total do Carrinho: {{ number_format($totalPrice, 2, ',', '.') }} €</h6>
                     </div>
                     <div class="text-center">
-                        <a href="#" class="btn btn-primary">Ver Carrinho</a>
+                        <a href="/cart-details" class="btn btn-primary">Ver Carrinho</a>
                     </div>
                 @else
                     <hr>
@@ -496,46 +496,36 @@
 
                 response.products.forEach(product => {
                     cartContent += `
-                    <div class="container overflow-hidden text-center">
-                        <h6>${product.name}</h6>
-                        <div class="row gx-2">
-                            <div class="col">
-                                <div class="p-3">
-                                    <img src="${product.photo_1}" class="rounded" style="max-width: 50%">
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="p-3">
-                                    <p class="text-muted">Preço: ${product.price} €</p>
-                                    <p class="text-muted">Quantidade: ${product.quantity}</p>
-                                    <button class="btn btn-dark decrease-quantity" data-id="${product.id}">-</button>
-                                    <button class="btn btn-dark increase-quantity" data-id="${product.id}">+</button>
-                                </div>
+                <div class="container overflow-hidden text-center">
+                    <h6>${product.name}</h6>
+                    <div class="row gx-2">
+                        <div class="col">
+                            <div class="p-3">
+                                <img src="${product.photo_1}" class="rounded" style="max-width: 50%">
                             </div>
                         </div>
-                    </div><br>
-                `;
+                        <div class="col">
+                            <div class="p-3">
+                                <p class="text-muted">Preço: ${product.price} €</p>
+                                <p class="text-muted">Quantidade: ${product.quantity}</p>
+                                <button class="btn btn-dark decrease-quantity" data-id="${product.id}">-</button>
+                                <button class="btn btn-dark increase-quantity" data-id="${product.id}">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div><br>
+            `;
                 });
 
                 cartContent += `
-                <div class="pt-3">
-                    <h6>Preço Total do Carrinho: ${response.totalPrice} €</h6>
-                </div>
-                <div class="text-center">
-                    <a href="#" class="btn btn-primary">Ver Carrinho</a>
-                </div>`;
+            <div class="pt-3">
+                <h6>Preço Total do Carrinho: ${response.totalPrice} €</h6>
+            </div>
+            <div class="text-center">
+                <a href="/cart-details" class="btn btn-primary">Ver Carrinho</a>
+            </div>`;
 
                 $('#cart-content').html(cartContent);
-
-                $('.decrease-quantity').click(function() {
-                    const productId = $(this).data('id');
-                    updateQuantity(productId, -1);
-                });
-
-                $('.increase-quantity').click(function() {
-                    const productId = $(this).data('id');
-                    updateQuantity(productId, 1);
-                });
             },
             error: function(xhr) {
                 alert('Error: ' + xhr.responseJSON.error); // Exibir mensagem de erro
@@ -561,12 +551,12 @@
         });
     }
 
-    $('.decrease-quantity').click(function() {
+    $(document).on('click', '.decrease-quantity', function() {
         const productId = $(this).data('id');
         updateQuantity(productId, -1);
     });
 
-    $('.increase-quantity').click(function() {
+    $(document).on('click', '.increase-quantity', function() {
         const productId = $(this).data('id');
         updateQuantity(productId, 1);
     });

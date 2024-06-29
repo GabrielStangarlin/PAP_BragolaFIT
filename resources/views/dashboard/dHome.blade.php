@@ -44,8 +44,8 @@
                     <div class="card card-custom">
                         <div class="card-body d-flex justify-content-between align-items-center">
                             <div>
-                                <h6 class="text-uppercase text-muted mb-2">Earnings (Monthly)</h6>
-                                <h3 class="mb-0">$40,000</h3>
+                                <h6 class="text-uppercase text-muted mb-2">Orders (all)</h6>
+                                <h3 class="mb-0">{{ $orderCount }}</h3>
                             </div>
                             <div class="card-icon">
                                 <i class="bi bi-calendar"></i>
