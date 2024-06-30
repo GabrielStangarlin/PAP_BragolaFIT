@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\SubcategoryController;
@@ -44,12 +45,15 @@ Route::post('/profilepost', [UserController::class, 'updateProfile'])->name('use
 Route::post('/add-to-cart', [CartController::class, 'addToCart'])->name('addToCart');
 Route::get('/cart-content', [CartController::class, 'getCartContent'])->name('cart.content');
 Route::post('/cart-update', [CartController::class, 'updateQuantity'])->name('cart.updateQuantity');
+Route::post('/cart-checkout', [OrderController::class, 'checkout'])->name('cart.checkout');
+
 //Detalhes Carrinho
 Route::get('/cart-details', [CartController::class, 'cartDetails'])->name('cart.details');
 Route::post('/delete/product/cart', [CartController::class, 'removeItem'])->name('cart.delete');
 
 //Dashboard (Gabriel)
 Route::get('/db', [SiteController::class, 'dashboardHome'])->name('dashboard.home');
+Route::get('/api/product-subcategories', [ProductsController::class, 'getProductSubcategories']);
 
 //User
 Route::get('/db/list/user', [UserController::class, 'listUser'])->name('dashboard.user');

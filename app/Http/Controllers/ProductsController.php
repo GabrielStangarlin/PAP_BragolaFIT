@@ -5,11 +5,25 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Subcategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
 class ProductsController extends Controller
 {
     //Dashboard
+
+    public function getProductSubcategories()
+    {
+        // Consulta para obter as subcategorias e a contagem de produtos
+        $data = DB::table('subcategories')
+            ->leftJoin('products_subcategories', 'subcategories.id', '=', 'products_subcategories.subcategory_id')
+            ->select('subcategories.name', DB::raw('COUNT(products_subcategories.product_id) as product_count'))
+            ->groupBy('subcategories.name')
+            ->get();
+
+        return response()->json($data);
+    }
+
     public function listProducts()
     {
         if (request()->ajax()) {
@@ -41,7 +55,7 @@ class ProductsController extends Controller
             'photo_1' => 'nullable|string',
             'photo_2' => 'nullable|string',
             'quantity' => 'required|integer',
-            'subcategory_id' => 'required|exists:subcategories,id' // Validação para garantir que o subcategory_id exista
+            'subcategory_id' => 'required|exists:subcategories,id', // Validação para garantir que o subcategory_id exista
         ]);
 
         // Criar o produto
@@ -60,18 +74,20 @@ class ProductsController extends Controller
         return response()->json([$product]);
     }
 
-    public function showOnEdit(Request $request){
+    public function showOnEdit(Request $request)
+    {
         $product = Product::with('subcategories')->findOrFail($request->id);
         $subcategories = Subcategory::all(); // Para enviar todas as subcategorias disponíveis
 
         return response()->json([
             'product' => $product,
             'subcategories' => $subcategories,
-            'selected_subcategory' => $product->subcategories->pluck('id') // Supondo que um produto pode ter várias subcategorias
+            'selected_subcategory' => $product->subcategories->pluck('id'), // Supondo que um produto pode ter várias subcategorias
         ]);
     }
 
-    public function editProduct(Request $request){
+    public function editProduct(Request $request)
+    {
         $id = $request->id;
 
         $validatedData = $request->validate([
@@ -81,7 +97,7 @@ class ProductsController extends Controller
             'photo_1' => 'nullable|string',
             'photo_2' => 'nullable|string',
             'quantity' => 'required|integer',
-            'subcategory_id' => 'required|exists:subcategories,id' // Validação para garantir que o subcategory_id exista
+            'subcategory_id' => 'required|exists:subcategories,id', // Validação para garantir que o subcategory_id exista
         ]);
 
         $product = Product::findOrFail($id);
