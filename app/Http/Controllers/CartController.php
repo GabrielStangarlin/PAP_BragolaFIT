@@ -18,6 +18,17 @@ class CartController extends Controller
         return view('cart.cart_details', compact('cart', 'categories'));
     }
 
+    public function checkProductQuantity($productId)
+    {
+        $product = Product::find($productId);
+
+        if (! $product) {
+            return response()->json(['error' => 'Produto não encontrado'], 404);
+        }
+
+        return response()->json(['quantity' => $product->quantity]);
+    }
+
     public function addToCart(Request $request)
     {
         $notLogged = false;

@@ -22,27 +22,29 @@ class OrderController extends Controller
                 'invoicing_address' => $user->address,
             ]);
 
-            $cartItems = Cart::where('user_id', $user->id)->get();
+            $cartItems = Cart::with('products')->where('user_id', $user->id)->get();
 
-            $totalValue = 0;
-            $totalQuantity = 0;
+            foreach ($cartItems as $cartItem) {
+                foreach ($cartItem->products as $product) {
+                    // Acessa a quantidade da tabela pivot
+                    $quantity = $product->pivot->quantity;
 
-            foreach ($cartItems as $item) {
-                $itemTotalValue = $item->product->price * $item->quantity;
-                $totalValue += $itemTotalValue;
-                $totalQuantity += $item->quantity;
+                    // Calcula o valor total do item
+                    $itemTotalValue = $product->price * $quantity;
 
-                OrderProduct::create([
-                    'order_id' => $order->id,
-                    'product_id' => $item->product_id,
-                    'quantity' => $item->quantity,
-                    'value' => $itemTotalValue,
-                ]);
+                    // Cria uma nova instância de OrderProduct
+                    OrderProduct::create([
+                        'order_id' => $order->id,
+                        'product_id' => $product->id,
+                        'quantity' => $quantity,
+                        'value' => $itemTotalValue,
+                    ]);
+                }
             }
 
             Cart::where('user_id', $user->id)->delete();
         });
 
-        return response()->json(['success' => true]);
+        return response()->json('success');
     }
 }

@@ -8,8 +8,8 @@ use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WishlistController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,6 +43,7 @@ Route::get('/profile', [UserController::class, 'profile'])->name('user.profile')
 Route::post('/profilepost', [UserController::class, 'updateProfile'])->name('user.updateProfile');
 
 //Carrinho de compras
+Route::get('/check-product-quantity/{id}', [CartController::class, 'checkProductQuantity']);
 Route::post('/add-to-cart', [CartController::class, 'addToCart'])->name('addToCart');
 Route::get('/cart-content', [CartController::class, 'getCartContent'])->name('cart.content');
 Route::post('/cart-update', [CartController::class, 'updateQuantity'])->name('cart.updateQuantity');
@@ -88,12 +89,8 @@ Route::post('/product/delete', [ProductsController::class, 'deleteProduct']);
 
 Route::get('/search', [ProductsController::class, 'search'])->name('search');
 
-
 // routes/web.php
 
-
-
-    Route::post('/wishlist/add', [WishlistController::class, 'add'])->name('wishlist.add');
-    Route::post('/wishlist/remove', [WishlistController::class, 'remove'])->name('wishlist.remove');
-    Route::get('/profile/wishlist', [WishlistController::class, 'index'])->name('profile.wishlist');
-
+Route::post('/wishlist/add', [WishlistController::class, 'add'])->name('wishlist.add');
+Route::post('/wishlist/remove', [WishlistController::class, 'remove'])->name('wishlist.remove');
+Route::get('/profile/wishlist', [WishlistController::class, 'index'])->name('profile.wishlist');

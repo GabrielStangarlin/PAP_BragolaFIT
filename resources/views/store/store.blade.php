@@ -483,23 +483,49 @@
         var productId = $(this).data('product-id');
 
         $.ajax({
-            type: 'POST',
-            url: '/add-to-cart',
-            data: {
-                _token: '{{ csrf_token() }}',
-                productId: productId
-            },
+            type: 'GET',
+            url: '/check-product-quantity/' + productId,
             success: function(response) {
-                Swal.fire({
-                    icon: "success",
-                    title: "Adicionado ao carrinho!",
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-                updateCartContent(); // Atualizar o conteúdo do carrinho
+                if (response.quantity > 0) {
+                    // Adicionar ao carrinho se a quantidade for maior que 0
+                    $.ajax({
+                        type: 'POST',
+                        url: '/add-to-cart',
+                        data: {
+                            _token: '{{ csrf_token() }}',
+                            productId: productId
+                        },
+                        success: function(response) {
+                            Swal.fire({
+                                icon: "success",
+                                title: "Adicionado ao carrinho!",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            updateCartContent(); // Atualizar o conteúdo do carrinho
+                        },
+                        error: function(response) {
+                            if (response.responseJSON.not_logged_id) {
+                                window.location.href = '/login';
+                            }
+                        }
+                    });
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Produto esgotado!",
+                        text: "Este produto está esgotado no momento.",
+                        showConfirmButton: true
+                    });
+                }
             },
-            error: function(response) {
-                if (response.responseJSON.not_logged_id) window.location.href = '/login'
+            error: function() {
+                Swal.fire({
+                    icon: "error",
+                    title: "Erro",
+                    text: "Não foi possível verificar a quantidade do produto.",
+                    showConfirmButton: true
+                });
             }
         });
     });
