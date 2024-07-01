@@ -83,6 +83,9 @@ Route::post('/product/edit', [ProductsController::class, 'editProduct']);
 Route::post('/product/informations/edit', [ProductsController::class, 'showOnEdit']);
 Route::post('/product/delete', [ProductsController::class, 'deleteProduct']);
 
+//Orders
+Route::get('/db/list/order', [OrderController::class, 'listOrder']);
+
 Route::get('/search', [ProductsController::class, 'search'])->name('search');
 
 // routes/web.php

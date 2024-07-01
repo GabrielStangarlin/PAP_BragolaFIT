@@ -63,6 +63,13 @@ class UserController extends Controller
                     return '<a href="javascript:void(0)" data-toggle="tooltip" onClick="editFunc('.$user->id.')" data-original-title="Edit" class="edit btn btn-success edit openEditModal" id="openEditModal"><i class="fa-regular fa-pen-to-square"></i></a>
                             <a href="javascript:void(0);" id="delete-company" onClick="deleteFunction('.$user->id.')" data-toggle="tooltip" data-original-title="Delete" class="delete btn btn-danger"><i class="fa-solid fa-trash-can"></i></a>';
                 })
+                ->editColumn('isAdmin', function ($user) {
+                    if ($user->isAdmin == 0) {
+                        return 'User';
+                    } else {
+                        return 'Admin';
+                    }
+                })
                 ->rawColumns(['action'])
                 ->make(true);
         }
