@@ -56,4 +56,39 @@
             </div>
         </div>
     </div>
+    <canvas class="mt-3" style="max-height: 400px;" id="myChart"></canvas>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/api/product-subcategories')
+                .then(response => response.json())
+                .then(data => {
+                    const labels = data.map(item => item.name);
+                    const productCounts = data.map(item => item.product_count);
+
+                    const ctx = document.getElementById('myChart').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Quantidade de Produtos',
+                                data: productCounts,
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    ticks: {
+                                        stepSize: 1 // Define o incremento de 1 em 1
+                                    }
+                                }
+                            }
+                        }
+                    });
+                });
+        });
+    </script>
 @endsection

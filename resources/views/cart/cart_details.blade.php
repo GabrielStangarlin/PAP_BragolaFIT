@@ -39,7 +39,11 @@
                     }
                 @endphp
                 <h5 class="card-title">Preço Total do Carrinho: {{ number_format($totalPrice, 2, ',', '.') }} €</h5>
-                <a href="#" class="btn btn-success mt-3">Finalizar Compra</a>
+                <form action="/cart-checkout" method="POST">
+                    @csrf
+                    <button class="btn btn-success mt-3" type="submit"><i class="fa-solid fa-credit-card"></i> Finalizar
+                        Compra</button>
+                </form>
             </div>
         </div>
     </div>

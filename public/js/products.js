@@ -67,8 +67,7 @@ let table = $('#product-datatable').DataTable({
     ],
     order: [
         [0, 'desc']
-    ],
-    onClick: editFunc()
+    ]
 });
 
 $(document).on('click', '.openAddModal', function () {

@@ -148,7 +148,7 @@
 
     <script>
         $(document).on('click', '.openAddModal', function() {
-            $('#addUserModal').modal('show');
+            $('#addUserModal').modal('toggle');
             $('#nameAdd').val('');
             $('#addresAdd').val('');
             $('#phoneAdd').val('');
@@ -229,10 +229,14 @@
                 },
                 dataType: 'json',
                 success: (data) => {
-                    $('#addUserModal').modal('hide');
-                    $("#btn-save").html('Submit');
-                    $("#btn-save").attr("disabled", false);
+                    $('#addUserModal').modal('toggle');
                     table.ajax.reload();
+                    Swal.fire({
+                        icon: "success",
+                        title: "User Adicionado!",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                 }
             });
         });
@@ -255,7 +259,7 @@
                     $('#editUserModal').find('#email').val(res.email);
                     $('#editUserModal').find('#isAdmin').prop('checked', res.isAdmin == 1);
 
-                    $('#editUserModal').modal('show');
+                    $('#editUserModal').modal('toggle');
 
                 }
             });
@@ -286,29 +290,59 @@
                 },
                 dataType: 'json',
                 success: (data) => {
-                    $('#editUserModal').modal('hide');
-                    $("#btn-save-edit").html('Submit');
-                    $("#btn-save-edit").attr("disabled", false);
+                    $('#editUserModal').modal('toggle');
                     table.ajax.reload();
+                    Swal.fire({
+                        icon: "success",
+                        title: "User Editado!",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                 }
             });
         });
 
         function deleteFunction(id) {
-            if (confirm("Do you really want do delete?") == true) {
-                var id = id;
-                $.ajax({
-                    type: "POST",
-                    url: "/user/delete",
-                    data: {
-                        id: id
-                    },
-                    dataType: 'json',
-                    success: function(res) {
-                        table.ajax.reload();
-                    }
-                });
-            }
+            // Exibe um SweetAlert de confirmação
+            Swal.fire({
+                title: 'Tem certeza?',
+                text: 'Você não será capaz de reverter isso!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sim, deletar!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Se confirmado, faz a requisição AJAX para deletar o produto
+                    $.ajax({
+                        url: '/user/delete', // Substitua pela URL do seu controller
+                        type: 'POST',
+                        data: {
+                            id: id
+                        },
+                        success: function(response) {
+                            // Se a requisição foi bem sucedida, exibe um SweetAlert de sucesso
+                            Swal.fire(
+                                'Deletado!',
+                                'O User foi deletado com sucesso.',
+                                'success'
+                            ).then(() => {
+                                // Atualize a página ou faça outra ação necessária após deletar
+                                location.reload(); // Exemplo: recarregar a página
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            // Se houver um erro na requisição, exibe um SweetAlert de erro
+                            Swal.fire(
+                                'Erro!',
+                                'Ocorreu um erro ao deletar o produto.',
+                                'error'
+                            );
+                        }
+                    });
+                }
+            });
         }
     </script>
 @endsection

@@ -5,16 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Shipment extends Model
+class OrderProduct extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'tracking_number',
+        'order_id',
+        'product_id',
+        'value',
+        'quantity',
     ];
-
-    public function order()
-    {
-        return $this->belongsTo(Order::class);
-    }
 }
