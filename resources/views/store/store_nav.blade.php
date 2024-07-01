@@ -64,7 +64,7 @@
 
                         <!-- Favoritos -->
                         <button class="btn bg-white me-3" type="button" onclick="redirectToWishlist()">
-                            <i class="fa-solid fa-star"></i> Favoritos
+                            <i class="fa-solid fa-heart"></i> Favoritos
                         </button>
 
                         <!-- Carrinho -->
