@@ -203,7 +203,7 @@
                             </div>
                         </div>
                     @empty
-                        <p>vo ce n tem produtos na sua lista de desejos</p>
+                        <p>ainda não existe produtos na sua lista de desejos</p>
                     @endforelse
                 </div>
             </div>

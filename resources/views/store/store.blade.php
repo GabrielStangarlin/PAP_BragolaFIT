@@ -63,7 +63,7 @@
 
                         <!-- Favoritos -->
                         <button class="btn bg-white me-3" type="button">
-                            <i class="fa-solid fa-star"></i> Favoritos
+                            <a href="{{ route('user.profile') }}#desejos"><i class="fa-solid fa-heart"></i> Favoritos</a>
                         </button>
 
                         <!-- Carrinho -->
@@ -196,14 +196,9 @@
                         <p class="text-muted">De momento o seu carrinho está vazio.</p>
                     </div>
                 @endif
-            @else
-                <hr>
-                <div class="d-flex flex-column align-items-center text-center">
-                    <i class="fa-solid fa-box fa-bounce mb-2" style="font-size: 3rem;"></i>
-                    <p class="text-muted">De momento o seu carrinho está vazio.</p>
-                </div>
-            @endif
         </div>
+        @endif
+    </div>
     </div>
 
     @if (session('success'))
@@ -280,6 +275,19 @@
                                     @foreach ($productChunk as $product)
                                         <div class="col mb-5">
                                             <div class="card h-100">
+                                                <!-- Heart Icon -->
+                                                <a onclick="toggleWishlist({{ $product->id }})"
+                                                    class="position-absolute top-0 end-0 m-2 "id="wishlist-button-{{ $product->id }}">
+                                                    @if (in_array($product->id, $wishlistProductIds))
+                                                        <i class="fa-solid fa-heart"
+                                                            style="color: red; font-size: 1.5rem;"
+                                                            id="wishlist-icon-{{ $product->id }}"></i>
+                                                    @else
+                                                        <i class="fa-regular fa-heart"
+                                                            style="color: red; font-size: 1.5rem;"
+                                                            id="wishlist-icon-{{ $product->id }}"></i>
+                                                    @endif
+                                                </a>
                                                 <!-- Product image-->
                                                 <img class="card-img-top img-fluid mx-auto d-block" style="width: 50%"
                                                     src="{{ $product->photo_1 }}" alt="..." />
