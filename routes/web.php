@@ -8,6 +8,7 @@ use App\Http\Controllers\SiteController;
 use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\WishlistController;
 
 /*
 |--------------------------------------------------------------------------
@@ -82,3 +83,13 @@ Route::post('/product/informations/edit', [ProductsController::class, 'showOnEdi
 Route::post('/product/delete', [ProductsController::class, 'deleteProduct']);
 
 Route::get('/search', [ProductsController::class, 'search'])->name('search');
+
+
+// routes/web.php
+
+
+
+    Route::post('/wishlist/add', [WishlistController::class, 'add'])->name('wishlist.add');
+    Route::post('/wishlist/remove', [WishlistController::class, 'remove'])->name('wishlist.remove');
+    Route::get('/profile/wishlist', [WishlistController::class, 'index'])->name('profile.wishlist');
+

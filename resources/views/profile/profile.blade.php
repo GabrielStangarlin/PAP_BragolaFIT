@@ -79,11 +79,26 @@
         </div>
     </div>
 
- <div id="successModal" class="modal-content p-3 mt-5">
-                        <div class="modal-body">
-                            <p id="successMessage"></p>
-                        </div>
-                    </div>
+    @if (session('success'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    toast: true,
+                    icon: 'success',
+                    title: '{{ session('success') }}',
+                    showCloseButton: true,
+                    showConfirmButton: false,
+                    position: 'top-right',
+                    timer: 2000,
+                    timerProgressBar: true,
+                    customClass: {
+                        popup: 'swal2-toast',
+                    },
+                });
+            });
+        </script>
+    @endif
+
 
 
     <div class="container main-container">
@@ -97,10 +112,10 @@
         <div class="right-column">
             <div id="perfil" class="content-section">
                 @if (session('success'))
-                <script>
-                    const successMessage = "{{ session('success') }}";
-                </script>
-            @endif
+                    <script>
+                        const successMessage = "{{ session('success') }}";
+                    </script>
+                @endif
                 <div class="card p-4">
                     <form method="POST">
                         @csrf
@@ -166,7 +181,30 @@
                 <div class="card p-4">
                     <h4>Lista de Desejos</h4>
                     <p>Aqui estão os seus itens desejados.</p>
-                    <!-- Adicione aqui mais conteúdo relacionado à lista de desejos -->
+                    @forelse ($products as $product)
+                        <div class="card mb-4">
+                            <div class="row g-0">
+                                <div class="col-md-4 text-center p-3">
+                                    <img src="{{ $product->photo_1 }}" class="img-fluid rounded"
+                                        style="max-width: 100%;">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ $product->name }}</h5>
+                                        <p class="card-text text-muted">Preço:
+                                            {{ number_format($product->price, 2, ',', '.') }} €</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <button class="btn btn-outline-danger btn-sm remove-item"
+                                                data-id="{{ $product->id }}"> Adicionar ao
+                                                <i class="fa-solid fa-cart-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @empty
+                        <p>vo ce n tem produtos na sua lista de desejos</p>
+                    @endforelse
                 </div>
             </div>
         </div>

@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\Subcategory;
 use App\Models\User;
+use App\Models\Wishlist;
 use Illuminate\Support\Facades\Auth;
 
 class SiteController extends Controller
@@ -22,6 +23,8 @@ class SiteController extends Controller
         $categories = Category::all();
         $bestSellers = Product::orderBy('id', 'asc')->take(8)->get();
         $newProducts = Product::orderBy('id', 'desc')->take(8)->get();
+        $wishlist = Wishlist::where('user_id', Auth::id())->first();
+        $wishlistProductIds = $wishlist ? $wishlist->products->pluck('id')->toArray() : [];
 
         if (Auth::check()) {
             $cart = Cart::where('user_id', Auth::id())->first();
@@ -29,7 +32,7 @@ class SiteController extends Controller
             $cart = null;
         }
 
-        return view('store.store', compact('categories', 'newProducts', 'bestSellers', 'cart'));
+        return view('store.store', compact('categories', 'newProducts', 'bestSellers', 'cart', "wishlistProductIds"));
     }
 
     public function storectg()

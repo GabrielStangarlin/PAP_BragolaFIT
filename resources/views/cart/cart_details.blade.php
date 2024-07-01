@@ -64,7 +64,7 @@
                 const productId = button.getAttribute('data-id');
                 $.ajax({
                     type: 'POST',
-                    url: '/delete/product/cart'
+                    url: '/delete/product/cart',
                     data: {
                         _token: '{{ csrf_token() }}',
                         product_id: productId,
@@ -83,8 +83,12 @@
                                 popup: 'swal2-toast',
                             },
                         });
+                        updateCartContent();
+                    },
+                    error: function(xhr) {
+                        alert('Error: ' + xhr.responseJSON.error); // Exibir mensagem de erro
                     }
-                })
+                });
             });
         });
 
@@ -104,6 +108,11 @@
                     alert('Error: ' + xhr.responseJSON.error); // Exibir mensagem de erro
                 }
             });
+        }
+
+        function updateCartContent() {
+            // Função para atualizar dinamicamente o conteúdo do carrinho, pode ser uma requisição AJAX para recarregar o HTML do carrinho
+            location.reload(); // Solução simples: Recarregar a página para atualizar o conteúdo do carrinho
         }
     </script>
 

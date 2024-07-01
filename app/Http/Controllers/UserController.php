@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Wishlist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -13,7 +14,11 @@ class UserController extends Controller
 {
     public function profile(){
         $user = Auth::user();
-        return view('profile.profile', compact('user'));
+
+        $wishlist = Wishlist::where('user_id', Auth::id())->first();
+        $products = $wishlist ? $wishlist->products : [];
+
+        return view('profile.profile', compact('user', 'products'))->with('success','Profile updated successfully.');
     }
 
     //site

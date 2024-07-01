@@ -61,6 +61,11 @@
                             </div>
                         </div>
 
+                        <!-- Favoritos -->
+                        <button class="btn bg-white me-3" type="button">
+                            <i class="fa-solid fa-star"></i> Favoritos
+                        </button>
+
                         <!-- Carrinho -->
                         <button class="btn bg-white" type="button" data-bs-toggle="offcanvas"
                             data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
@@ -110,7 +115,8 @@
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasMenu" aria-labelledby="offcanvasMenuLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasMenuLabel">Menu</h5>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
             <ul class="nav flex-column offcanvas-submenu">
@@ -346,7 +352,18 @@
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                     @foreach ($newProducts as $product)
                         <div class="col mb-5">
-                            <div class="card h-100">
+                            <div class="card h-100 position-relative">
+                                <!-- Heart Icon -->
+                                <a onclick="toggleWishlist({{ $product->id }})"
+                                    class="position-absolute top-0 end-0 m-2 "id="wishlist-button-{{ $product->id }}">
+                                    @if (in_array($product->id, $wishlistProductIds))
+                                        <i class="fa-solid fa-heart" style="color: red; font-size: 1.5rem;"
+                                            id="wishlist-icon-{{ $product->id }}"></i>
+                                    @else
+                                        <i class="fa-regular fa-heart" style="color: red; font-size: 1.5rem;"
+                                            id="wishlist-icon-{{ $product->id }}"></i>
+                                    @endif
+                                </a>
                                 <!-- Product image-->
                                 <img class="card-img-top img-fluid mx-auto d-block" style="width: 50%"
                                     src="{{ $product->photo_1 }}" alt="..." />
@@ -447,11 +464,11 @@
 
 <!-- Script JavaScript Botão Topo -->
 <script src="/js/store.js"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{{-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script> --}}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
     // Quando o usuário clicar no botão, rolar para o topo do documento
@@ -560,6 +577,36 @@
         const productId = $(this).data('id');
         updateQuantity(productId, 1);
     });
+
+    function toggleWishlist(productId) {
+        let url = '/wishlist/add';
+
+        fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({
+                    product_id: productId
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const icon = document.getElementById(`wishlist-icon-${data.product_id}`);
+
+                    // Atualiza o ícone
+                    if (data.action === 'added') {
+                        icon.classList.remove('fa-regular');
+                        icon.classList.add('fa-solid');
+                    } else if (data.action === 'removed') {
+                        icon.classList.remove('fa-solid');
+                        icon.classList.add('fa-regular');
+                    }
+                }
+            });
+    }
 </script>
 
 </html>

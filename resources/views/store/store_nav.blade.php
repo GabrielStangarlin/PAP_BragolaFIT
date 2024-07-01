@@ -62,6 +62,11 @@
                             </div>
                         </div>
 
+                        <!-- Favoritos -->
+                        <button class="btn bg-white me-3" type="button" onclick="redirectToWishlist()">
+                            <i class="fa-solid fa-star"></i> Favoritos
+                        </button>
+
                         <!-- Carrinho -->
                         <button class="btn bg-white" type="button" data-bs-toggle="offcanvas"
                             data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
@@ -292,14 +297,16 @@
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
-    <script src="js/scripts.js"></script>
+    {{-- <script src="js/scripts.js"></script> --}}
 
 
     <!-- Script JavaScript Botão Topo -->
     <script src="/js/store.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
     <script>
         // Quando o usuário clicar no botão, rolar para o topo do documento
         function topFunction() {
