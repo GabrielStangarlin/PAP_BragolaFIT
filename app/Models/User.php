@@ -28,7 +28,7 @@ class User extends Authenticatable
 
     public function cart()
     {
-        return $this->hasMany(Cart::class);
+        return $this->hasOne(Cart::class);
     }
 
     public function wishlist()
@@ -40,10 +40,6 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Role::class);
     }
-
-    
-    
-
 
     /**
      * The attributes that should be hidden for serialization.

@@ -62,9 +62,8 @@
                         </div>
 
                         <!-- Favoritos -->
-                        <button class="btn bg-white me-3" type="button">
-                            <a href="{{ route('user.profile') }}#desejos"><i class="fa-solid fa-heart"></i> Favoritos</a>
-                        </button>
+                        <a href="{{ route('user.profile') }}#desejos" class="btn bg-white me-3"><i
+                                class="fa-solid fa-heart"></i> Favoritos</a>
 
                         <!-- Carrinho -->
                         <button class="btn bg-white" type="button" data-bs-toggle="offcanvas"
@@ -196,8 +195,13 @@
                         <p class="text-muted">De momento o seu carrinho está vazio.</p>
                     </div>
                 @endif
+            @else
+                <div class="d-flex flex-column align-items-center text-center">
+                    <i class="fa-solid fa-box fa-bounce mb-2" style="font-size: 3rem;"></i>
+                    <p class="text-muted">De momento o seu carrinho está vazio.</p>
+                </div>
+            @endif
         </div>
-        @endif
     </div>
     </div>
 
@@ -559,8 +563,8 @@
                             <div class="p-3">
                                 <p class="text-muted">Preço: ${product.price} €</p>
                                 <p class="text-muted">Quantidade: ${product.quantity}</p>
-                                <button class="btn btn-dark decrease-quantity" data-id="${product.id}">-</button>
-                                <button class="btn btn-dark increase-quantity" data-id="${product.id}">+</button>
+                                <button class="btn btn-light decrease-quantity" data-id="${product.id}">-</button>
+                                <button class="btn btn-light increase-quantity" data-id="${product.id}">+</button>
                             </div>
                         </div>
                     </div>

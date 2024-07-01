@@ -140,7 +140,7 @@ class CartController extends Controller
     {
         $id = $request->productId;
         $user = Auth::user();
-        $cart = $user->cart;
+        $cart = $user->cart->first(); // Ensure we're getting a single cart instance
 
         if (! $cart) {
             return response()->json(['success' => false, 'message' => 'Carrinho não encontrado.']);

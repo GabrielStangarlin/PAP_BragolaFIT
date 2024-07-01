@@ -28,10 +28,6 @@ Route::get('/store', [SiteController::class, 'store'])->name('store');
 Route::get('/subcategoria/{id}', [SiteController::class, 'filterBySubcategory'])->name('subcategory.products');
 Route::get('/categoria/{id}', [SiteController::class, 'filterByCategory'])->name('category.products');
 
-Route::get('/show_product', function () {
-    return view('store.show_product');
-});
-
 //login
 
 Route::post('/register', [AuthController::class, 'registerPost'])->name('user.register');
