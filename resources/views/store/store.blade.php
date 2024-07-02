@@ -276,18 +276,20 @@
                                         <div class="col mb-5">
                                             <div class="card h-100">
                                                 <!-- Heart Icon -->
-                                                <a onclick="toggleWishlist({{ $product->id }})"
-                                                    class="position-absolute top-0 end-0 m-2 "id="wishlist-button-{{ $product->id }}">
-                                                    @if (in_array($product->id, $wishlistProductIds))
-                                                        <i class="fa-solid fa-heart"
-                                                            style="color: red; font-size: 1.5rem;"
-                                                            id="wishlist-icon-{{ $product->id }}"></i>
-                                                    @else
-                                                        <i class="fa-regular fa-heart"
-                                                            style="color: red; font-size: 1.5rem;"
-                                                            id="wishlist-icon-{{ $product->id }}"></i>
-                                                    @endif
-                                                </a>
+                                                @auth
+                                                    <a onclick="toggleWishlist({{ $product->id }})"
+                                                        class="position-absolute top-0 end-0 m-2 "id="wishlist-button-{{ $product->id }}">
+                                                        @if (in_array($product->id, $wishlistProductIds))
+                                                            <i class="fa-solid fa-heart"
+                                                                style="color: red; font-size: 1.5rem;"
+                                                                id="wishlist-icon-{{ $product->id }}"></i>
+                                                        @else
+                                                            <i class="fa-regular fa-heart"
+                                                                style="color: red; font-size: 1.5rem;"
+                                                                id="wishlist-icon-{{ $product->id }}"></i>
+                                                        @endif
+                                                    </a>
+                                                @endauth
                                                 <!-- Product image-->
                                                 <img class="card-img-top img-fluid mx-auto d-block" style="width: 50%"
                                                     src="{{ $product->photo_1 }}" alt="..." />
@@ -362,16 +364,18 @@
                         <div class="col mb-5">
                             <div class="card h-100 position-relative">
                                 <!-- Heart Icon -->
-                                <a onclick="toggleWishlist({{ $product->id }})"
-                                    class="position-absolute top-0 end-0 m-2 "id="wishlist-button-{{ $product->id }}">
-                                    @if (in_array($product->id, $wishlistProductIds))
-                                        <i class="fa-solid fa-heart" style="color: red; font-size: 1.5rem;"
-                                            id="wishlist-icon-{{ $product->id }}"></i>
-                                    @else
-                                        <i class="fa-regular fa-heart" style="color: red; font-size: 1.5rem;"
-                                            id="wishlist-icon-{{ $product->id }}"></i>
-                                    @endif
-                                </a>
+                                @auth
+                                    <a onclick="toggleWishlist({{ $product->id }})"
+                                        class="position-absolute top-0 end-0 m-2 "id="wishlist-button-{{ $product->id }}">
+                                        @if (in_array($product->id, $wishlistProductIds))
+                                            <i class="fa-solid fa-heart" style="color: red; font-size: 1.5rem;"
+                                                id="wishlist-icon-{{ $product->id }}"></i>
+                                        @else
+                                            <i class="fa-regular fa-heart" style="color: red; font-size: 1.5rem;"
+                                                id="wishlist-icon-{{ $product->id }}"></i>
+                                        @endif
+                                    </a>
+                                @endauth
                                 <!-- Product image-->
                                 <img class="card-img-top img-fluid mx-auto d-block" style="width: 50%"
                                     src="{{ $product->photo_1 }}" alt="..." />
@@ -603,6 +607,7 @@
             .then(data => {
                 if (data.success) {
                     const icon = document.getElementById(`wishlist-icon-${data.product_id}`);
+                    const successModal = document.getElementById('successModal');
 
                     // Atualiza o ícone
                     if (data.action === 'added') {
@@ -612,6 +617,9 @@
                         icon.classList.remove('fa-solid');
                         icon.classList.add('fa-regular');
                     }
+
+                    successModal.style.display = 'block';
+
                 }
             });
     }
