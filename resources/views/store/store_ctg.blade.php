@@ -11,6 +11,19 @@
             @foreach ($products as $product)
                 <div class="col mb-5">
                     <div class="card h-100">
+                        <!-- Heart Icon -->
+                        @auth
+                            <a onclick="toggleWishlist({{ $product->id }})"
+                                class="position-absolute top-0 end-0 m-2 "id="wishlist-button-{{ $product->id }}">
+                                @if (in_array($product->id, $wishlistProductIds))
+                                    <i class="fa-solid fa-heart" style="color: red; font-size: 1.5rem;"
+                                        id="wishlist-icon-{{ $product->id }}"></i>
+                                @else
+                                    <i class="fa-regular fa-heart" style="color: red; font-size: 1.5rem;"
+                                        id="wishlist-icon-{{ $product->id }}"></i>
+                                @endif
+                            </a>
+                        @endauth
                         <!-- Product image -->
                         <img class="card-img-top img-fluid mx-auto d-block" style="width: 50%" src="{{ $product->photo_1 }}"
                             alt="..." />

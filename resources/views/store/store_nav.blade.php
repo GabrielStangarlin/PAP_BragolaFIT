@@ -63,9 +63,8 @@
                         </div>
 
                         <!-- Favoritos -->
-                        <button class="btn bg-white me-3" type="button" onclick="redirectToWishlist()">
-                            <i class="fa-solid fa-heart"></i> Favoritos
-                        </button>
+                        <a href="{{ route('user.profile') }}#desejos" class="btn bg-white me-3"><i
+                                class="fa-solid fa-heart"></i> Favoritos</a>
 
                         <!-- Carrinho -->
                         <button class="btn bg-white" type="button" data-bs-toggle="offcanvas"
@@ -127,11 +126,25 @@
         </div>
     </div>
 
-    <div id="successModal" class="modal-content p-3 mt-5">
-        <div class="modal-body">
-            <p id="successMessage"></p>
-        </div>
-    </div>
+    @if (session('success'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    toast: true,
+                    icon: 'success',
+                    title: '{{ session('success') }}',
+                    showCloseButton: true,
+                    showConfirmButton: false,
+                    position: 'top-right',
+                    timer: 2000,
+                    timerProgressBar: true,
+                    customClass: {
+                        popup: 'swal2-toast',
+                    },
+                });
+            });
+        </script>
+    @endif
 
     <!-- Offcanvas do Menu para telas menores -->
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasMenu" aria-labelledby="offcanvasMenuLabel">
@@ -463,6 +476,57 @@
                         }
                     }
                 });
+        }
+
+
+        function toggleWishlist(productId) {
+            let url = '/wishlist/add';
+
+            fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        product_id: productId
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const icon = document.getElementById(`wishlist-icon-${data.product_id}`);
+                        const successModal = document.getElementById('successModal');
+
+                        // Atualiza o ícone
+                        if (data.action === 'added') {
+                            icon.classList.remove('fa-regular');
+                            icon.classList.add('fa-solid');
+                            showSuccessToast('Produto adicionado à lista de desejos!');
+                        } else if (data.action === 'removed') {
+                            icon.classList.remove('fa-solid');
+                            icon.classList.add('fa-regular');
+                            showSuccessToast('Produto removido da lista de desejos!');
+                        }
+
+                    }
+                });
+        }
+
+        function showSuccessToast(message) {
+            Swal.fire({
+                toast: true,
+                icon: 'success',
+                title: message,
+                showCloseButton: true,
+                showConfirmButton: false,
+                position: 'top-right',
+                timer: 2000,
+                timerProgressBar: true,
+                customClass: {
+                    popup: 'swal2-toast',
+                },
+            });
         }
     </script>
 </body>

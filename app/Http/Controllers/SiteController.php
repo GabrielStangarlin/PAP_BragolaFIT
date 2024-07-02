@@ -40,7 +40,7 @@ class SiteController extends Controller
         $categories = Category::all();
         $products = Product::orderBy('id', 'desc')->take(8)->get();
 
-        return view('store.store_showctg', compact('categories', 'products'));
+        return view('store.store_ctg', compact('categories', 'products'));
     }
 
     public function filterBySubcategory($id)
@@ -61,7 +61,7 @@ class SiteController extends Controller
         $wishlist = Wishlist::where('user_id', Auth::id())->first();
         $wishlistProductIds = $wishlist ? $wishlist->products->pluck('id')->toArray() : [];
 
-        return view('store.store_showctg', compact('categories', 'products', 'subcategory', 'cart', 'wishlistProductIds'));
+        return view('store.store_ctg', compact('categories', 'products', 'subcategory', 'cart', 'wishlistProductIds'));
     }
 
     public function filterByCategory($id)
@@ -89,7 +89,7 @@ class SiteController extends Controller
         $wishlist = Wishlist::where('user_id', Auth::id())->first();
         $wishlistProductIds = $wishlist ? $wishlist->products->pluck('id')->toArray() : [];
 
-        return view('store.store_showctg1', compact('categories', 'products', 'category', 'subcategories', 'cart', 'wishlistProductIds'));
+        return view('store.store_subctg', compact('categories', 'products', 'category', 'subcategories', 'cart', 'wishlistProductIds'));
     }
 
     public function dashboardHome()

@@ -555,25 +555,25 @@
 
                 response.products.forEach(product => {
                     cartContent += `
-                <div class="container overflow-hidden text-center">
-                    <h6>${product.name}</h6>
-                    <div class="row gx-2">
-                        <div class="col">
-                            <div class="p-3">
-                                <img src="${product.photo_1}" class="rounded" style="max-width: 50%">
+                        <div class="container overflow-hidden text-center">
+                            <h6>${product.name}</h6>
+                            <div class="row gx-2">
+                                <div class="col">
+                                    <div class="p-3">
+                                        <img src="${product.photo_1}" class="rounded" style="max-width: 50%">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="p-3">
+                                        <p class="text-muted">Preço: ${product.price} €</p>
+                                        <p class="text-muted">Quantidade: ${product.quantity}</p>
+                                        <button class="btn btn-light decrease-quantity" data-id="${product.id}">-</button>
+                                        <button class="btn btn-light increase-quantity" data-id="${product.id}">+</button>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col">
-                            <div class="p-3">
-                                <p class="text-muted">Preço: ${product.price} €</p>
-                                <p class="text-muted">Quantidade: ${product.quantity}</p>
-                                <button class="btn btn-light decrease-quantity" data-id="${product.id}">-</button>
-                                <button class="btn btn-light increase-quantity" data-id="${product.id}">+</button>
-                            </div>
-                        </div>
-                    </div>
-                </div><br>
-            `;
+                        </div><br>
+                    `;
                 });
 
                 cartContent += `
@@ -643,15 +643,31 @@
                     if (data.action === 'added') {
                         icon.classList.remove('fa-regular');
                         icon.classList.add('fa-solid');
+                        showSuccessToast('Produto adicionado à lista de desejos!');
                     } else if (data.action === 'removed') {
                         icon.classList.remove('fa-solid');
                         icon.classList.add('fa-regular');
+                        showSuccessToast('Produto removido da lista de desejos!');
                     }
-
-                    successModal.style.display = 'block';
 
                 }
             });
+    }
+
+    function showSuccessToast(message) {
+        Swal.fire({
+            toast: true,
+            icon: 'success',
+            title: message,
+            showCloseButton: true,
+            showConfirmButton: false,
+            position: 'top-right',
+            timer: 2000,
+            timerProgressBar: true,
+            customClass: {
+                popup: 'swal2-toast',
+            },
+        });
     }
 </script>
 

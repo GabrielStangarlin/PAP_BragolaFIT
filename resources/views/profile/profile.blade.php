@@ -170,9 +170,11 @@
                                         <p class="card-text text-muted">Preço:
                                             {{ number_format($product->price, 2, ',', '.') }} €</p>
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <button class="btn btn-outline-danger btn-sm remove-item"
-                                                data-id="{{ $product->id }}"> Adicionar ao
-                                                <i class="fa-solid fa-cart-plus"></i></button>
+                                            <a id="addToCart" class="btn btn-outline-success mt-auto"
+                                                data-product-id="{{ $product->id }}">
+                                                Adicionar ao
+                                                <i class="fa-solid fa-cart-plus"></i>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -187,10 +189,144 @@
     </div>
 
 
+
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Script JavaScript Botão Topo -->
     <script src="/js/store.js"></script>
-    <script src="/js/profile.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        const successMessage = '{{ session('success') }}';
+
+        $(document).on('click', '#addToCart', function() {
+            var productId = $(this).data('product-id');
+
+            $.ajax({
+                type: 'GET',
+                url: '/check-product-quantity/' + productId,
+                success: function(response) {
+                    if (response.quantity > 0) {
+                        // Adicionar ao carrinho se a quantidade for maior que 0
+                        $.ajax({
+                            type: 'POST',
+                            url: '/add-to-cart',
+                            data: {
+                                _token: '{{ csrf_token() }}',
+                                productId: productId
+                            },
+
+                            success: function(response) {
+                                Swal.fire({
+                                    icon: "success",
+                                    title: "Adicionado ao carrinho!",
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                                updateCartContent(); // Atualizar o conteúdo do carrinho
+                            },
+                            error: function(response) {
+                                if (response.responseJSON.not_logged_id) {
+                                    window.location.href = '/login';
+                                }
+                            }
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Produto esgotado!",
+                            text: "Este produto está esgotado no momento.",
+                            showConfirmButton: true
+                        });
+                    }
+                },
+                error: function() {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Erro",
+                        text: "Não foi possível verificar a quantidade do produto.",
+                        showConfirmButton: true
+                    });
+                }
+            });
+        });
+
+        function updateCartContent() {
+            $.ajax({
+                type: 'GET',
+                url: '{{ route('cart.content') }}',
+                success: function(response) {
+                    let cartContent = '';
+
+                    response.products.forEach(product => {
+                        cartContent += `
+                        <div class="container overflow-hidden text-center">
+                            <h6>${product.name}</h6>
+                            <div class="row gx-2">
+                                <div class="col">
+                                    <div class="p-3">
+                                        <img src="${product.photo_1}" class="rounded" style="max-width: 50%">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="p-3">
+                                        <p class="text-muted">Preço: ${product.price} €</p>
+                                        <p class="text-muted">Quantidade: ${product.quantity}</p>
+                                        <button class="btn btn-light decrease-quantity" data-id="${product.id}">-</button>
+                                        <button class="btn btn-light increase-quantity" data-id="${product.id}">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><br>
+                    `;
+                    });
+
+                    cartContent += `
+            <div class="pt-3">
+                <h6>Preço Total do Carrinho: ${response.totalPrice} €</h6>
+            </div>
+            <div class="text-center">
+                <a href="/cart-details" class="btn btn-primary">Ver Carrinho</a>
+            </div>`;
+
+                    $('#cart-content').html(cartContent);
+                },
+                error: function(xhr) {
+                    alert('Error: ' + xhr.responseJSON.error); // Exibir mensagem de erro
+                }
+            });
+        }
+
+        function updateQuantity(productId, change) {
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('cart.updateQuantity') }}',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    product_id: productId,
+                    change: change
+                },
+                success: function(response) {
+                    updateCartContent();
+                },
+                error: function(xhr) {
+                    alert('Error: ' + xhr.responseJSON.error); // Exibir mensagem de erro
+                }
+            });
+        }
+
+        $(document).on('click', '.decrease-quantity', function() {
+            const productId = $(this).data('id');
+            updateQuantity(productId, -1);
+        });
+
+        $(document).on('click', '.increase-quantity', function() {
+            const productId = $(this).data('id');
+            updateQuantity(productId, 1);
+        });
+    </script>
 </body>
 
 </html>

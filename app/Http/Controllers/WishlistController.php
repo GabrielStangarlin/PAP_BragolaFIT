@@ -18,7 +18,6 @@ class WishlistController extends Controller
         if ($wishlist->products()->where('product_id', $productId)->exists()) {
             $wishlist->products()->detach($productId);
             $action = 'removed';
-            return response()->with('success', '');
         } else {
             $wishlist->products()->syncWithoutDetaching($productId);
             $action = 'added';
@@ -26,6 +25,7 @@ class WishlistController extends Controller
 
         return response()->json(['success' => true, 'action' => $action, 'product_id' => $productId]);
     }
+
 
 
 }

@@ -46,3 +46,6 @@ function showContent(section) {
     // Mostra a seção selecionada
     document.getElementById(section).style.display = 'block';
 }
+
+
+
