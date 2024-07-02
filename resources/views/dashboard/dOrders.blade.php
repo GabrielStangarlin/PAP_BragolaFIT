@@ -11,6 +11,7 @@
                 <th>Name (User)</th>
                 <th>Address</th>
                 <th>Status</th>
+                <th></th>
             </tr>
         </thead>
         <tbody class="text-center">
@@ -34,10 +35,18 @@
                     data: 'order_status',
                     name: 'order_status'
                 },
+                {
+                    data: 'options',
+                    name: 'options'
+                }
             ],
             order: [
                 [0, 'desc']
             ]
         });
+
+        function showfunction(id) {
+
+        }
     </script>
 @endsection

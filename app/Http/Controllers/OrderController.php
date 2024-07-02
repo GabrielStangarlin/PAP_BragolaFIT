@@ -28,7 +28,10 @@ class OrderController extends Controller
                         return "<div style='font-weight: bold; color:green;'>Recebido</div>";
                     }
                 })
-                ->rawColumns(['name', 'order_status'])
+                ->addColumn('options', function($order){
+                    return '<a href="javascript:void(0);" id="show-order" onClick="showFunction('.$order->id.')" data-toggle="tooltip" data-original-title="show" class="show btn btn-secondary"><i class="fa-solid fa-eye"></i></a>';
+                })
+                ->rawColumns(['name', 'order_status', 'options'])
                 ->make(true);
         }
 

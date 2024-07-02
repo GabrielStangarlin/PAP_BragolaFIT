@@ -52,7 +52,7 @@ class ProductsController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'price' => 'required|numeric',
-            'photo_1' => 'nullable|string',
+            'photo_1' => 'required|string',
             'photo_2' => 'nullable|string',
             'quantity' => 'required|integer',
             'subcategory_id' => 'required|exists:subcategories,id', // Validação para garantir que o subcategory_id exista
