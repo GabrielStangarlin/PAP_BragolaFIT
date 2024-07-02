@@ -2,10 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 use App\Models\Product;
 use App\Models\Subcategory;
+use Illuminate\Database\Seeder;
 
 class ProductSeeder extends Seeder
 {
@@ -289,7 +288,7 @@ class ProductSeeder extends Seeder
                 'name' => 'Óleo de Peixe Ultra (75 softgel)',
                 'description' => 'Contribui para hipertrofia melhora a recuperação pós treino',
                 'price' => '3.89',
-                'photo_1' => 'https://www.gsuplementos.com.br/upload/produto/imagem/m_leo-de-peixe-ultra-75-softgel-growth-supplements.png',
+                'photo_1' => 'https://www.gsuplementos.com.br/upload/produto/imagem/m_leo-de-peixe-ultra-75-softgel-growth-supplements.webp',
                 'photo_2' => '',
                 'quantity' => '10',
                 'subcategory_ids' => [17],

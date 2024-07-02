@@ -17,7 +17,7 @@
                 <th>Address</th>
                 <th>Phone</th>
                 <th>E-mail</th>
-                <th>Admin</th>
+                <th>Role</th>
                 <th>Vat-Number</th>
                 <th>Actions</th>
             </tr>

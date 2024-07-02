@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\User;
 use App\Models\Wishlist;
 use Illuminate\Http\Request;
@@ -9,16 +10,18 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
 
-
 class UserController extends Controller
 {
-    public function profile(){
+    public function profile()
+    {
         $user = Auth::user();
 
         $wishlist = Wishlist::where('user_id', Auth::id())->first();
         $products = $wishlist ? $wishlist->products : [];
+        $orders = Order::where('user_id', Auth::id())->first();
+        $ordersProducts = $orders ? $orders->products : [];
 
-        return view('profile.profile', compact('user', 'products'))->with('success','Profile updated successfully.');
+        return view('profile.profile', compact('user', 'products', 'ordersProducts'))->with('success', 'Profile updated successfully.');
     }
 
     //site
@@ -28,7 +31,7 @@ class UserController extends Controller
         $user = Auth::user();
 
         // Verifica se $user é uma instância válida de User
-        if (!$user instanceof User) {
+        if (! $user instanceof User) {
             return redirect()->route('login')->with('error', 'User authentication failed.');
         }
 
@@ -46,12 +49,8 @@ class UserController extends Controller
 
         $user->save();
 
-        return redirect()->route('profile.profile')->with('success','Profile updated successfully.');
+        return redirect()->route('profile.profile')->with('success', 'Profile updated successfully.');
     }
-
-
-
-
 
     //dashboard:
     public function listUser()
@@ -63,6 +62,13 @@ class UserController extends Controller
                 ->addColumn('action', function ($user) {
                     return '<a href="javascript:void(0)" data-toggle="tooltip" onClick="editFunc('.$user->id.')" data-original-title="Edit" class="edit btn btn-success edit openEditModal" id="openEditModal"><i class="fa-regular fa-pen-to-square"></i></a>
                             <a href="javascript:void(0);" id="delete-company" onClick="deleteFunction('.$user->id.')" data-toggle="tooltip" data-original-title="Delete" class="delete btn btn-danger"><i class="fa-solid fa-trash-can"></i></a>';
+                })
+                ->editColumn('isAdmin', function ($user) {
+                    if ($user->isAdmin == 0) {
+                        return 'User';
+                    } else {
+                        return 'Admin';
+                    }
                 })
                 ->rawColumns(['action'])
                 ->make(true);

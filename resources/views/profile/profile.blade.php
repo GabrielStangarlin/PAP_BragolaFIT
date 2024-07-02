@@ -50,13 +50,6 @@
                                 </a>
                             </div>
                         </div>
-
-                        <!-- Carrinho -->
-                        <button class="btn bg-white" type="button" data-bs-toggle="offcanvas"
-                            data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
-                            <i class="bi-cart-fill me-1"></i>
-                            Carrinho
-                        </button>
                     </div>
                 @endauth
                 @if (!Auth::check())
@@ -67,15 +60,6 @@
                     </a>
                 @endif
             </div>
-        </div>
-    </div>
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCart" aria-labelledby="offcanvasCartLabel">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasCartLabel">Carrinho</h5>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-            <p>Seu carrinho está vazio.</p>
         </div>
     </div>
 
@@ -137,8 +121,7 @@
                         </div>
                         <div class="form-group mb-3">
                             <label for="vat_number">Nif</label>
-                            <input type="text" id="vat_number" class="form-control"
-                                value="{{ $user->vat_number }}">
+                            <input type="text" id="vat_number" class="form-control" value="{{ $user->vat_number }}">
                         </div>
                         <button class="btn btn btn-primary">GUARDAR</button>
                     </form>
@@ -166,15 +149,8 @@
             <div id="encomendas" class="content-section" style="display: none;">
                 <div class="card p-4">
                     <h4>Minhas Encomendas</h4>
-                    <div class="form-group mb-3">
-                        <label for="order-id">ID da Encomenda</label>
-                        <input type="text" id="order-id" class="form-control">
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="order-date">Data da Encomenda</label>
-                        <input type="date" id="order-date" class="form-control">
-                    </div>
-                    <button class="btn btn-primary">Buscar Encomenda</button>
+                    @if (isset($ordersProducts))
+                    @endif
                 </div>
             </div>
             <div id="desejos" class="content-section" style="display: none;">

@@ -32,7 +32,7 @@ class SiteController extends Controller
             $cart = null;
         }
 
-        return view('store.store', compact('categories', 'newProducts', 'bestSellers', 'cart', "wishlistProductIds"));
+        return view('store.store', compact('categories', 'newProducts', 'bestSellers', 'cart', 'wishlistProductIds'));
     }
 
     public function storectg()
@@ -46,8 +46,6 @@ class SiteController extends Controller
     public function filterBySubcategory($id)
     {
         $categories = Category::all();
-
-        // Busca a subcategoria pelo ID
         $subcategory = Subcategory::findOrFail($id);
 
         // Usando Eloquent para buscar os produtos relacionados à subcategoria
@@ -55,7 +53,15 @@ class SiteController extends Controller
             $query->where('subcategories.id', $id);
         })->get();
 
-        return view('store.store_showctg', compact('categories', 'products', 'subcategory'));
+        if (Auth::check()) {
+            $cart = Cart::where('user_id', Auth::id())->first();
+        } else {
+            $cart = null;
+        }
+        $wishlist = Wishlist::where('user_id', Auth::id())->first();
+        $wishlistProductIds = $wishlist ? $wishlist->products->pluck('id')->toArray() : [];
+
+        return view('store.store_showctg', compact('categories', 'products', 'subcategory', 'cart', 'wishlistProductIds'));
     }
 
     public function filterByCategory($id)
@@ -75,7 +81,15 @@ class SiteController extends Controller
             });
         })->get();
 
-        return view('store.store_showctg1', compact('categories', 'products', 'category', 'subcategories'));
+        if (Auth::check()) {
+            $cart = Cart::where('user_id', Auth::id())->first();
+        } else {
+            $cart = null;
+        }
+        $wishlist = Wishlist::where('user_id', Auth::id())->first();
+        $wishlistProductIds = $wishlist ? $wishlist->products->pluck('id')->toArray() : [];
+
+        return view('store.store_showctg1', compact('categories', 'products', 'category', 'subcategories', 'cart', 'wishlistProductIds'));
     }
 
     public function dashboardHome()

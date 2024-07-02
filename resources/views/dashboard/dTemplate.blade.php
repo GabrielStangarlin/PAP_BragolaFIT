@@ -136,7 +136,7 @@
                             <i class="fa-solid fa-users"></i>
                             Users
                         </a>
-                        <a class="collapse-item" href="#">
+                        <a class="collapse-item" href="/db/list/order">
                             <i class="fa-solid fa-truck-fast"></i>
                             Orders
                         </a>

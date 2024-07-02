@@ -13,9 +13,13 @@ class Order extends Model
         'user_id', 'shipment_id', 'order_status', 'ship_address', 'invoicing_address',
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function products()
     {
-        return $this->belongsToMany(Product::class, 'orders_products')
-            ->withPivot('value', 'quantity');
+        return $this->hasMany(OrderProduct::class);
     }
 }

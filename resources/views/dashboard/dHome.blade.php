@@ -40,7 +40,7 @@
                 </a>
             </div>
             <div class="col-md-4">
-                <a href="#" class="card-link">
+                <a href="/db/list/order" class="card-link">
                     <div class="card card-custom">
                         <div class="card-body d-flex justify-content-between align-items-center">
                             <div>
@@ -57,6 +57,10 @@
         </div>
     </div>
     <canvas class="mt-3" style="max-height: 400px;" id="myChart"></canvas>
+
+    <div style="width: 50%; margin: auto;">
+        <canvas id="myDoughnutChart"></canvas>
+    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -89,6 +93,39 @@
                         }
                     });
                 });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var ctx = document.getElementById('myDoughnutChart').getContext('2d');
+            var myDoughnutChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Users', 'Orders'],
+                    datasets: [{
+                        data: [{{ $userCount }}, {{ $orderCount }}],
+                        backgroundColor: [
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        tooltip: {
+                            enabled: true,
+                        }
+                    }
+                }
+            });
         });
     </script>
 @endsection

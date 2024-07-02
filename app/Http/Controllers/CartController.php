@@ -18,6 +18,17 @@ class CartController extends Controller
         return view('cart.cart_details', compact('cart', 'categories'));
     }
 
+    public function checkProductQuantity($productId)
+    {
+        $product = Product::find($productId);
+
+        if (! $product) {
+            return response()->json(['error' => 'Produto não encontrado'], 404);
+        }
+
+        return response()->json(['quantity' => $product->quantity]);
+    }
+
     public function addToCart(Request $request)
     {
         $notLogged = false;
@@ -129,7 +140,7 @@ class CartController extends Controller
     {
         $id = $request->productId;
         $user = Auth::user();
-        $cart = $user->cart;
+        $cart = $user->cart->first(); // Ensure we're getting a single cart instance
 
         if (! $cart) {
             return response()->json(['success' => false, 'message' => 'Carrinho não encontrado.']);
