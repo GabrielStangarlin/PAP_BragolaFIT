@@ -74,10 +74,11 @@
                                     </div>
 
                                     <div class="form-group mt-1">
-                                        <label for="isAdmin" class="form-check-label">Admin:</label>
-                                        <input type="checkbox" class="form-check-input" id="isAdminAdd"
+                                        <label for="isAdminAdd" class="form-check-label">Admin:</label>
+                                        <input type="checkbox" class="form-check-input" id="isAdminAdd" name="isAdminAdd"
                                             style="margin-left: 2px;">
                                     </div>
+
 
                                     <div class="model-footer d-flex mt-1" style="justify-content:flex-end">
                                         <button type="button" id="btn-save" class="btn btn-primary">Save</button>
@@ -131,7 +132,7 @@
 
                         <div class="form-group mt-1">
                             <label for="isAdmin" class="form-label">Admin:</label>
-                            <input type="checkbox" class="form-check-input" id="isAdmin">
+                            <input type="checkbox" class="form-check-input" id="isAdmin" style="margin-left: 2px;">
                         </div>
 
                         <div class="model-footer d-flex mt-1" style="justify-content:flex-end">
@@ -206,7 +207,6 @@
         });
 
         $(document).on('click', '#btn-save', function() {
-
             var name = $('#addUserModal').find('#nameAdd').val();
             var address = $('#addUserModal').find('#addressAdd').val();
             var email = $('#addUserModal').find('#emailAdd').val();
@@ -225,7 +225,8 @@
                     phone: phone,
                     password: password,
                     vat_number: vat_number,
-                    isAdmin: isAdmin
+                    isAdmin: isAdmin,
+                    _token: $('input[name="_token"]').val()
                 },
                 dataType: 'json',
                 success: (data) => {
@@ -240,6 +241,7 @@
                 }
             });
         });
+
 
         function editFunc(id) {
             $.ajax({

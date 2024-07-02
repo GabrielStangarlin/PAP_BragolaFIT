@@ -39,7 +39,9 @@ class OrderController extends Controller
     {
         $user = auth()->user();
 
-        DB::transaction(function () use ($user) {
+        DB::beginTransaction();
+
+        try {
             $order = Order::create([
                 'user_id' => $user->id,
                 'order_status' => 0,
@@ -78,8 +80,15 @@ class OrderController extends Controller
             }
 
             Cart::where('user_id', $user->id)->delete();
-        });
 
-        return response()->json('success');
+            DB::commit();
+
+            return response()->json(['status' => 'success', 'order_id' => $order->id]);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()], 500);
+        }
     }
 }

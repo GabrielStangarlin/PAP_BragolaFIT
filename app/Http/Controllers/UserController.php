@@ -79,14 +79,26 @@ class UserController extends Controller
 
     public function addUser(Request $request)
     {
+        // Validação dos dados de entrada
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'address' => 'nullable|string|max:255',
+            'phone' => 'nullable|string|max:20',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8',
+            'vat_number' => 'nullable|string|max:50',
+            'isAdmin' => 'boolean',
+        ]);
+
+        // Criação do usuário apenas se os dados forem validados corretamente
         $user = User::create([
-            'name' => $request->name,
-            'address' => $request->address,
-            'phone' => $request->phone,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'vat_number' => $request->vat_number,
-            'isAdmin' => $request->isAdmin,
+            'name' => $validatedData['name'],
+            'address' => $validatedData['address'],
+            'phone' => $validatedData['phone'],
+            'email' => $validatedData['email'],
+            'password' => bcrypt($validatedData['password']),
+            'vat_number' => $validatedData['vat_number'],
+            'isAdmin' => $validatedData['isAdmin'] ?? false, // Se não for especificado, assume false
         ]);
 
         return response()->json($user);
@@ -102,15 +114,34 @@ class UserController extends Controller
 
     public function editUser(Request $request)
     {
+        // Busca o usuário pelo ID
         $user = User::find($request->id);
 
-        // Verifica se a categoria foi encontrada
+        // Verifica se o usuário foi encontrado
         if (! $user) {
-            return response()->json(['error' => 'User não encontrado.'], 404);
+            return response()->json(['error' => 'Usuário não encontrado.'], 404);
         }
 
-        // Atualiza o nome da categoria
-        $user->name = $request->name;
+        // Validação dos dados recebidos (opcional, dependendo dos requisitos do sistema)
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'address' => 'sometimes|string|max:255',
+            'phone' => 'sometimes|string|max:10',
+            'email' => 'required|string|email',
+            'password' => 'sometimes|string|min:6',
+            'vat_number' => 'nullable|string|max:10',
+            'isAdmin' => 'required',
+        ]);
+
+        $user->name = $validatedData['name'];
+        $user->address = $validatedData['address'] ?? $user->address;
+        $user->phone = $validatedData['phone'] ?? $user->phone;
+        $user->email = $validatedData['email'];
+        if (isset($validatedData['password'])) {
+            $user->password = bcrypt($validatedData['password']);
+        }
+        $user->vat_number = $validatedData['vat_number'] ?? $user->vat_number;
+        $user->isAdmin = $validatedData['isAdmin'] ?? $user->isAdmin;
         $user->save();
 
         return response()->json($user);

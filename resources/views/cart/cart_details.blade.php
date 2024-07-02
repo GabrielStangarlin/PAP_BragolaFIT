@@ -39,10 +39,9 @@
                     }
                 @endphp
                 <h5 class="card-title">Preço Total do Carrinho: {{ number_format($totalPrice, 2, ',', '.') }} €</h5>
-                <form action="/cart-checkout" method="POST">
+                <form id="checkout-form" method="POST">
                     @csrf
-                    <button class="btn btn-success mt-3" type="submit"><i class="fa-solid fa-credit-card"></i> Finalizar
-                        Compra</button>
+                    <button class="btn btn-success mt-3" type="submit">Finalizar Compra</button>
                 </form>
             </div>
         </div>
@@ -118,6 +117,56 @@
             // Função para atualizar dinamicamente o conteúdo do carrinho, pode ser uma requisição AJAX para recarregar o HTML do carrinho
             location.reload(); // Solução simples: Recarregar a página para atualizar o conteúdo do carrinho
         }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Seleciona o formulário e adiciona um evento de submit
+            document.getElementById('checkout-form').addEventListener('submit', function(event) {
+                event.preventDefault(); // Previne o comportamento padrão de submissão do formulário
+
+                // Cria uma instância do FormData para coletar dados do formulário
+                let formData = new FormData(this);
+
+                // Envia o formulário via AJAX usando fetch
+                fetch('/cart-checkout', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            // Exibe o SweetAlert de sucesso
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Compra realizada com sucesso!',
+                                text: `Sua encomenda de id #${data.order_id} foi feita.`,
+                                confirmButtonText: 'OK'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    //Mario (Enviar Notificação)
+                                    window.location.href =
+                                        '/store'; // Redireciona para a página /store
+                                }
+                            });
+                        } else {
+                            // Se houver um erro, exibe um alerta de erro
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Houve um erro ao finalizar sua compra. Por favor, tente novamente.'
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erro ao finalizar compra:', error);
+                        // Exibe um alerta de erro genérico
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Houve um erro ao finalizar sua compra. Por favor, tente novamente.'
+                        });
+                    });
+            });
+        });
     </script>
 
 @endsection
