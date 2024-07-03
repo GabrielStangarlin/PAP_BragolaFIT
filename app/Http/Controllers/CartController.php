@@ -96,9 +96,14 @@ class CartController extends Controller
             return $product->price * $product->pivot->quantity;
         });
 
+        $totalItems = $cart->products->sum(function ($product) {
+            return $product->pivot->quantity;
+        });
+
         return response()->json([
             'products' => $cartContent,
             'totalPrice' => number_format($totalPrice, 2, ',', '.'),
+            'totalItems' => $totalItems, // Adicionando o total de itens ao retorno
         ]);
     }
 

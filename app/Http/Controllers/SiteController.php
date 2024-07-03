@@ -10,6 +10,7 @@ use App\Models\Subcategory;
 use App\Models\User;
 use App\Models\Wishlist;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class SiteController extends Controller
 {
@@ -99,5 +100,24 @@ class SiteController extends Controller
         $orderCount = Order::count();
 
         return view('dashboard.dHome', compact('userCount', 'productCount', 'orderCount'));
+    }
+
+    
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+        // Busca os produtos pelo nome
+        $products = Product::where('name', 'LIKE', "%{$query}%")->get();
+
+        // Obtém os IDs dos produtos na wishlist do usuário autenticado
+        $wishlistProductIds = auth()->check() ? auth()->user()->wishlist->pluck('id')->toArray() : [];
+
+
+        // Obtém todas as categorias (ou conforme sua lógica de negócio)
+        $categories = Category::all();
+
+        // Retorna a view com os resultados da busca e os IDs dos produtos na wishlist
+        return view('store.search_results', compact('products', 'wishlistProductIds', 'categories','query'));
     }
 }

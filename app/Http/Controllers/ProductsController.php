@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\Subcategory;
 use Illuminate\Http\Request;
@@ -123,11 +124,5 @@ class ProductsController extends Controller
         return response()->json($product);
     }
 
-    public function search(Request $request)
-    {
-        $query = $request->get('query');
-        $products = Product::where('name', 'LIKE', "%{$query}%")->get();
 
-        return view('store.store_search', compact('products', 'query'))->render();
-    }
 }

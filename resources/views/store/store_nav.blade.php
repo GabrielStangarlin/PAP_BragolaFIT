@@ -35,14 +35,16 @@
                     <img src="{{ asset('img(s)/Bragola-Logo.png') }}" style="max-width: 150px; height: auto;">
                 </a>
 
-                <!-- Barra de Pesquisa (para telas maiores) -->
-                <form class="d-none d-lg-flex position-relative" style="width: 550px;"id="search-form">
-                    <input class="form-control me-2" type="search" placeholder="Encontre o melhor suplemento pra ti"
-                        aria-label="Search">
+                <!-- Barra de Pesquisa -->
+                <form class="d-flex position-relative" style="width: 550px;" action="{{ route('search') }}"
+                    method="GET">
+                    <input class="form-control me-2" type="search" name="query"
+                        placeholder="Encontre o melhor suplemento pra ti" aria-label="Search">
                     <button class="btn border-0 position-absolute end-0 top-0 bottom-0" type="submit">
                         <i class="fas fa-search"></i>
                     </button>
                 </form>
+
                 @auth
                     <div class="d-flex justify-content-end align-items-center w-900 mt-3">
                         <!-- Usuário -->
@@ -322,6 +324,9 @@
         }
 
         const successMessage = '{{ session('success') }}'
+        $(document).ready(function() {
+            updateCartContent(); // Atualiza o conteúdo do carrinho quando a página carrega
+        });
 
         $(document).on('click', '#addToCart', function() {
             var productId = $(this).data('product-id');
@@ -383,36 +388,39 @@
 
                     response.products.forEach(product => {
                         cartContent += `
-                            <div class="container overflow-hidden text-center">
-                                <h6>${product.name}</h6>
-                                <div class="row gx-2">
-                                    <div class="col">
-                                        <div class="p-3">
-                                            <img src="${product.photo_1}" class="rounded" style="max-width: 50%">
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="p-3">
-                                            <p class="text-muted">Preço: ${product.price} €</p>
-                                            <p class="text-muted">Quantidade: ${product.quantity}</p>
-                                            <button class="btn btn-light decrease-quantity" data-id="${product.id}">-</button>
-                                            <button class="btn btn-light increase-quantity" data-id="${product.id}">+</button>
-                                        </div>
+                        <div class="container overflow-hidden text-center">
+                            <h6>${product.name}</h6>
+                            <div class="row gx-2">
+                                <div class="col">
+                                    <div class="p-3">
+                                        <img src="${product.photo_1}" class="rounded" style="max-width: 50%">
                                     </div>
                                 </div>
-                            </div><br>
-                        `;
+                                <div class="col">
+                                    <div class="p-3">
+                                        <p class="text-muted">Preço: ${product.price} €</p>
+                                        <p class="text-muted">Quantidade: ${product.quantity}</p>
+                                        <button class="btn btn-light decrease-quantity" data-id="${product.id}">-</button>
+                                        <button class="btn btn-light increase-quantity" data-id="${product.id}">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><br>
+                    `;
                     });
 
                     cartContent += `
-                        <div class="pt-3">
-                            <h6>Preço Total do Carrinho: ${response.totalPrice} €</h6>
-                        </div>
-                        <div class="text-center">
-                            <a href="/cart-details" class="btn btn-primary">Ver Carrinho</a>
-                        </div>`;
+            <div class="pt-3">
+                <h6>Preço Total do Carrinho: ${response.totalPrice} €</h6>
+            </div>
+            <div class="text-center">
+                <a href="/cart-details" class="btn btn-primary">Ver Carrinho</a>
+            </div>`;
 
                     $('#cart-content').html(cartContent);
+
+                    // Atualiza o número de itens no badge do carrinho
+                    $('#cart-count').text(response.totalItems);
                 },
                 error: function(xhr) {
                     alert('Error: ' + xhr.responseJSON.error); // Exibir mensagem de erro
@@ -447,37 +455,6 @@
             const productId = $(this).data('id');
             updateQuantity(productId, 1);
         });
-
-        function toggleWishlist(productId) {
-            let url = '/wishlist/add';
-
-            fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    body: JSON.stringify({
-                        product_id: productId
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        const icon = document.getElementById(`wishlist-icon-${data.product_id}`);
-
-                        // Atualiza o ícone
-                        if (data.action === 'added') {
-                            icon.classList.remove('fa-regular');
-                            icon.classList.add('fa-solid');
-                        } else if (data.action === 'removed') {
-                            icon.classList.remove('fa-solid');
-                            icon.classList.add('fa-regular');
-                        }
-                    }
-                });
-        }
-
 
         function toggleWishlist(productId) {
             let url = '/wishlist/add';

@@ -35,13 +35,15 @@
                     <img src="img(s)/Bragola-Logo.png" style="max-width: 150px; height: auto;">
                 </a>
                 <!-- Barra de Pesquisa -->
-                <form class="d-flex position-relative" style="width: 550px;">
-                    <input class="form-control me-2" type="search" placeholder="Encontre o melhor suplemento pra ti"
-                        aria-label="Search">
+                <form class="d-flex position-relative" style="width: 550px;" action="{{ route('search') }}"
+                    method="GET">
+                    <input class="form-control me-2" type="search" name="query"
+                        placeholder="Encontre o melhor suplemento pra ti" aria-label="Search">
                     <button class="btn border-0 position-absolute end-0 top-0 bottom-0" type="submit">
                         <i class="fas fa-search"></i>
                     </button>
                 </form>
+
                 @auth
                     <div class="d-flex justify-content-end align-items-center w-900 mt-3">
                         <!-- Usuário -->
@@ -66,10 +68,14 @@
                                 class="fa-solid fa-heart"></i> Favoritos</a>
 
                         <!-- Carrinho -->
-                        <button class="btn bg-white" type="button" data-bs-toggle="offcanvas"
+                        <button class="btn bg-white position-relative" type="button" data-bs-toggle="offcanvas"
                             data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
                             <i class="bi-cart-fill me-1"></i>
                             Cart
+                            <span id="cart-count"
+                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                0
+                            </span>
                         </button>
                     </div>
                 @endauth
@@ -494,6 +500,9 @@
     }
 
     const successMessage = '{{ session('success') }}'
+    $(document).ready(function() {
+        updateCartContent(); // Atualiza o conteúdo do carrinho quando a página carrega
+    });
 
     $(document).on('click', '#addToCart', function() {
         var productId = $(this).data('product-id');
@@ -585,6 +594,9 @@
             </div>`;
 
                 $('#cart-content').html(cartContent);
+
+                // Atualiza o número de itens no badge do carrinho
+                $('#cart-count').text(response.totalItems);
             },
             error: function(xhr) {
                 alert('Error: ' + xhr.responseJSON.error); // Exibir mensagem de erro

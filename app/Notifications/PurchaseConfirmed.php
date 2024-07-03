@@ -26,6 +26,7 @@ class PurchaseConfirmed extends Notification
         $this->total = $total;
     }
 
+
     /**
      * Get the notification's delivery channels.
      *
@@ -39,28 +40,19 @@ class PurchaseConfirmed extends Notification
     /**
      * Get the mail representation of the notification.
      */
-    public function toMail($notifiable): MailMessage
+    public function toMail($notifiable)
     {
-        $mailMessage = (new MailMessage)
+        return (new MailMessage)
             ->subject('Confirmação de Compra')
-            ->greeting('Olá '.$notifiable->name.'!')
-            ->line('Obrigado pela sua compra na nossa loja.')
-            ->line('Aqui estão os detalhes da sua compra:')
-            ->line('Pedido ID: '.$this->order->id);
-
-        foreach ($this->products as $product) {
-            $mailMessage->line($product->name.' - '.$product->pivot->quantity.' x € '.$product->price);
-        }
-
-        $mailMessage->line('Preço total: € '.$this->total)
-            ->line('Obrigado por comprar connosco!')
-            ->salutation('Atenciosamente, Equipe da Loja');
-
-        return $mailMessage;
+            ->view('emails.order_confirmation', [
+                'notifiable' => $notifiable,
+                'order' => $this->order,
+                'products' => $this->products,
+                'total' => $this->total,
+            ]);
     }
-
     /**
-     * Get the array representation of the notification.
+     * Get the array representation of the notification.S
      *
      * @return array<string, mixed>
      */

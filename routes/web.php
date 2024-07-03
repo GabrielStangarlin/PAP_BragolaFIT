@@ -95,3 +95,7 @@ Route::get('/search', [ProductsController::class, 'search'])->name('search');
 Route::post('/wishlist/add', [WishlistController::class, 'add'])->name('wishlist.add');
 Route::post('/wishlist/remove', [WishlistController::class, 'remove'])->name('wishlist.remove');
 Route::get('/profile/wishlist', [WishlistController::class, 'index'])->name('profile.wishlist');
+
+
+//pesquisa
+Route::get('/search', [SiteController::class, 'search'])->name('search');
