@@ -142,9 +142,8 @@
                                 confirmButtonText: 'OK'
                             }).then((result) => {
                                 if (result.isConfirmed) {
-                                    //Mario (Enviar Notificação)
-                                    window.location.href =
-                                        '/store'; // Redireciona para a página /store
+                                    // Redireciona para a página /store
+                                    window.location.href = '/store';
                                 }
                             });
                         } else {

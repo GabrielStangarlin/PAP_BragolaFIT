@@ -9,6 +9,8 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
+use App\Notifications\PurchaseConfirmed;
+use Illuminate\Support\Facades\Notification;
 
 class OrderController extends Controller
 {
@@ -53,6 +55,8 @@ class OrderController extends Controller
             ]);
 
             $cartItems = Cart::with('products')->where('user_id', $user->id)->get();
+            $totalPrice = 0;
+            $products = [];
 
             foreach ($cartItems as $cartItem) {
                 foreach ($cartItem->products as $product) {
@@ -79,12 +83,17 @@ class OrderController extends Controller
                         $productInStock->quantity -= $quantity;
                         $productInStock->save();
                     }
+                    $totalPrice += $itemTotalValue;
+                    $products[] = $product;
                 }
             }
 
             Cart::where('user_id', $user->id)->delete();
 
             DB::commit();
+
+               // Enviar notificação de confirmação de compra
+        Notification::send($user, new PurchaseConfirmed($order, $products, $totalPrice));
 
             return response()->json(['status' => 'success', 'order_id' => $order->id]);
 
