@@ -3,7 +3,6 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -12,9 +11,10 @@ class PurchaseConfirmed extends Notification
     use Queueable;
 
     protected $order;
-    protected $products;
-    protected $total;
 
+    protected $products;
+
+    protected $total;
 
     /**
      * Create a new notification instance.
@@ -43,21 +43,20 @@ class PurchaseConfirmed extends Notification
     {
         $mailMessage = (new MailMessage)
             ->subject('Confirmação de Compra')
-            ->greeting('Olá ' . $notifiable->name . '!')
+            ->greeting('Olá '.$notifiable->name.'!')
             ->line('Obrigado pela sua compra na nossa loja.')
             ->line('Aqui estão os detalhes da sua compra:')
-            ->line('Pedido ID: ' . $this->order->id);
+            ->line('Pedido ID: '.$this->order->id);
 
         foreach ($this->products as $product) {
-            $mailMessage->line($product->name . ' - ' . $product->pivot->quantity . ' x € ' . $product->price);
+            $mailMessage->line($product->name.' - '.$product->pivot->quantity.' x € '.$product->price);
         }
 
-        $mailMessage->line('Preço total: R$ ' . $this->total)
-            ->line('Obrigado por comprar conosco!')
+        $mailMessage->line('Preço total: € '.$this->total)
+            ->line('Obrigado por comprar connosco!')
             ->salutation('Atenciosamente, Equipe da Loja');
 
         return $mailMessage;
-    
     }
 
     /**

@@ -33,8 +33,8 @@ class Product extends Model
         return $this->belongsToMany(Cart::class, 'products_carts');
     }
 
-    public function order()
+    public function orderProducts()
     {
-        return $this->belongsToMany(OrderProduct::class);
+        return $this->hasMany(OrderProduct::class);
     }
 }

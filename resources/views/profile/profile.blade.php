@@ -149,7 +149,37 @@
             <div id="encomendas" class="content-section" style="display: none;">
                 <div class="card p-4">
                     <h4>Minhas Encomendas</h4>
-                    @if (isset($ordersProducts))
+                    @if (isset($orders))
+                        @foreach ($orders as $order)
+                            <div class="border rounded mt-4">
+                                <p>Endereço de entrega: <span
+                                        style="font-weight: bold">{{ $order->ship_address }}</span></p>
+                                @php
+                                    $totalPrice = 0;
+                                @endphp
+                                @foreach ($order->orderProducts as $item)
+                                    @php
+                                        $itemTotal = $item->value * $item->quantity;
+                                        $totalPrice += $itemTotal;
+                                    @endphp
+                                    <p>Produto: {{ $item->products->name }} -
+                                        {{ number_format($item->value, 2, ',', '.') }}€ x {{ $item->quantity }}</p>
+                                @endforeach
+                                <p>Estado:
+                                    @if ($order->order_status == 0)
+                                        <span style="font-weight: bold; color:blue">Em processamento</span>
+                                    @elseif ($order->order_status == 1)
+                                        <span style="font-weight: bold; color:rgb(131, 0, 0)">Enviado</span>
+                                    @elseif($order->order_status == 2)
+                                        <span style="font-weight: bold; color:green">Entregue</span>
+                                    @endif
+                                </p>
+                                <p>Total da encomenda: <span
+                                        style="font-weight: bold">{{ number_format($totalPrice, 2, ',', '.') }}€</span>
+                                </p>
+                            </div>
+                        @endforeach
+
                     @endif
                 </div>
             </div>

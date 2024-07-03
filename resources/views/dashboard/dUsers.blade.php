@@ -242,7 +242,6 @@
             });
         });
 
-
         function editFunc(id) {
             $.ajax({
                 type: "POST",

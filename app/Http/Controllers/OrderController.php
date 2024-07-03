@@ -6,11 +6,11 @@ use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\Product;
+use App\Notifications\PurchaseConfirmed;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Yajra\DataTables\Facades\DataTables;
-use App\Notifications\PurchaseConfirmed;
 use Illuminate\Support\Facades\Notification;
+use Yajra\DataTables\Facades\DataTables;
 
 class OrderController extends Controller
 {
@@ -25,13 +25,16 @@ class OrderController extends Controller
                     if ($order->order_status == 0) {
                         return "<div style='font-weight: bold; color:blue;'>Em processamento</div>";
                     } elseif ($order->order_status == 1) {
-                        return "<div style='font-weight: bold; color:yellow;'>Enviado</div>";
+                        return "<div style='font-weight: bold; color:rgb(131, 0, 0)'>Enviado</div>";
                     } elseif ($order->order_status == 2) {
                         return "<div style='font-weight: bold; color:green;'>Recebido</div>";
                     }
                 })
-                ->addColumn('options', function($order){
-                    return '<a href="javascript:void(0);" id="show-order" onClick="showFunction('.$order->id.')" data-toggle="tooltip" data-original-title="show" class="show btn btn-secondary"><i class="fa-solid fa-eye"></i></a>';
+                ->addColumn('options', function ($order) {
+                    return '
+                    <a href="javascript:void(0);" id="update-order" onClick="updateFunction('.$order->id.', '.$order->order_status.')" data-toggle="tooltip" data-original-title="show" class="show btn btn-success"><i class="fa-solid fa-truck-fast"></i></a>
+                    <a href="javascript:void(0);" id="show-order" onClick="showFunction('.$order->id.')" data-toggle="tooltip" data-original-title="show" class="show btn btn-secondary"><i class="fa-solid fa-eye"></i></a>
+                    ';
                 })
                 ->rawColumns(['name', 'order_status', 'options'])
                 ->make(true);
@@ -92,8 +95,8 @@ class OrderController extends Controller
 
             DB::commit();
 
-               // Enviar notificação de confirmação de compra
-        Notification::send($user, new PurchaseConfirmed($order, $products, $totalPrice));
+            // Enviar notificação de confirmação de compra
+            Notification::send($user, new PurchaseConfirmed($order, $products, $totalPrice));
 
             return response()->json(['status' => 'success', 'order_id' => $order->id]);
 
@@ -102,5 +105,33 @@ class OrderController extends Controller
 
             return response()->json(['status' => 'error', 'message' => $e->getMessage()], 500);
         }
+    }
+
+    public function orderInfo(Request $request)
+    {
+        $order = Order::with('orderProducts.products')->where('id', $request->id)->first();
+
+        return response()->json($order);
+    }
+
+    public function updateOrder(Request $request)
+    {
+        $order = Order::find($request->id);
+        if ($order) {
+            if ($order->order_status == 0) {
+                $order->order_status = 1;
+            } elseif ($order->order_status == 1) {
+                $order->order_status = 2;
+            } elseif ($order->order_status == 2) {
+                $order->delete();
+
+                return response()->json(['success' => 'Encomenda excluída com sucesso.']);
+            }
+            $order->save();
+
+            return response()->json(['success' => 'Estado da encomenda atualizado com sucesso.']);
+        }
+
+        return response()->json(['error' => 'Encomenda não encontrada.'], 404);
     }
 }
