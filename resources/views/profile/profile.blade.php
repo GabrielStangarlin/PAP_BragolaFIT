@@ -101,14 +101,14 @@
                     </script>
                 @endif
                 <div class="card p-4">
-                    <form method="POST">
+                    <form action="{{ route('user.updateProfile') }}" method="POST">
                         @csrf
                         <div class="form-group mb-3">
                             <label for="name">Nome</label>
                             <input type="text" id="name" class="form-control" value="{{ $user->name }}">
                         </div>
                         <div class="form-group mb-3">
-                            <label for="address">Address</label>
+                            <label for="address">Endereço</label>
                             <input type="text" id="address" class="form-control" value="{{ $user->address }}">
                         </div>
                         <div class="form-group mb-3">
@@ -116,11 +116,11 @@
                             <input type="email" id="email" class="form-control" value="{{ $user->email }}">
                         </div>
                         <div class="form-group mb-3">
-                            <label for="phone">Phone</label>
+                            <label for="phone">Telefone</label>
                             <input type="text" id="phone" class="form-control" value="{{ $user->phone }}">
                         </div>
                         <div class="form-group mb-3">
-                            <label for="vat_number">Nif</label>
+                            <label for="vat_number">NIF</label>
                             <input type="text" id="vat_number" class="form-control" value="{{ $user->vat_number }}">
                         </div>
                         <button class="btn btn btn-primary">GUARDAR</button>
@@ -128,7 +128,7 @@
                 </div>
                 <div class="card p-4 mt-4">
                     <h4>Alterar Password</h4>
-                    <form action="{{ route('user.updateProfile') }}" method="POST">
+                    <form method="POST">
                         @csrf
                         <div class="form-group mb-3">
                             <label for="current-password">Password atual</label>
