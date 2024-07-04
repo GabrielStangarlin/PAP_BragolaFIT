@@ -39,7 +39,7 @@
                     method="GET">
                     <input class="form-control me-2" type="search" name="query"
                         placeholder="Encontre o melhor suplemento pra ti" aria-label="Search">
-                    <button class="btn border-0 end-0 top-0 bottom-0" type="submit">
+                    <button class="btn border-0  end-0 top-0 bottom-0" type="submit">
                         <i class="fas fa-search"></i>
                     </button>
                 </form>

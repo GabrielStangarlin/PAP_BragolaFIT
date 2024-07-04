@@ -77,10 +77,10 @@
                         <td>€ {{ number_format($product->price, 2, ',', '.') }}</td>
                     </tr>
                 @endforeach
+                <td colspan="2" style="text-align: end; font-weight: bold">TOTAL:</td>
+                <td style="font-weight: bold">€ {{ number_format($total, 2, ',', '.') }}</td>
             </tbody>
         </table>
-
-        <p>Preço total: € {{ number_format($total, 2, ',', '.') }}</p>
         <p>Obrigado por comprar connosco!</p>
         <p>Atenciosamente, Equipe da Loja</p>
     </div>
