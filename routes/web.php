@@ -10,6 +10,7 @@ use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WishlistController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -99,3 +100,7 @@ Route::get('/profile/wishlist', [WishlistController::class, 'index'])->name('pro
 
 //pesquisa
 Route::get('/search', [SiteController::class, 'search'])->name('search');
+
+
+Route::get('/payment', [PaymentController::class, 'index'])->name('payment.process');
+

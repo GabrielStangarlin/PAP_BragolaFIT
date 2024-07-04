@@ -9,7 +9,7 @@
             <div class="row text-center justify-content-center">
                 <h1> UPS....</h1>
                 <h5>Não conseguimos encontrar o que procuras.</h5>
-                <h5> novamente pesquisar por outras palavras. .</h5>
+                <h5> Tente novamente pesquisar por outras palavras...</h5>
             </div>
         </div>
     @else
