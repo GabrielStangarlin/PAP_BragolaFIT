@@ -1,5 +1,5 @@
 @extends('store.store_nav')
-@section('tittle', 'Bragola|Store')
+@section('tittle', 'Bragola | Store')
 @section('content')
 
     <h1 class="text-center custom-title" style="margin-left: 200px;">{{ $category->name }}</h1>

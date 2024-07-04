@@ -1,15 +1,15 @@
 @extends('dashboard.dTemplate')
 
-@section('title', 'Dashboard | Orders')
+@section('title', 'Dashboard | Encomendas')
 
 @section('dContent')
-    <h1>Orders</h1>
+    <h1>Encomenda</h1>
 
     <table class="table table-striped" id="order-datatable">
         <thead>
             <tr>
-                <th>Name (User)</th>
-                <th>Address</th>
+                <th>Nome (Utilizador)</th>
+                <th>Endereço</th>
                 <th>Status</th>
                 <th></th>
             </tr>
@@ -22,7 +22,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="showOrderModalLabel">Order</h1>
+                    <h1 class="modal-title fs-5" id="showOrderModalLabel">Encomenda</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -92,7 +92,7 @@
 
                     modalBody.append(`
                         <div class="order-address">
-                            <h5>Shipping Address:</h5>
+                            <h5>Endereço de Envio:</h5>
                             <p>${order.ship_address}</p>
                         </div>
                         <hr>
@@ -110,8 +110,8 @@
                         modalBody.append(`
                             <div class="order-item">
                                 <h5>${product.name}</h5>
-                                <p>Value: ${formattedProductValue}</p>
-                                <p>Quantity: ${orderProduct.quantity}</p>
+                                <p>Preço: ${formattedProductValue}</p>
+                                <p>Quantidade: ${orderProduct.quantity}</p>
                                 <p>Total: ${formattedTotalProductValue}</p>
                             </div>
                             <hr>
@@ -120,7 +120,7 @@
 
                     let formattedTotalValue = formatCurrency(totalValue);
 
-                    modalBody.append(`<h4>Total Order Value: ${formattedTotalValue}</h4>`);
+                    modalBody.append(`<h4>Valor Total da Encomenda: ${formattedTotalValue}</h4>`);
                     $('#showOrderModal').modal('show');
                 }
             });
@@ -138,10 +138,6 @@
                 case 1:
                     currentStatus = 'Enviado';
                     nextStatus = 'Recebido';
-                    break;
-                case 2:
-                    currentStatus = 'Recebido';
-                    nextStatus = 'Excluir encomenda';
                     break;
             }
 

@@ -174,7 +174,7 @@ Estilo da div que contém o botão
     flex-direction: column;
     align-items: start;
     gap: 20px;
-   
+
 }
 
 
@@ -248,7 +248,7 @@ Estilo da div que contém o botão
     transform: translateY(-50%);
     cursor: pointer;
     color: #aaa;
-    
+
 }
 
 #cart-count {

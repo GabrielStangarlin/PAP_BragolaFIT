@@ -39,7 +39,7 @@
                     method="GET">
                     <input class="form-control me-2" type="search" name="query"
                         placeholder="Encontre o melhor suplemento pra ti" aria-label="Search">
-                    <button class="btn border-0 position-absolute end-0 top-0 bottom-0" type="submit">
+                    <button class="btn border-0 end-0 top-0 bottom-0" type="submit">
                         <i class="fas fa-search"></i>
                     </button>
                 </form>
@@ -72,10 +72,6 @@
                             data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
                             <i class="bi-cart-fill me-1"></i>
                             Cart
-                            <span id="cart-count"
-                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                0
-                            </span>
                         </button>
                     </div>
                 @endauth
@@ -130,7 +126,8 @@
                         <details>
                             <summary class="nav-link"><a
                                     href="{{ route('category.products', ['id' => $category->id]) }}">{{ $category->name }}</a><i
-                                    class="fa-solid fa-caret-down fa-sm" style="margin-left: 8px;"></i></summary>
+                                    class="nav-link fa-solid fa-caret-down fa-sm" style="margin-left: 8px;"></i>
+                            </summary>
                             <hr>
                             @foreach ($category->subcategories as $subcategory)
                                 <div>
@@ -173,9 +170,9 @@
                                         </p>
                                         <p class="text-muted">Quantidade: {{ $product->pivot->quantity }}</p>
                                         <button class="btn btn-light decrease-quantity"
-                                            data-id="{{ $product->id }}}">-</button>
+                                            data-id="{{ $product->id }}">-</button>
                                         <button class="btn btn-light increase-quantity"
-                                            data-id="{{ $product->id }}}">+</button>
+                                            data-id="{{ $product->id }}">+</button>
                                     </div>
                                 </div>
                             </div>
@@ -195,7 +192,6 @@
                         <a href="/cart-details" class="btn btn-primary">Ver Carrinho</a>
                     </div>
                 @else
-                    <hr>
                     <div class="d-flex flex-column align-items-center text-center">
                         <i class="fa-solid fa-box fa-bounce mb-2" style="font-size: 3rem;"></i>
                         <p class="text-muted">De momento o seu carrinho está vazio.</p>
@@ -500,9 +496,6 @@
     }
 
     const successMessage = '{{ session('success') }}'
-    $(document).ready(function() {
-        updateCartContent(); // Atualiza o conteúdo do carrinho quando a página carrega
-    });
 
     $(document).on('click', '#addToCart', function() {
         var productId = $(this).data('product-id');
@@ -555,6 +548,45 @@
         });
     });
 
+    function updateCartQuantity(productId, action) {
+        $.ajax({
+            type: 'POST',
+            url: '/cart-update',
+            data: {
+                _token: '{{ csrf_token() }}',
+                productId: productId,
+                action: action
+            },
+            success: function(response) {
+                if (response.cartEmpty) {
+                    $('#cart-content').html(
+                        '<div class="d-flex flex-column align-items-center text-center"><i class="fa-solid fa-box fa-bounce mb-2" style="font-size: 3rem;"></i><p class="text-muted">De momento o seu carrinho está vazio.</p></div>'
+                    );
+                } else {
+                    updateCartContent();
+                }
+            },
+            error: function(xhr) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Erro",
+                    text: xhr.responseJSON.error,
+                    showConfirmButton: true
+                });
+            }
+        });
+    }
+
+    $(document).on('click', '.increase-quantity', function() {
+        var productId = $(this).data('id');
+        updateCartQuantity(productId, 'increase');
+    });
+
+    $(document).on('click', '.decrease-quantity', function() {
+        var productId = $(this).data('id');
+        updateCartQuantity(productId, 'decrease');
+    });
+
     function updateCartContent() {
         $.ajax({
             type: 'GET',
@@ -563,6 +595,7 @@
                 let cartContent = '';
 
                 response.products.forEach(product => {
+                    console.log(product);
                     cartContent += `
                         <div class="container overflow-hidden text-center">
                             <h6>${product.name}</h6>
@@ -586,51 +619,20 @@
                 });
 
                 cartContent += `
-            <div class="pt-3">
-                <h6>Preço Total do Carrinho: ${response.totalPrice} €</h6>
-            </div>
-            <div class="text-center">
-                <a href="/cart-details" class="btn btn-primary">Ver Carrinho</a>
-            </div>`;
+                    <div class="pt-3">
+                        <h6>Preço Total do Carrinho: ${response.totalPrice} €</h6>
+                    </div>
+                    <div class="text-center">
+                        <a href="/cart-details" class="btn btn-primary">Ver Carrinho</a>
+                    </div>`;
 
                 $('#cart-content').html(cartContent);
-
-                // Atualiza o número de itens no badge do carrinho
-                $('#cart-count').text(response.totalItems);
             },
             error: function(xhr) {
                 alert('Error: ' + xhr.responseJSON.error); // Exibir mensagem de erro
             }
         });
     }
-
-    function updateQuantity(productId, change) {
-        $.ajax({
-            type: 'POST',
-            url: '{{ route('cart.updateQuantity') }}',
-            data: {
-                _token: '{{ csrf_token() }}',
-                product_id: productId,
-                change: change
-            },
-            success: function(response) {
-                updateCartContent();
-            },
-            error: function(xhr) {
-                alert('Error: ' + xhr.responseJSON.error); // Exibir mensagem de erro
-            }
-        });
-    }
-
-    $(document).on('click', '.decrease-quantity', function() {
-        const productId = $(this).data('id');
-        updateQuantity(productId, -1);
-    });
-
-    $(document).on('click', '.increase-quantity', function() {
-        const productId = $(this).data('id');
-        updateQuantity(productId, 1);
-    });
 
     function toggleWishlist(productId) {
         let url = '/wishlist/add';

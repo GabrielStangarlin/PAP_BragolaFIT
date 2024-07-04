@@ -85,6 +85,7 @@ class CartController extends Controller
 
         $cartContent = $cart->products->map(function ($product) {
             return [
+                'id' => $product->id,
                 'name' => $product->name,
                 'photo_1' => $product->photo_1,
                 'price' => number_format($product->price, 2, ',', '.'),
@@ -107,36 +108,45 @@ class CartController extends Controller
         ]);
     }
 
-    public function updateQuantity(Request $request)
+    public function updateCartQuantity(Request $request)
     {
         if (! Auth::check()) {
-            return response()->json(['error' => 'User not authenticated'], 403);
+            return response()->json(['error' => 'User is not logged in'], 403);
         }
 
         $userId = Auth::id();
+        $productId = $request->input('productId');
+        $action = $request->input('action');
+
         $cart = Cart::where('user_id', $userId)->first();
 
         if (! $cart) {
             return response()->json(['error' => 'Cart not found'], 404);
         }
 
-        $productId = intval($request->product_id); // Converter para inteiro para garantir a formatação correta
+        $cartProduct = $cart->products()->where('product_id', $productId)->first();
 
-        // Verifique se o produto existe no carrinho
-        $product = $cart->products()->where('product_id', $productId)->first();
-
-        if (! $product) {
+        if (! $cartProduct) {
             return response()->json(['error' => 'Product not found in cart'], 404);
         }
 
-        // Atualize a quantidade do produto no carrinho
-        $newQuantity = $product->pivot->quantity + $request->change;
+        if ($action == 'increase') {
+            $cartProduct->pivot->quantity++;
+        } elseif ($action == 'decrease') {
+            $cartProduct->pivot->quantity--;
 
-        if ($newQuantity < 1) {
-            $cart->products()->detach($productId);
-        } else {
-            $cart->products()->updateExistingPivot($productId, ['quantity' => $newQuantity]);
+            if ($cartProduct->pivot->quantity <= 0) {
+                $cart->products()->detach($productId);
+
+                if ($cart->products()->count() == 0) {
+                    $cart->delete();
+
+                    return response()->json(['cartEmpty' => true]);
+                }
+            }
         }
+
+        $cartProduct->pivot->save();
 
         return response()->json(['success' => true]);
     }
@@ -144,8 +154,8 @@ class CartController extends Controller
     public function removeItem(Request $request)
     {
         $id = $request->productId;
-        $user = Auth::user();
-        $cart = $user->cart->first(); // Ensure we're getting a single cart instance
+        $user = Auth::id();
+        $cart = Cart::where('user_id', $user)->first();
 
         if (! $cart) {
             return response()->json(['success' => false, 'message' => 'Carrinho não encontrado.']);
@@ -157,6 +167,10 @@ class CartController extends Controller
             $cart->products()->detach($id);
 
             return response()->json(['success' => true, 'message' => 'Item removido com sucesso!']);
+        }
+
+        if ($cart->products <= 0) {
+            $cart->delete();
         }
 
         return response()->json(['success' => false, 'message' => 'Produto não encontrado no carrinho.']);

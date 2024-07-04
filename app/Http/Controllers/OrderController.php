@@ -31,10 +31,16 @@ class OrderController extends Controller
                     }
                 })
                 ->addColumn('options', function ($order) {
-                    return '
-                    <a href="javascript:void(0);" id="update-order" onClick="updateFunction('.$order->id.', '.$order->order_status.')" data-toggle="tooltip" data-original-title="show" class="show btn btn-success"><i class="fa-solid fa-truck-fast"></i></a>
+                    $buttons = '
                     <a href="javascript:void(0);" id="show-order" onClick="showFunction('.$order->id.')" data-toggle="tooltip" data-original-title="show" class="show btn btn-secondary"><i class="fa-solid fa-eye"></i></a>
                     ';
+                    if ($order->order_status == 0 || $order->order_status == 1) {
+                        $buttons .= '
+                        <a href="javascript:void(0);" id="update-order" onClick="updateFunction('.$order->id.', '.$order->order_status.')" data-toggle="tooltip" data-original-title="show" class="show btn btn-success"><i class="fa-solid fa-truck-fast"></i></a>
+                        ';
+                    }
+
+                    return $buttons;
                 })
                 ->rawColumns(['name', 'order_status', 'options'])
                 ->make(true);
@@ -66,7 +72,6 @@ class OrderController extends Controller
                     // Acessa a quantidade da tabela pivot
                     $quantity = $product->pivot->quantity;
 
-                    // Calcula o valor total do item
                     $itemTotalValue = $product->price * $quantity;
 
                     // Cria uma nova instância de OrderProduct
@@ -74,7 +79,7 @@ class OrderController extends Controller
                         'order_id' => $order->id,
                         'product_id' => $product->id,
                         'quantity' => $quantity,
-                        'value' => $itemTotalValue,
+                        'value' => $product->price,
                     ]);
 
                     $productInStock = Product::find($product->id);
@@ -122,10 +127,6 @@ class OrderController extends Controller
                 $order->order_status = 1;
             } elseif ($order->order_status == 1) {
                 $order->order_status = 2;
-            } elseif ($order->order_status == 2) {
-                $order->delete();
-
-                return response()->json(['success' => 'Encomenda excluída com sucesso.']);
             }
             $order->save();
 

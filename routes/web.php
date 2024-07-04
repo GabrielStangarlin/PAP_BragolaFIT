@@ -42,8 +42,9 @@ Route::post('/profilepost', [UserController::class, 'updateProfile'])->name('use
 Route::get('/check-product-quantity/{id}', [CartController::class, 'checkProductQuantity']);
 Route::post('/add-to-cart', [CartController::class, 'addToCart'])->name('addToCart');
 Route::get('/cart-content', [CartController::class, 'getCartContent'])->name('cart.content');
-Route::post('/cart-update', [CartController::class, 'updateQuantity'])->name('cart.updateQuantity');
+Route::post('/cart-update', [CartController::class, 'updateCartQuantity'])->name('cart.updateQuantity');
 Route::post('/cart-checkout', [OrderController::class, 'checkout'])->name('cart.checkout');
+Route::get('(cart/verification/content', [CartController::class, 'verifyContent'])->name('cart.verification.for.cartContent');
 
 //Detalhes Carrinho
 Route::get('/cart-details', [CartController::class, 'cartDetails'])->name('cart.details');
@@ -95,7 +96,6 @@ Route::get('/search', [ProductsController::class, 'search'])->name('search');
 Route::post('/wishlist/add', [WishlistController::class, 'add'])->name('wishlist.add');
 Route::post('/wishlist/remove', [WishlistController::class, 'remove'])->name('wishlist.remove');
 Route::get('/profile/wishlist', [WishlistController::class, 'index'])->name('profile.wishlist');
-
 
 //pesquisa
 Route::get('/search', [SiteController::class, 'search'])->name('search');

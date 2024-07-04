@@ -101,22 +101,22 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>Products</span>
+                    <span>Produtos</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Related to products:</h6>
+                        <h6 class="collapse-header">Relacionado a Produtos:</h6>
                         <a class="collapse-item" href="{{ route('dashboard.products') }}">
                             <i class="fa-solid fa-boxes-stacked"></i>
-                            Products
+                            Produtos
                         </a>
                         <a class="collapse-item" href="{{ route('dashboard.category') }}">
                             <i class="fa-solid fa-layer-group"></i>
-                            Categories
+                            Categorias
                         </a>
                         <a class="collapse-item" href="{{ route('dashboard.subcategory') }}">
                             <i class="fa-solid fa-layer-group"></i>
-                            Subcategories
+                            Subcategorias
                         </a>
                     </div>
                 </div>
@@ -126,19 +126,19 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fa-solid fa-users"></i>
-                    <span>Users</span>
+                    <span>Utilizadores</span>
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Related to Users:</h6>
+                        <h6 class="collapse-header">Relacionado a Utilizadores:</h6>
                         <a class="collapse-item" href="{{ route('dashboard.user') }}">
                             <i class="fa-solid fa-users"></i>
-                            Users
+                            Utilizadores
                         </a>
                         <a class="collapse-item" href="/db/list/order">
                             <i class="fa-solid fa-truck-fast"></i>
-                            Orders
+                            Encomendas
                         </a>
                     </div>
                 </div>
@@ -178,7 +178,7 @@
                                 aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="#">
                                     <i class="fa-solid fa-user text-gray-400"></i>
-                                    Profile
+                                    Perfil
                                 </a>
                                 <a class="dropdown-item" href="{{ route('user.logout') }}">
                                     <i class="fa-solid fa-right-from-bracket text-gray-400"></i>

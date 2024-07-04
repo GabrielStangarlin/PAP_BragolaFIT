@@ -1,5 +1,5 @@
 @extends('store.store_nav')
-@section('title', 'Bragola|FIT')
+@section('title', 'Bragola | FIT')
 
 @section('content')
     @if ($products->isEmpty())

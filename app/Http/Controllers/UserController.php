@@ -18,7 +18,7 @@ class UserController extends Controller
 
         $wishlist = Wishlist::where('user_id', Auth::id())->first();
         $products = $wishlist ? $wishlist->products : [];
-        $orders = Order::with('orderProducts.products')->where('user_id', Auth::id())->get();
+        $orders = Order::with('orderProducts.products')->where('user_id', Auth::id())->orderBy('created_at', 'desc')->get();
 
         return view('profile.profile', compact('user', 'products', 'orders'));
     }

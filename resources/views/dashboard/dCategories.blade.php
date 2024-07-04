@@ -3,18 +3,18 @@
 @section('title', 'Dashboard | Category')
 
 @section('dContent')
-    <h1>All Categories</h1>
+    <h1>Categoria</h1>
     <a class="btn btn-success gap-2 mb-2 openAddModal" id="openAddModal">
         <ion-icon name="add-circle-outline"></ion-icon>
-        Add Category
+        Add Categoria
     </a>
 
     <table class="table table-striped" id="category-datatable">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Updated at</th>
-                <th>Actions</th>
+                <th>Nome</th>
+                <th>Atualizado </th>
+                <th>Ações</th>
             </tr>
         </thead>
         <tbody>
@@ -35,12 +35,12 @@
                                 <form class="p-3">
                                     @csrf
                                     <div class="form-group">
-                                        <label for="name" class="form-label">Name:</label>
+                                        <label for="name" class="form-label">Nome</label>
                                         <input type="text" id="nameAdd" name="nameAdd" class="form-control">
                                     </div>
 
                                     <div class="model-footer d-flex mt-1" style="justify-content:flex-end">
-                                        <button type="button" id="btn-save" class="btn btn-primary">Save</button>
+                                        <button type="button" id="btn-save" class="btn btn-primary">Salvar</button>
                                     </div>
                                 </form>
                             </div>
@@ -67,12 +67,12 @@
                                     <input type="hidden" id="id">
 
                                     <div class="form-group">
-                                        <label for="name" class="form-label">Name:</label>
+                                        <label for="name" class="form-label">Nome</label>
                                         <input type="text" id="name" name="name" class="form-control">
                                     </div>
 
                                     <div class="model-footer d-flex mt-1" style="justify-content:flex-end">
-                                        <button type="button" id="btn-save-edit" class="btn btn-primary">Save</button>
+                                        <button type="button" id="btn-save-edit" class="btn btn-primary">Salvar</button>
                                     </div>
                                 </form>
                             </div>

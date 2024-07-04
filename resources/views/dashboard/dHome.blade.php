@@ -3,10 +3,6 @@
 @section('title', 'Dashboard | Home')
 
 @section('dContent')
-
-    <div class="text-center">
-        <img src="/img(s)/Bragola-logo-noBg.png" alt="" class="img-fluid">
-    </div>
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-4">
@@ -14,7 +10,7 @@
                     <div class="card card-custom">
                         <div class="card-body d-flex justify-content-between align-items-center">
                             <div>
-                                <h6 class="text-uppercase text-muted mb-2">Users (All)</h6>
+                                <h6 class="text-uppercase text-muted mb-2">Utilizadores</h6>
                                 <h3 class="mb-0">{{ $userCount }}</h3>
                             </div>
                             <div class="card-icon">
@@ -29,7 +25,7 @@
                     <div class="card card-custom">
                         <div class="card-body d-flex justify-content-between align-items-center">
                             <div>
-                                <h6 class="text-uppercase text-muted mb-2">Products (All)</h6>
+                                <h6 class="text-uppercase text-muted mb-2">Produtos (Variedade)</h6>
                                 <h3 class="mb-0">{{ $productCount }}</h3>
                             </div>
                             <div class="card-icon">
@@ -44,7 +40,7 @@
                     <div class="card card-custom">
                         <div class="card-body d-flex justify-content-between align-items-center">
                             <div>
-                                <h6 class="text-uppercase text-muted mb-2">Orders (all)</h6>
+                                <h6 class="text-uppercase text-muted mb-2">Encomendas</h6>
                                 <h3 class="mb-0">{{ $orderCount }}</h3>
                             </div>
                             <div class="card-icon">
@@ -56,12 +52,18 @@
             </div>
         </div>
     </div>
-    <canvas class="mt-3" style="max-height: 400px;" id="myChart"></canvas>
-
-    <div style="width: 50%; margin: auto;">
-        <canvas id="myDoughnutChart"></canvas>
+    <div class="row">
+        <div class="mt-5 col-xl-8 col-lg-7">
+            <div class="card shadow">
+                <canvas class="mt-3" style="max-height: 400px;" id="myChart"></canvas>
+            </div>
+        </div>
+        <div class="mt-5 col-xl-4 col-lg-5">
+            <div class="card shadow">
+                <canvas class="mt-3" style="max-height: 400px;" id="myDoughnutChart"></canvas>
+            </div>
+        </div>
     </div>
-
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             fetch('/api/product-subcategories')
@@ -76,7 +78,7 @@
                         data: {
                             labels: labels,
                             datasets: [{
-                                label: 'Quantidade de Produtos',
+                                label: 'Variedade de Produtos',
                                 data: productCounts,
                                 borderWidth: 1
                             }]
@@ -100,7 +102,7 @@
             var myDoughnutChart = new Chart(ctx, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Users', 'Orders'],
+                    labels: ['Utilizadores', 'Encomendas'],
                     datasets: [{
                         data: [{{ $userCount }}, {{ $orderCount }}],
                         backgroundColor: [

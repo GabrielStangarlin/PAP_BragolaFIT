@@ -3,23 +3,23 @@
 @section('title', 'Dashboard | Users')
 
 @section('dContent')
-    <h1>All Users</h1>
+    <h1>Utilizadores</h1>
 
     <a class="btn btn-success gap-2 mb-2 openAddModal" id="openAddModal">
         <ion-icon name="add-circle-outline"></ion-icon>
-        Add Users
+        Adicionar Utilizadores
     </a>
 
     <table class="table table-striped" id="user-datatable">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Address</th>
-                <th>Phone</th>
+                <th>Nome</th>
+                <th>Morada</th>
+                <th>Telefone</th>
                 <th>E-mail</th>
-                <th>Role</th>
-                <th>Vat-Number</th>
-                <th>Actions</th>
+                <th>Cargo</th>
+                <th>NIF</th>
+                <th>Ações</th>
             </tr>
         </thead>
         <tbody class="text-center">
@@ -31,7 +31,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add Users</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Adicionar Utilizador</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -42,12 +42,12 @@
                                     @csrf
 
                                     <div class="form-group">
-                                        <label for="name" class="form-label">Name:</label>
+                                        <label for="name" class="form-label">Nome:</label>
                                         <input type="text" id="nameAdd" name="name" class="form-control">
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="address" class="form-label">Address:</label>
+                                        <label for="address" class="form-label">Morada:</label>
                                         <input type="text" id="addressAdd" name="address" class="form-control">
                                     </div>
 
@@ -69,7 +69,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="password" class="form-label">Password:</label>
+                                        <label for="password" class="form-label">Senha:</label>
                                         <input type="password" id="passwordAdd" name="password" class="form-control">
                                     </div>
 
@@ -81,7 +81,7 @@
 
 
                                     <div class="model-footer d-flex mt-1" style="justify-content:flex-end">
-                                        <button type="button" id="btn-save" class="btn btn-primary">Save</button>
+                                        <button type="button" id="btn-save" class="btn btn-primary">Salvar</button>
                                     </div>
                                 </form>
                             </div>
@@ -96,7 +96,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Edit User</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Editar Utilizador</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -105,22 +105,22 @@
                         <input type="hidden" name="id" id="id">
 
                         <div class="form-group">
-                            <label for="name" class="form-label">Name:</label>
+                            <label for="name" class="form-label">Nome:</label>
                             <input type="text" id="name" name="name" class="form-control">
                         </div>
 
                         <div class="form-group">
-                            <label for="address" class="form-label">Address:</label>
+                            <label for="address" class="form-label">Morada:</label>
                             <input type="text" id="address" name="address" class="form-control">
                         </div>
 
                         <div class="form-group">
-                            <label for="phone" class="form-label">Phone:</label>
+                            <label for="phone" class="form-label">Telefone:</label>
                             <input type="number" id="phone" name="phone" class="form-control" maxlength="10">
                         </div>
 
                         <div class="form-group">
-                            <label for="phone" class="form-label">Vat number</label>
+                            <label for="phone" class="form-label">NIF:</label>
                             <input type="number" id="vat_number" name="vat_number" class="form-control"
                                 maxlength="10">
                         </div>
@@ -136,7 +136,7 @@
                         </div>
 
                         <div class="model-footer d-flex mt-1" style="justify-content:flex-end">
-                            <button type="button" id="btn-save-edit" class="btn btn-primary">Save</button>
+                            <button type="button" id="btn-save-edit" class="btn btn-primary">Salvar</button>
                         </div>
 
 
@@ -222,7 +222,7 @@
                     name: name,
                     address: address,
                     email: email,
-                    phone: phone,
+                    Telefone: phone,
                     password: password,
                     vat_number: vat_number,
                     isAdmin: isAdmin,
