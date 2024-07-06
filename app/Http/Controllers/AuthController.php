@@ -30,7 +30,7 @@ class AuthController extends Controller
                 return redirect('/db')->with('success', 'Usuário Administrador Logado');
             }
 
-            return redirect('/store')->with('success', 'Usuário Logado');
+            return redirect('/store')->with('success', 'Utilizador logado com sucesso');
         }
 
         return redirect()->back()->with('error', 'Email ou Senha Errados');
@@ -65,6 +65,6 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        return redirect('/store')->with('success', 'Usuário criado com sucesso');
+        return redirect('/store')->with('success', 'utilizador criado com sucesso');
     }
 }

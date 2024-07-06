@@ -243,7 +243,7 @@
         position: fixed;
         top: 20px;
         right: 20px;
-        background-color: red;
+        background-color: rgb(255, 255, 255);
         color: black;
         padding: 10px 20px;
         border-radius: 5px;
@@ -252,7 +252,7 @@
     }
 
     .error-message {
-        color: red;
+        color: rgb(255, 255, 255);
         font-size: 12px;
         margin-bottom: 10px;
         display: none;
