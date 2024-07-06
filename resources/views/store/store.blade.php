@@ -64,8 +64,8 @@
                         </div>
 
                         <!-- Favoritos -->
-                        <a href="{{ route('user.profile') }}#desejos" class="btn bg-white me-3"><i
-                                class="fa-solid fa-heart"></i> Favoritos</a>
+                        <a href="{{ route('user.profile') }}#desejos" class="btn bg-white me-3" id="wishlist-icon"><i
+                                class="fa-regular fa-heart"></i> Favoritos</a>
 
                         <!-- Carrinho -->
                         <button class="btn bg-white position-relative" type="button" data-bs-toggle="offcanvas"
@@ -287,11 +287,11 @@
                                                         class="position-absolute top-0 end-0 m-2 "id="wishlist-button-{{ $product->id }}">
                                                         @if (in_array($product->id, $wishlistProductIds))
                                                             <i class="fa-solid fa-heart"
-                                                                style="color: red; font-size: 1.5rem;"
+                                                                style="color: red; font-size: 1.5rem; cursor: pointer;"
                                                                 id="wishlist-icon-{{ $product->id }}"></i>
                                                         @else
                                                             <i class="fa-regular fa-heart"
-                                                                style="color: red; font-size: 1.5rem;"
+                                                                style="color: red; font-size: 1.5rem; cursor: pointer;"
                                                                 id="wishlist-icon-{{ $product->id }}"></i>
                                                         @endif
                                                     </a>
@@ -374,10 +374,12 @@
                                     <a onclick="toggleWishlist({{ $product->id }})"
                                         class="position-absolute top-0 end-0 m-2 "id="wishlist-button-{{ $product->id }}">
                                         @if (in_array($product->id, $wishlistProductIds))
-                                            <i class="fa-solid fa-heart" style="color: red; font-size: 1.5rem;"
+                                            <i class="fa-solid fa-heart"
+                                                style="color: red; font-size: 1.5rem; cursor: pointer;"
                                                 id="wishlist-icon-{{ $product->id }}"></i>
                                         @else
-                                            <i class="fa-regular fa-heart" style="color: red; font-size: 1.5rem;"
+                                            <i class="fa-regular fa-heart"
+                                                style="color: red; font-size: 1.5rem; cursor: pointer;"
                                                 id="wishlist-icon-{{ $product->id }}"></i>
                                         @endif
                                     </a>
@@ -520,6 +522,7 @@
                                 showConfirmButton: false,
                                 timer: 1500
                             });
+
                             updateCartContent(); // Atualizar o conteúdo do carrinho
                         },
                         error: function(response) {
@@ -657,11 +660,11 @@
                     if (data.action === 'added') {
                         icon.classList.remove('fa-regular');
                         icon.classList.add('fa-solid');
-                        showSuccessToast('Produto adicionado à lista de desejos!');
+                        showSuccessToast('Produto adicionado aos favoritos!');
                     } else if (data.action === 'removed') {
                         icon.classList.remove('fa-solid');
                         icon.classList.add('fa-regular');
-                        showSuccessToast('Produto removido da lista de desejos!');
+                        showSuccessToast('Produto removido dos favoritos!');
                     }
 
                 }
@@ -683,6 +686,24 @@
             },
         });
     }
+
+    document.addEventListener("DOMContentLoaded", function() {
+
+        fetch('{{ route('wishlist.has-items') }}')
+            .then(response => response.json())
+            .then(data => {
+                const wishlistIcon = document.getElementById('wishlist-icon').querySelector('i');
+                if (data.has_items) {
+                    wishlistIcon.classList.remove('fa-regular');
+                    wishlistIcon.classList.add('fa-solid'); // Classe para ícone preenchido
+                } else {
+                    wishlistIcon.classList.remove('fa-solid');
+                    wishlistIcon.classList.add('fa-regular'); // Classe para ícone vazio
+                }
+            })
+            .catch(error => console.error('Error:', error));
+
+    });
 </script>
 
 </html>

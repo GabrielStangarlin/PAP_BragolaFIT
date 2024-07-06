@@ -92,13 +92,16 @@ Route::post('/order/update', [OrderController::class, 'updateOrder']);
 
 Route::get('/search', [ProductsController::class, 'search'])->name('search');
 
-// routes/web.php
-
+//wishlist
 Route::post('/wishlist/add', [WishlistController::class, 'add'])->name('wishlist.add');
 Route::post('/wishlist/remove', [WishlistController::class, 'remove'])->name('wishlist.remove');
 Route::get('/profile/wishlist', [WishlistController::class, 'index'])->name('profile.wishlist');
+Route::get('/wishlist/has-items', [WishlistController::class, 'hasWishlistItems'])->name('wishlist.has-items');
+
 
 //pesquisa
 Route::get('/search', [SiteController::class, 'search'])->name('search');
 
 Route::get('/payment', [PaymentController::class, 'index'])->name('payment.process');
+
+

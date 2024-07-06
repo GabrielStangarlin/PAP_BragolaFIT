@@ -88,9 +88,9 @@
     <div class="container main-container">
         <div class="left-column">
             <ul>
-                <li><a onclick="showContent('perfil')">MEU PERFIL</a></li>
-                <li><a onclick="showContent('encomendas')">MINHAS ENCOMENDAS</a></li>
-                <li><a onclick="showContent('desejos')">LISTA DE DESEJOS</a></li>
+                <li><a onclick="showContent('perfil')" style="cursor: pointer;">MEU PERFIL</a></li>
+                <li><a onclick="showContent('encomendas')" style="cursor: pointer;">MINHAS ENCOMENDAS</a></li>
+                <li><a onclick="showContent('desejos')" style="cursor: pointer;">LISTA DE DESEJOS</a></li>
             </ul>
         </div>
         <div class="right-column">
@@ -121,7 +121,8 @@
                         </div>
                         <div class="form-group mb-3">
                             <label for="vat_number">NIF</label>
-                            <input type="text" id="vat_number" class="form-control" value="{{ $user->vat_number }}">
+                            <input type="text" id="vat_number" class="form-control"
+                                value="{{ $user->vat_number }}">
                         </div>
                         <button class="btn btn btn-primary">GUARDAR</button>
                     </form>

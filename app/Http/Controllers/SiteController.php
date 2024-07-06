@@ -62,7 +62,7 @@ class SiteController extends Controller
         $wishlist = Wishlist::where('user_id', Auth::id())->first();
         $wishlistProductIds = $wishlist ? $wishlist->products->pluck('id')->toArray() : [];
 
-        return view('store.store_ctg', compact('categories', 'products', 'subcategory', 'cart', 'wishlistProductIds'));
+        return view('store.store_subctg', compact('categories', 'products', 'subcategory', 'cart', 'wishlistProductIds'));
     }
 
     public function filterByCategory($id)
@@ -90,7 +90,7 @@ class SiteController extends Controller
         $wishlist = Wishlist::where('user_id', Auth::id())->first();
         $wishlistProductIds = $wishlist ? $wishlist->products->pluck('id')->toArray() : [];
 
-        return view('store.store_subctg', compact('categories', 'products', 'category', 'subcategories', 'cart', 'wishlistProductIds'));
+        return view('store.store_ctg', compact('categories', 'products', 'category', 'subcategories', 'cart', 'wishlistProductIds'));
     }
 
     public function dashboardHome()
@@ -111,7 +111,9 @@ class SiteController extends Controller
         $products = Product::where('name', 'LIKE', "%{$query}%")->get();
 
         // Obtém os IDs dos produtos na wishlist do usuário autenticado
-        $wishlistProductIds = auth()->check() ? auth()->user()->wishlist->pluck('id')->toArray() : [];
+        $wishlistProductIds = auth()->check() && auth()->user()->wishlist 
+        ? auth()->user()->wishlist->pluck('id')->toArray() 
+        : [];
 
 
         // Obtém todas as categorias (ou conforme sua lógica de negócio)

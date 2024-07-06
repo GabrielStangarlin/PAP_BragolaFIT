@@ -277,14 +277,14 @@
                 @csrf
                 <h1>Criar conta</h1>
                 <span>ou use seu e-mail para cadastro</span>
-                <input type="text" id="name" name="name" placeholder="Name" required>
+                <input type="text" id="name" name="name" placeholder="Nome" required>
                 <input type="email" id="email" name="email" placeholder="Email" required>
                 <input type="password" id="password" name="password" placeholder="Password" required>
                 <div class="error-message" id="error-message">As senhas estão diferentes.</div>
                 <input type="password" id="password_confirmation" name="password_confirmation"
                     placeholder="Confirm Password" required>
-                <input type="text" id="address" name="address" placeholder="Address" required>
-                <input type="text" id="phone" name="phone" placeholder="Phone" required>
+                <input type="text" id="address" name="address" placeholder="Endereço" required>
+                <input type="text" id="phone" name="phone" placeholder="Telemovel" required>
 
                 <button type="submit">Registrar</button>
             </form>
