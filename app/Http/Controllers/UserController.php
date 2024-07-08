@@ -41,15 +41,22 @@ class UserController extends Controller
         $user->phone = $request->input('phone');
         $user->vat_number = $request->input('vat_number');
 
-        // Apenas atualize a senha se um novo valor foi fornecido
-        if ($request->filled('password')) {
-            $user->password = Hash::make($request->input('password'));
-        }
-
         $user->save();
 
-        return redirect()->route('profile.profile')->with('success', 'Profile updated successfully.');
+        return response()->json($user);
     }
+
+    public function getProfile()
+    {
+        $user = Auth::user();
+
+        if (! $user instanceof User) {
+            return response()->json(['error' => 'User authentication failed.'], 401);
+        }
+
+        return response()->json($user);
+    }
+
 
     //dashboard:
     public function listUser()

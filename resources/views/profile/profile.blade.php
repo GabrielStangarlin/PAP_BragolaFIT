@@ -101,30 +101,29 @@
                     </script>
                 @endif
                 <div class="card p-4">
-                    <form action="{{ route('user.updateProfile') }}" method="POST">
+                    <form id="profileForm" method="POST">
                         @csrf
                         <div class="form-group mb-3">
                             <label for="name">Nome</label>
-                            <input type="text" id="name" class="form-control" value="{{ $user->name }}">
+                            <input type="text" id="name" class="form-control">
                         </div>
                         <div class="form-group mb-3">
                             <label for="address">Endereço</label>
-                            <input type="text" id="address" class="form-control" value="{{ $user->address }}">
+                            <input type="text" id="address" class="form-control">
                         </div>
                         <div class="form-group mb-3">
                             <label for="email">E-mail</label>
-                            <input type="email" id="email" class="form-control" value="{{ $user->email }}">
+                            <input type="email" id="email" class="form-control">
                         </div>
                         <div class="form-group mb-3">
                             <label for="phone">Telefone</label>
-                            <input type="text" id="phone" class="form-control" value="{{ $user->phone }}">
+                            <input type="text" id="phone" class="form-control">
                         </div>
                         <div class="form-group mb-3">
                             <label for="vat_number">NIF</label>
-                            <input type="text" id="vat_number" class="form-control"
-                                value="{{ $user->vat_number }}">
+                            <input type="text" id="vat_number" class="form-control">
                         </div>
-                        <button class="btn btn btn-primary">GUARDAR</button>
+                        <button id="btn-profile" class="btn btn btn-primary">GUARDAR</button>
                     </form>
                 </div>
                 <div class="card p-4 mt-4">
@@ -152,20 +151,46 @@
                     <h4>Minhas Encomendas</h4>
                     @if (isset($orders))
                         @foreach ($orders as $order)
-                            <div class="border rounded mt-4">
-                                <p>Endereço de entrega: <span
-                                        style="font-weight: bold">{{ $order->ship_address }}</span></p>
-                                @php
-                                    $totalPrice = 0;
-                                @endphp
-                                @foreach ($order->orderProducts as $item)
-                                    @php
-                                        $itemTotal = $item->value * $item->quantity;
-                                        $totalPrice += $itemTotal;
-                                    @endphp
-                                    <p>Produto: {{ $item->products->name }} -
-                                        {{ number_format($item->value, 2, ',', '.') }}€ x {{ $item->quantity }}</p>
-                                @endforeach
+                            @php
+                                $totalPrice = 0;
+                                foreach ($order->orderProducts as $item) {
+                                    $itemTotal = $item->value * $item->quantity;
+                                    $totalPrice += $itemTotal;
+                                }
+                            @endphp
+
+                            <div class="order-summary border rounded mt-4 p-2"
+                                onclick="toggleDetails('details-{{ $order->id }}')"
+                                style="cursor: pointer; position: relative;">
+                                <p style="margin-bottom: 0;"><strong>Encomenda #{{ $order->id }}</strong> - Total:
+                                    {{ number_format($totalPrice, 2, ',', '.') }}€</p>
+                                <i class="fa-solid fa-caret-down"
+                                    style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%);"></i>
+                            </div>
+
+                            <div id="details-{{ $order->id }}" class="order-details"
+                                style="display: none; margin-left: 20px;">
+                                <table class="table table-bordered mt-3">
+                                    <thead>
+                                        <tr>
+                                            <th>Produto</th>
+                                            <th>Quantidade</th>
+                                            <th>Preço Unitário</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($order->orderProducts as $item)
+                                            <tr>
+                                                <td>{{ $item->products->name }}</td>
+                                                <td>{{ $item->quantity }}</td>
+                                                <td>{{ number_format($item->value, 2, ',', '.') }}€</td>
+                                                <td>{{ number_format($item->value * $item->quantity, 2, ',', '.') }}€
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                                 <p>Estado:
                                     @if ($order->order_status == 0)
                                         <span style="font-weight: bold; color:blue">Em processamento</span>
@@ -175,12 +200,13 @@
                                         <span style="font-weight: bold; color:green">Entregue</span>
                                     @endif
                                 </p>
+                                <p>Endereço de entrega: <span
+                                        style="font-weight: bold">{{ $order->ship_address }}</span></p>
                                 <p>Total da encomenda: <span
                                         style="font-weight: bold">{{ number_format($totalPrice, 2, ',', '.') }}€</span>
                                 </p>
                             </div>
                         @endforeach
-
                     @endif
                 </div>
             </div>
@@ -230,7 +256,24 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
+        $(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+        });
+
         const successMessage = '{{ session('success') }}';
+
+        function toggleDetails(id) {
+            var details = document.getElementById(id);
+            if (details.style.display === "none") {
+                details.style.display = "block";
+            } else {
+                details.style.display = "none";
+            }
+        }
 
         $(document).on('click', '#addToCart', function() {
             var productId = $(this).data('product-id');
@@ -255,8 +298,9 @@
                                     title: "Adicionado ao carrinho!",
                                     showConfirmButton: false,
                                     timer: 1500
+                                }).then(() => {
+                                    location.reload();
                                 });
-                                updateCartContent(); // Atualizar o conteúdo do carrinho
                             },
                             error: function(response) {
                                 if (response.responseJSON.not_logged_id) {
@@ -284,78 +328,59 @@
             });
         });
 
-        function updateCartContent() {
+        function populateForm() {
             $.ajax({
-                type: 'GET',
-                url: '{{ route('cart.content') }}',
-                success: function(response) {
-                    let cartContent = '';
+                url: '/user/getProfile', // Ajuste essa URL conforme necessário
+                method: 'GET',
+                success: function(data) {
 
-                    response.products.forEach(product => {
-                        cartContent += `
-                        <div class="container overflow-hidden text-center">
-                            <h6>${product.name}</h6>
-                            <div class="row gx-2">
-                                <div class="col">
-                                    <div class="p-3">
-                                        <img src="${product.photo_1}" class="rounded" style="max-width: 50%">
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="p-3">
-                                        <p class="text-muted">Preço: ${product.price} €</p>
-                                        <p class="text-muted">Quantidade: ${product.quantity}</p>
-                                        <button class="btn btn-light decrease-quantity" data-id="${product.id}">-</button>
-                                        <button class="btn btn-light increase-quantity" data-id="${product.id}">+</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><br>
-                    `;
-                    });
-
-                    cartContent += `
-            <div class="pt-3">
-                <h6>Preço Total do Carrinho: ${response.totalPrice} €</h6>
-            </div>
-            <div class="text-center">
-                <a href="/cart-details" class="btn btn-primary">Ver Carrinho</a>
-            </div>`;
-
-                    $('#cart-content').html(cartContent);
+                    $('#name').val(data.name);
+                    $('#address').val(data.address);
+                    $('#email').val(data.email);
+                    $('#phone').val(data.phone);
+                    $('#vat_number').val(data.vat_number);
                 },
-                error: function(xhr) {
-                    alert('Error: ' + xhr.responseJSON.error); // Exibir mensagem de erro
+                error: function(error) {
+                    console.log('Erro ao buscar os dados do cliente:', error);
                 }
             });
         }
 
-        function updateQuantity(productId, change) {
-            $.ajax({
-                type: 'POST',
-                url: '{{ route('cart.updateQuantity') }}',
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    product_id: productId,
-                    change: change
-                },
-                success: function(response) {
-                    updateCartContent();
-                },
-                error: function(xhr) {
-                    alert('Error: ' + xhr.responseJSON.error); // Exibir mensagem de erro
-                }
-            });
-        }
-
-        $(document).on('click', '.decrease-quantity', function() {
-            const productId = $(this).data('id');
-            updateQuantity(productId, -1);
+        $(document).ready(function() {
+            populateForm();
         });
 
-        $(document).on('click', '.increase-quantity', function() {
-            const productId = $(this).data('id');
-            updateQuantity(productId, 1);
+        $(document).on('click', '#btn-profile', function() {
+            event.preventDefault();
+            var name = $('#profileForm').find('#name').val();
+            var address = $('#profileForm').find('#address').val();
+            var email = $('#profileForm').find('#email').val();
+            var phone = $('#profileForm').find('#phone').val();
+            var vat_number = $('#profileForm').find('#vat_number').val();
+
+            $.ajax({
+                url: '{{ route('user.updateProfile') }}',
+                method: 'POST',
+                data: {
+                    name: name,
+                    address: address,
+                    email: email,
+                    phone: phone,
+                    vat_number: vat_number
+                },
+                success: function(data) {
+                    Swal.fire({
+                        icon: "success",
+                        title: "Dados Atualizados com sucesso!",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    populateForm();
+                },
+                error: function(error) {
+                    console.log('Erro ao atualizar os dados do perfil:', error);
+                }
+            });
         });
     </script>
 </body>
