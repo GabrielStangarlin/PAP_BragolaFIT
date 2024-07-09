@@ -72,7 +72,12 @@ class CartController extends Controller
             $wishlist->products()->detach($productId);
         }
 
-        return response()->json($cart);
+        $totalItems = $cart->products->sum('pivot.quantity');
+
+        return response()->json([
+            'cart' => $cart,
+            'cartCounter' => $totalItems
+        ]);
     }
 
     public function getCartContent()
@@ -154,7 +159,7 @@ class CartController extends Controller
 
         $cartProduct->pivot->save();
 
-        return response()->json(['success' => true]);
+        return response()->json(['success' => true, 'cartCounter' => $cart->count()]);
     }
 
     public function removeItem(Request $request)

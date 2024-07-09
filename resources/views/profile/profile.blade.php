@@ -92,7 +92,7 @@
             <ul>
                 <li><a onclick="showContent('perfil')" style="cursor: pointer;">MEU PERFIL</a></li>
                 <li><a onclick="showContent('encomendas')" style="cursor: pointer;">MINHAS ENCOMENDAS</a></li>
-                <li><a onclick="showContent('desejos')" style="cursor: pointer;">LISTA DE DESEJOS</a></li>
+                <li><a onclick="showContent('desejos')" style="cursor: pointer;">LISTA DE FAVORITOS</a></li>
             </ul>
         </div>
         <div class="right-column">
@@ -219,8 +219,8 @@
             </div>
             <div id="desejos" class="content-section" style="display: none;">
                 <div class="card p-4">
-                    <h4>Lista de Desejos</h4>
-                    <p>Aqui estão os seus itens desejados.</p>
+                    <h4>Lista de Favoritos</h4>
+                    <p>Aqui estão os seus produtos pretendidos.</p>
                     @forelse ($products as $product)
                         <div class="card mb-4">
                             <div class="row g-0">
@@ -245,7 +245,7 @@
                             </div>
                         </div>
                     @empty
-                        <p>ainda não existe produtos na sua lista de desejos</p>
+                        <p>ainda não existe produtos na sua lista de favoritos</p>
                     @endforelse
                 </div>
             </div>

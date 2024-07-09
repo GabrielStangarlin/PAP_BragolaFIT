@@ -473,18 +473,20 @@
                         if (data.action === 'added') {
                             icon.classList.remove('fa-regular');
                             icon.classList.add('fa-solid');
-                            showSuccessToast('Produto adicionado aos favoritos!');
+                            showSuccessToast(
+                                'Produto adicionado aos favoritos! Consulte os teus favoritos na tua area de cliente.',
+                                true);
                         } else if (data.action === 'removed') {
                             icon.classList.remove('fa-solid');
                             icon.classList.add('fa-regular');
-                            showSuccessToast('Produto removido dos favoritos!');
+                            showSuccessToast('Produto removido dos favoritos!', false);
                         }
 
                     }
                 });
         }
 
-        function showSuccessToast(message) {
+        function showSuccessToast(message, isAdd = false) {
             Swal.fire({
                 toast: true,
                 icon: 'success',
@@ -492,13 +494,14 @@
                 showCloseButton: true,
                 showConfirmButton: false,
                 position: 'top-right',
-                timer: 2000,
+                timer: isAdd === true ? 4000 : 2000,
                 timerProgressBar: true,
                 customClass: {
                     popup: 'swal2-toast',
                 },
             });
         }
+
 
         document.addEventListener("DOMContentLoaded", function() {
 
