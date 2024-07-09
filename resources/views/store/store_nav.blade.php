@@ -31,16 +31,15 @@
             <!-- Parte superior da div -->
             <div class="d-flex justify-content-between align-items-center w-100">
                 <!-- Logo -->
-                <a href="/store" class="navbar-brand mb-0">
-                    <img src="{{ asset('img(s)/Bragola-Logo.png') }}" style="max-width: 150px; height: auto;">
+                <a href="/" class="navbar-brand mb-0">
+                    <img src="img(s)/Bragola-Logo.png" style="max-width: 150px; height: auto;">
                 </a>
-
                 <!-- Barra de Pesquisa -->
                 <form class="d-flex position-relative" style="width: 550px;" action="{{ route('search') }}"
                     method="GET">
                     <input class="form-control me-2" type="search" name="query"
                         placeholder="Encontre o melhor suplemento pra ti" aria-label="Search">
-                    <button class="btn border-0 position-absolute end-0 top-0 bottom-0" type="submit">
+                    <button class="btn border-0  end-0 top-0 bottom-0" type="submit">
                         <i class="fas fa-search"></i>
                     </button>
                 </form>
@@ -56,31 +55,27 @@
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item" href="{{ route('user.profile') }}">
                                     <i class="fa-solid fa-user"></i>
-                                    Profile
+                                    Perfil
                                 </a>
                                 <a class="dropdown-item" href="{{ route('user.logout') }}">
-                                    <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+                                    <i class="fa-solid fa-arrow-right-from-bracket"></i> Sair
                                 </a>
                             </div>
                         </div>
 
-                        <!-- Favoritos -->
-                        <a href="{{ route('user.profile') }}#desejos" class="btn bg-white me-3"><i
-                                class="fa-solid fa-heart"></i> Favoritos</a>
+
 
                         <!-- Carrinho -->
-                        <button class="btn bg-white" type="button" data-bs-toggle="offcanvas"
+                        <button class="btn bg-white position-relative" type="button" data-bs-toggle="offcanvas"
                             data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
                             <i class="bi-cart-fill me-1"></i>
                             Cart
                         </button>
                     </div>
                 @endauth
-
-                <!-- Entrar (para telas menores) -->
                 @if (!Auth::check())
                     <a href="/login" style="margin-left: 12%">
-                        <button class="btn bg-white d-lg-none" type="button">
+                        <button class="btn bg-white" type="button">
                             <i class="fas fa-user"></i> Entrar
                         </button>
                     </a>
@@ -476,11 +471,11 @@
                         if (data.action === 'added') {
                             icon.classList.remove('fa-regular');
                             icon.classList.add('fa-solid');
-                            showSuccessToast('Produto adicionado à lista de desejos!');
+                            showSuccessToast('Produto adicionado aos favoritos!');
                         } else if (data.action === 'removed') {
                             icon.classList.remove('fa-solid');
                             icon.classList.add('fa-regular');
-                            showSuccessToast('Produto removido da lista de desejos!');
+                            showSuccessToast('Produto removido dos favoritos!');
                         }
 
                     }
@@ -502,6 +497,24 @@
                 },
             });
         }
+
+        document.addEventListener("DOMContentLoaded", function() {
+
+            fetch('{{ route('wishlist.has-items') }}')
+                .then(response => response.json())
+                .then(data => {
+                    const wishlistIcon = document.getElementById('wishlist-icon').querySelector('i');
+                    if (data.has_items) {
+                        wishlistIcon.classList.remove('fa-regular');
+                        wishlistIcon.classList.add('fa-solid'); // Classe para ícone preenchido
+                    } else {
+                        wishlistIcon.classList.remove('fa-solid');
+                        wishlistIcon.classList.add('fa-regular'); // Classe para ícone vazio
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+
+        });
     </script>
 </body>
 

@@ -55,17 +55,15 @@
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item" href="{{ route('user.profile') }}">
                                     <i class="fa-solid fa-user"></i>
-                                    Profile
+                                    Perfil
                                 </a>
                                 <a class="dropdown-item" href="{{ route('user.logout') }}">
-                                    <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+                                    <i class="fa-solid fa-arrow-right-from-bracket"></i> Sair
                                 </a>
                             </div>
                         </div>
 
-                        <!-- Favoritos -->
-                        <a href="{{ route('user.profile') }}#desejos" class="btn bg-white me-3" id="wishlist-icon"><i
-                                class="fa-regular fa-heart"></i> Favoritos</a>
+
 
                         <!-- Carrinho -->
                         <button class="btn bg-white position-relative" type="button" data-bs-toggle="offcanvas"
@@ -205,7 +203,7 @@
             @endif
         </div>
     </div>
-    </div>
+
 
     @if (session('success'))
         <script>
@@ -310,7 +308,7 @@
                                                                 style="color: green; font-size: 0.9rem;">
                                                                 <i class="fa-solid fa-circle availability-icon"
                                                                     style="color: green; font-size: 0.6rem;"></i>
-                                                                <strong>Em estoque</strong>
+                                                                <strong>Em stock</strong>
                                                             </span>
                                                         @elseif ($product->quantity >= 1 && $product->quantity <= 6)
                                                             <span class="availability-status"
@@ -324,7 +322,7 @@
                                                                 style="color: red; font-size: 0.9rem;">
                                                                 <i class="fa-solid fa-circle availability-icon"
                                                                     style="color: red; font-size: 0.6rem;"></i>
-                                                                <strong>Fora de estoque</strong>
+                                                                <strong>Sem stock</strong>
                                                             </span>
                                                         @endif
                                                     </div>
@@ -660,7 +658,9 @@
                     if (data.action === 'added') {
                         icon.classList.remove('fa-regular');
                         icon.classList.add('fa-solid');
-                        showSuccessToast('Produto adicionado aos favoritos!');
+                        showSuccessToast(
+                            'Produto adicionado aos favoritos! Consulte os teus favoritos na tua area de cliente.'
+                        );
                     } else if (data.action === 'removed') {
                         icon.classList.remove('fa-solid');
                         icon.classList.add('fa-regular');

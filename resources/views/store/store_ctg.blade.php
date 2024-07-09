@@ -39,7 +39,7 @@
                                         <span class="availability-status" style="color: green; font-size: 0.9rem;">
                                             <i class="fa-solid fa-circle availability-icon"
                                                 style="color: green; font-size: 0.6rem;"></i>
-                                            <strong>Em estoque</strong>
+                                            <strong>Em stock</strong>
                                         </span>
                                     @elseif ($product->quantity >= 1 && $product->quantity <= 6)
                                         <span class="availability-status" style="color: orange; font-size: 0.9rem;">
@@ -51,7 +51,7 @@
                                         <span class="availability-status" style="color: red; font-size: 0.9rem;">
                                             <i class="fa-solid fa-circle availability-icon"
                                                 style="color: red; font-size: 0.6rem;"></i>
-                                            <strong>Fora de estoque</strong>
+                                            <strong>Sem stock</strong>
                                         </span>
                                     @endif
                                 </div>

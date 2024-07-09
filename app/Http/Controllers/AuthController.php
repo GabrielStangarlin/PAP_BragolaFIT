@@ -27,10 +27,10 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             if (Auth::user()->isAdmin == 1) {
-                return redirect('/db')->with('success', 'Usuário Administrador Logado');
+                return redirect('/db')->with('success', 'Utilizador Administrador Logado');
             }
 
-            return redirect('/store')->with('success', 'Utilizador logado com sucesso');
+            return redirect('/store')->with('success', 'Sessão iniciada com sucesso');
         }
 
         return redirect()->back()->with('error', 'Email ou Senha Errados');

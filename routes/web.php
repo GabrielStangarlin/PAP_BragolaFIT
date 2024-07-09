@@ -104,4 +104,3 @@ Route::get('/search', [SiteController::class, 'search'])->name('search');
 
 Route::get('/payment', [PaymentController::class, 'index'])->name('payment.process');
 
-
