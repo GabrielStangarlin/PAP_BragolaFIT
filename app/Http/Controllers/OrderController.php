@@ -66,6 +66,28 @@ class OrderController extends Controller
             $cartItems = Cart::with('products')->where('user_id', $user->id)->get();
             $totalPrice = 0;
             $products = [];
+            $insufficientStockProducts = [];
+
+            foreach ($cartItems as $cartItem) {
+                foreach ($cartItem->products as $product) {
+                    // Acessa a quantidade da tabela pivot
+                    $quantity = $product->pivot->quantity;
+
+                    $itemTotalValue = $product->price * $quantity;
+
+                    $productInStock = Product::find($product->id);
+
+                    if ($productInStock) {
+                        if ($productInStock->quantity < $quantity) {
+                            $insufficientStockProducts[] = $productInStock->name;
+                        }
+                    }
+                }
+            }
+
+            if (!empty($insufficientStockProducts)) {
+                throw new \Exception('Quantidade insuficiente para os produtos: ' . implode(', ', $insufficientStockProducts));
+            }
 
             foreach ($cartItems as $cartItem) {
                 foreach ($cartItem->products as $product) {
@@ -85,9 +107,6 @@ class OrderController extends Controller
                     $productInStock = Product::find($product->id);
 
                     if ($productInStock) {
-                        if ($productInStock->quantity < $quantity) {
-                            throw new \Exception('Quantidade insuficiente para o produto: '.$productInStock->name);
-                        }
                         $productInStock->quantity -= $quantity;
                         $productInStock->save();
                     }
@@ -111,6 +130,8 @@ class OrderController extends Controller
             return response()->json(['status' => 'error', 'message' => $e->getMessage()], 500);
         }
     }
+
+
 
     public function orderInfo(Request $request)
     {

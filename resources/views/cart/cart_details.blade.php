@@ -241,7 +241,7 @@
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Oops...',
-                                text: 'Houve um erro ao finalizar sua compra. Por favor, tente novamente.'
+                                text: data.message // Exibe a mensagem de erro específica
                             });
                         }
                     })
