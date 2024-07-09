@@ -1,4 +1,4 @@
-{{-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt">
 
 <head>
@@ -23,27 +23,17 @@
 </head>
 
 <body>
-    <!-- Navigation-->
-    <div class="navbar navbar-expand-lg navbar-light " style="background-color:#ffffff; height: 100px;">
+    <div class="navbar navbar-expand-lg navbar-light sticky-top" style="background-color:#ffffff; height: 100px;">
         <div class="container px-4 px-lg-5 d-flex flex-column justify-content-between align-items-center">
             <!-- Parte superior da div -->
             <div class="d-flex justify-content-between align-items-center w-100">
                 <!-- Logo -->
-                <a href="/" class="navbar-brand mb-0">
+                <a href="/store" class="navbar-brand mb-0">
                     <img src="img(s)/Bragola-Logo.png" style="max-width: 150px; height: auto;">
                 </a>
-                <!-- Barra de Pesquisa -->
-                <form class="d-flex position-relative" style="width: 550px;" action="{{ route('search') }}"
-                    method="GET">
-                    <input class="form-control me-2" type="search" name="query"
-                        placeholder="Encontre o melhor suplemento pra ti" aria-label="Search">
-                    <button class="btn border-0  end-0 top-0 bottom-0" type="submit">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </form>
 
                 @auth
-                    <div class="d-flex justify-content-end align-items-center w-900 mt-3">
+                    <div class="d-flex justify-content-end align-items-center w-900 ">
                         <!-- Usuário -->
                         <div class="dropdown me-3">
                             <button class="btn bg-white" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
@@ -60,29 +50,19 @@
                                 </a>
                             </div>
                         </div>
-
-                        <!-- Favoritos -->
-                        <a href="{{ route('user.profile') }}#desejos" class="btn bg-white me-3" id="wishlist-icon"><i
-                                class="fa-regular fa-heart"></i> Favoritos</a>
-
-                        <!-- Carrinho -->
-                        <button class="btn bg-white position-relative" type="button" data-bs-toggle="offcanvas"
-                            data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
-                            <i class="bi-cart-fill me-1"></i>
-                            Cart
-                        </button>
                     </div>
                 @endauth
                 @if (!Auth::check())
                     <a href="/login" style="margin-left: 12%">
                         <button class="btn bg-white" type="button">
-                            <i class="fas fa-user"></i> Entrar
+                            <i class="fas fa-user"></i>Entrar
                         </button>
                     </a>
                 @endif
             </div>
         </div>
     </div>
+
     @if (session('success'))
         <script>
             document.addEventListener('DOMContentLoaded', function() {
@@ -110,7 +90,7 @@
             <ul>
                 <li><a onclick="showContent('perfil')" style="cursor: pointer;">MEU PERFIL</a></li>
                 <li><a onclick="showContent('encomendas')" style="cursor: pointer;">MINHAS ENCOMENDAS</a></li>
-                <li><a onclick="showContent('desejos')" style="cursor: pointer;">LISTA DOS FAVORITOS</a></li>
+                <li><a onclick="showContent('desejos')" style="cursor: pointer;">LISTA DE DESEJOS</a></li>
             </ul>
         </div>
         <div class="right-column">
@@ -232,14 +212,14 @@
             </div>
             <div id="desejos" class="content-section" style="display: none;">
                 <div class="card p-4">
-                    <h4>Lista de favoritos</h4>
-                    <p>Aqui estão os seus produtos pretendidos.</p>
+                    <h4>Lista de Desejos</h4>
+                    <p>Aqui estão os seus itens desejados.</p>
                     @forelse ($products as $product)
-                        <div class="card mb-4" style="height: 5%">
+                        <div class="card mb-4">
                             <div class="row g-0">
                                 <div class="col-md-4 text-center p-3">
                                     <img src="{{ $product->photo_1 }}" class="img-fluid rounded"
-                                        style="max-width: 50%;">
+                                        style="max-width: 100%;">
                                 </div>
                                 <div class="col-md-8">
                                     <div class="card-body">
@@ -258,14 +238,15 @@
                             </div>
                         </div>
                     @empty
-                        <p>ainda não existe produtos na sua lista de favoritos</p>
+                        <p>ainda não existe produtos na sua lista de desejos</p>
                     @endforelse
                 </div>
             </div>
         </div>
     </div>
 
-</body>
+
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Script JavaScript Botão Topo -->
@@ -294,22 +275,22 @@
             }
         }
 
-    $(document).on('click', '#addToCart', function() {
-        var productId = $(this).data('product-id');
+        $(document).on('click', '#addToCart', function() {
+            var productId = $(this).data('product-id');
 
-        $.ajax({
-            type: 'GET',
-            url: '/check-product-quantity/' + productId,
-            success: function(response) {
-                if (response.quantity > 0) {
-                    // Adicionar ao carrinho se a quantidade for maior que 0
-                    $.ajax({
-                        type: 'POST',
-                        url: '/add-to-cart',
-                        data: {
-                            _token: '{{ csrf_token() }}',
-                            productId: productId
-                        },
+            $.ajax({
+                type: 'GET',
+                url: '/check-product-quantity/' + productId,
+                success: function(response) {
+                    if (response.quantity > 0) {
+                        // Adicionar ao carrinho se a quantidade for maior que 0
+                        $.ajax({
+                            type: 'POST',
+                            url: '/add-to-cart',
+                            data: {
+                                _token: '{{ csrf_token() }}',
+                                productId: productId
+                            },
 
                             success: function(response) {
                                 Swal.fire({
@@ -317,8 +298,9 @@
                                     title: "Adicionado ao carrinho!",
                                     showConfirmButton: false,
                                     timer: 1500
+                                }).then(() => {
+                                    location.reload();
                                 });
-                                updateCartContent(); // Atualizar o conteúdo do carrinho
                             },
                             error: function(response) {
                                 if (response.responseJSON.not_logged_id) {
@@ -402,6 +384,5 @@
         });
     </script>
 </body>
-
 
 </html>
