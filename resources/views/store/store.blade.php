@@ -50,7 +50,7 @@
                         <div class="dropdown me-3">
                             <button class="btn bg-white" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-user"></i> {{ Auth::user()->name }}
+                                <i class="fas fa-user"></i>{{ Auth::user()->name }}
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item" href="{{ route('user.profile') }}">
@@ -70,6 +70,10 @@
                             data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
                             <i class="bi-cart-fill me-1"></i>
                             Cart
+                            <span id="cart-badge"
+                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                                style="display: none;">
+                            </span>
                         </button>
                     </div>
                 @endauth
@@ -497,6 +501,7 @@
 
     const successMessage = '{{ session('success') }}'
 
+
     $(document).on('click', '#addToCart', function() {
         var productId = $(this).data('product-id');
 
@@ -521,7 +526,12 @@
                                 timer: 1500
                             });
 
-                            updateCartContent(); // Atualizar o conteúdo do carrinho
+                            // Atualizar o conteúdo do carrinho
+                            updateCartContent();
+
+                            // Atualizar a bolinha do carrinho 
+                            updateCartBadge(response.cartCounter);
+
                         },
                         error: function(response) {
                             if (response.responseJSON.not_logged_id) {
@@ -549,6 +559,27 @@
         });
     });
 
+
+
+    function updateCartBadge(count) {
+        var cartBadge = $('#cart-badge');
+        if (count > 0) {
+            cartBadge.html(count);
+            cartBadge.show();
+        } else {
+            cartBadge.hide();
+        }
+    }
+
+    $(document).ready(function() {
+        @php
+            $cart = \App\Models\Cart::where('user_id', Auth::id())->first();
+            $initialCartItemCount = $cart ? $cart->products->sum('pivot.quantity') : 0;
+        @endphp
+        var initialCartItemCount = {{ $initialCartItemCount }};
+        updateCartBadge(initialCartItemCount);
+    });
+
     function updateCartQuantity(productId, action) {
         $.ajax({
             type: 'POST',
@@ -563,9 +594,12 @@
                     $('#cart-content').html(
                         '<div class="d-flex flex-column align-items-center text-center"><i class="fa-solid fa-box fa-bounce mb-2" style="font-size: 3rem;"></i><p class="text-muted">De momento o seu carrinho está vazio.</p></div>'
                     );
+
                 } else {
                     updateCartContent();
+
                 }
+                updateCartBadge(response.cartCounter);
             },
             error: function(xhr) {
                 Swal.fire({
@@ -586,6 +620,7 @@
     $(document).on('click', '.decrease-quantity', function() {
         var productId = $(this).data('id');
         updateCartQuantity(productId, 'decrease');
+
     });
 
     function updateCartContent() {
@@ -596,7 +631,6 @@
                 let cartContent = '';
 
                 response.products.forEach(product => {
-                    console.log(product);
                     cartContent += `
                         <div class="container overflow-hidden text-center">
                             <h6>${product.name}</h6>
@@ -628,6 +662,7 @@
                     </div>`;
 
                 $('#cart-content').html(cartContent);
+                updateCartBadge(response.totalItems);
             },
             error: function(xhr) {
                 alert('Error: ' + xhr.responseJSON.error); // Exibir mensagem de erro
@@ -659,19 +694,19 @@
                         icon.classList.remove('fa-regular');
                         icon.classList.add('fa-solid');
                         showSuccessToast(
-                            'Produto adicionado aos favoritos! Consulte os teus favoritos na tua area de cliente.'
-                        );
+                            'Produto adicionado aos favoritos! Consulte os teus favoritos na tua area de cliente.',
+                            true);
                     } else if (data.action === 'removed') {
                         icon.classList.remove('fa-solid');
                         icon.classList.add('fa-regular');
-                        showSuccessToast('Produto removido dos favoritos!');
+                        showSuccessToast('Produto removido dos favoritos!', false);
                     }
 
                 }
             });
     }
 
-    function showSuccessToast(message) {
+    function showSuccessToast(message, isAdd = false) {
         Swal.fire({
             toast: true,
             icon: 'success',
@@ -679,7 +714,7 @@
             showCloseButton: true,
             showConfirmButton: false,
             position: 'top-right',
-            timer: 2000,
+            timer: isAdd === true ? 4000 : 2000,
             timerProgressBar: true,
             customClass: {
                 popup: 'swal2-toast',
