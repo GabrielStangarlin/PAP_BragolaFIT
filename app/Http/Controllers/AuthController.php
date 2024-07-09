@@ -65,6 +65,6 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        return redirect('/store')->with('success', 'utilizador criado com sucesso');
+        return redirect('/store')->with('success', 'Utilizador criado com sucesso');
     }
 }

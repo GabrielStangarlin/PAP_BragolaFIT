@@ -38,6 +38,8 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('user.logout');
 
 Route::get('/profile', [UserController::class, 'profile'])->name('user.profile');
 Route::post('/profilepost', [UserController::class, 'updateProfile'])->name('user.updateProfile');
+Route::get('/user/getProfile', [UserController::class, 'getProfile'])->name('user.getProfile');
+
 
 //Carrinho de compras
 Route::get('/check-product-quantity/{id}', [CartController::class, 'checkProductQuantity']);
