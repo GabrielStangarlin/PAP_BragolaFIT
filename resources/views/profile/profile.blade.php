@@ -20,6 +20,8 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <link rel="stylesheet" href="/css/store.css">
+
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 <body>
@@ -128,7 +130,7 @@
                 </div>
                 <div class="card p-4 mt-4">
                     <h4>Alterar Password</h4>
-                    <form method="POST">
+                    <form id="passwordForm" method="POST">
                         @csrf
                         <div class="form-group mb-3">
                             <label for="current-password">Password atual</label>
@@ -142,7 +144,7 @@
                             <label for="confirm-password">Confirmar Nova Password</label>
                             <input type="password" id="confirm-password" class="form-control">
                         </div>
-                        <button class="btn btn-primary">Alterar Password</button>
+                        <button id="btn-password" class="btn btn-primary">Alterar Password</button>
                     </form>
                 </div>
             </div>
@@ -162,8 +164,12 @@
                             <div class="order-summary border rounded mt-4 p-2"
                                 onclick="toggleDetails('details-{{ $order->id }}')"
                                 style="cursor: pointer; position: relative;">
-                                <p style="margin-bottom: 0;"><strong>Encomenda #{{ $order->id }}</strong> - Total:
-                                    {{ number_format($totalPrice, 2, ',', '.') }}€</p>
+                                <p style="margin-bottom: 0;">
+                                    <strong>Encomenda #{{ $order->id }}</strong> - Total:
+                                    {{ number_format($totalPrice, 2, ',', '.') }}€
+                                    <span style="float: right; margin-right: 25px;">Data da encomenda:
+                                        {{ \Carbon\Carbon::parse($order->created_at)->format('d/m/Y') }}</span>
+                                </p>
                                 <i class="fa-solid fa-caret-down"
                                     style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%);"></i>
                             </div>
@@ -199,6 +205,7 @@
                                     @elseif($order->order_status == 2)
                                         <span style="font-weight: bold; color:green">Entregue</span>
                                     @endif
+                                    - {{ \Carbon\Carbon::parse($order->updated_at)->format('d/m/Y') }}
                                 </p>
                                 <p>Endereço de entrega: <span
                                         style="font-weight: bold">{{ $order->ship_address }}</span></p>
@@ -379,6 +386,52 @@
                 },
                 error: function(error) {
                     console.log('Erro ao atualizar os dados do perfil:', error);
+                }
+            });
+        });
+
+        $(document).on('click', '#btn-password', function(event) {
+            event.preventDefault();
+
+            var currentPassword = $('#passwordForm').find('#current-password').val();
+            var newPassword = $('#passwordForm').find('#new-password').val();
+            var confirmPassword = $('#passwordForm').find('#confirm-password').val();
+
+            if (newPassword !== confirmPassword) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Erro",
+                    text: "As novas senhas não batem.",
+                });
+                return;
+            }
+
+            $.ajax({
+                url: '{{ route('user.updatePassword') }}',
+                method: 'POST',
+                data: {
+                    current_password: currentPassword,
+                    new_password: newPassword
+                },
+                success: function(data) {
+                    Swal.fire({
+                        icon: "success",
+                        title: "Senha atualizada com sucesso!",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    $('#passwordForm')[0].reset();
+                },
+                error: function(error) {
+                    if (error.responseJSON && error.responseJSON.message) {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Erro",
+                            text: error.responseJSON.message,
+                        });
+                    } else {
+                        console.log('Erro ao atualizar a senha:', error);
+                    }
                 }
             });
         });

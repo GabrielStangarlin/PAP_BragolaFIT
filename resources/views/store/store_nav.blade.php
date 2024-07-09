@@ -32,7 +32,7 @@
             <div class="d-flex justify-content-between align-items-center w-100">
                 <!-- Logo -->
                 <a href="/" class="navbar-brand mb-0">
-                    <img src="img(s)/Bragola-Logo.png" style="max-width: 150px; height: auto;">
+                    <img src="/img(s)/Bragola-Logo.png" style="max-width: 150px; height: auto;">
                 </a>
                 <!-- Barra de Pesquisa -->
                 <form class="d-flex position-relative" style="width: 550px;" action="{{ route('search') }}"

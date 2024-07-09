@@ -36,10 +36,11 @@ Route::get('/login', [AuthController::class, 'login'])->name('user.login');
 Route::post('/loginPost', [AuthController::class, 'loginPost'])->name('user.loginPost');
 Route::get('/logout', [AuthController::class, 'logout'])->name('user.logout');
 
+//profile
 Route::get('/profile', [UserController::class, 'profile'])->name('user.profile');
 Route::post('/profilepost', [UserController::class, 'updateProfile'])->name('user.updateProfile');
 Route::get('/user/getProfile', [UserController::class, 'getProfile'])->name('user.getProfile');
-
+Route::post('/user/update-password', [UserController::class, 'updatePassword'])->name('user.updatePassword');
 
 //Carrinho de compras
 Route::get('/check-product-quantity/{id}', [CartController::class, 'checkProductQuantity']);

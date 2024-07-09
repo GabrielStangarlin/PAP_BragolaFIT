@@ -99,10 +99,15 @@ class SiteController extends Controller
         $productCount = Product::count();
         $orderCount = Order::count();
 
-        return view('dashboard.dHome', compact('userCount', 'productCount', 'orderCount'));
+        if(Auth::user()->isAdmin == 1)
+        {
+            return view('dashboard.dHome', compact('userCount', 'productCount', 'orderCount'));
+        }else {
+            return redirect()->route('store');
+        }
     }
 
-    
+
     public function search(Request $request)
     {
         $query = $request->input('query');
@@ -111,8 +116,8 @@ class SiteController extends Controller
         $products = Product::where('name', 'LIKE', "%{$query}%")->get();
 
         // Obtém os IDs dos produtos na wishlist do usuário autenticado
-        $wishlistProductIds = auth()->check() && auth()->user()->wishlist 
-        ? auth()->user()->wishlist->pluck('id')->toArray() 
+        $wishlistProductIds = auth()->check() && auth()->user()->wishlist
+        ? auth()->user()->wishlist->pluck('id')->toArray()
         : [];
 
 

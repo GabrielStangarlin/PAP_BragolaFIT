@@ -252,7 +252,7 @@
     }
 
     .error-message {
-        color: rgb(255, 255, 255);
+        color: rgb(255, 0, 0);
         font-size: 12px;
         margin-bottom: 10px;
         display: none;
