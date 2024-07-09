@@ -333,7 +333,9 @@
                                     icon: "success",
                                     title: "Adicionado ao carrinho!",
                                     showConfirmButton: false,
-                                    timer: 1500
+                                    timer: 1500,
+                                    toast: true,
+                                    position: 'top-end'
                                 });
                                 updateCartContent(); // Atualizar o conteúdo do carrinho
                             },
