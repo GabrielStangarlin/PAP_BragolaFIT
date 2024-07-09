@@ -261,3 +261,9 @@ Estilo da div que contém o botão
     padding: 0.6em 0.9em;
     font-size: 0.75em;
 }
+
+.not-allowed {
+    cursor: not-allowed;
+}
+
+

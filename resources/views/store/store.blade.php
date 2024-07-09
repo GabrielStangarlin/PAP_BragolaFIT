@@ -582,7 +582,7 @@
         updateCartBadge(initialCartItemCount);
     });
 
-    function updateCartQuantity(productId, action) {
+    function updateCartQuantity(productId, action, callback) {
         $.ajax({
             type: 'POST',
             url: '/cart-update',
@@ -596,12 +596,11 @@
                     $('#cart-content').html(
                         '<div class="d-flex flex-column align-items-center text-center"><i class="fa-solid fa-box fa-bounce mb-2" style="font-size: 3rem;"></i><p class="text-muted">De momento o seu carrinho está vazio.</p></div>'
                     );
-
                 } else {
                     updateCartContent();
-
                 }
                 updateCartBadge(response.cartCounter);
+                if (callback) callback();
             },
             error: function(xhr) {
                 Swal.fire({
@@ -610,19 +609,35 @@
                     text: xhr.responseJSON.error,
                     showConfirmButton: true
                 });
+                if (callback) callback();
             }
         });
     }
 
+    function disableButton($button) {
+        $button.prop('disabled', true).css('cursor', 'not-allowed');
+    }
+
+    function enableButton($button) {
+        $button.prop('disabled', false).css('cursor', 'pointer');
+    }
+
     $(document).on('click', '.increase-quantity', function() {
         var productId = $(this).data('id');
-        updateCartQuantity(productId, 'increase');
+        var $button = $(this);
+        disableButton($button);
+        updateCartQuantity(productId, 'increase', function() {
+            enableButton($button);
+        });
     });
 
     $(document).on('click', '.decrease-quantity', function() {
         var productId = $(this).data('id');
-        updateCartQuantity(productId, 'decrease');
-
+        var $button = $(this);
+        disableButton($button);
+        updateCartQuantity(productId, 'decrease', function() {
+            enableButton($button);
+        });
     });
 
     function updateCartContent() {

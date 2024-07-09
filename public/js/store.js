@@ -39,13 +39,24 @@ document.addEventListener('DOMContentLoaded', function () {
 function showContent(section) {
     // Esconde todas as seções de conteúdo
     const sections = document.querySelectorAll('.content-section');
-    sections.forEach(function (section) {
+    sections.forEach(function(section) {
         section.style.display = 'none';
     });
 
     // Mostra a seção selecionada
     document.getElementById(section).style.display = 'block';
+
+    // Remove a classe 'active-link' de todos os links
+    const links = document.querySelectorAll('.left-column ul li a');
+    links.forEach(function(link) {
+        link.classList.remove('active-link');
+    });
+
+    // Adiciona a classe 'active-link' ao link clicado
+    const currentLink = document.querySelector(`a[data-section="${section}"]`);
+    currentLink.classList.add('active-link');
 }
+
 
 
 
