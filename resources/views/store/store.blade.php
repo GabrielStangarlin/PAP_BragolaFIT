@@ -191,7 +191,7 @@
                         <h6>Preço Total do Carrinho: {{ number_format($totalPrice, 2, ',', '.') }} €</h6>
                     </div>
                     <div class="text-center">
-                        <a href="/cart-details" class="btn btn-primary">Ver Carrinho</a>
+                        <a href="/cart-details" class="btn btn-checkout">Ver Carrinho</a>
                     </div>
                 @else
                     <div class="d-flex flex-column align-items-center text-center">
@@ -448,7 +448,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4 mb-4">
-                    <h5 class="text-white"><span style="color: rgb(119, 0, 0)">LOCALIDADES</span></h5>
+                    <h5 class="text-white"><span style="color: rgb(133, 31, 0)">LOCALIDADES</span></h5>
                     <ul class="list-unstyled text-white">
                         <li>LISBOA</li>
                         <li>BEJA</li>
@@ -457,7 +457,7 @@
                     </ul>
                 </div>
                 <div class="col-md-4 mb-4">
-                    <h5 class="text-white"><span style="color: rgb(119, 0, 0)">LINKS RÁPIDOS</span></h5>
+                    <h5 class="text-white"><span style="color: rgb(133, 31, 0)">LINKS RÁPIDOS</span></h5>
                     <ul class="list-unstyled text-white">
                         <li>Preços</li>
                         <li>Blog</li>
@@ -465,7 +465,7 @@
                     </ul>
                 </div>
                 <div class="col-md-4 mb-4">
-                    <h5 class="text-white"><span style="color: rgb(119, 0, 0)">REDES SOCIAIS</span></h5>
+                    <h5 class="text-white"><span style="color: rgb(133, 31, 0)">REDES SOCIAIS</span></h5>
                     <!-- Aqui você pode adicionar seus ícones de mídia social -->
                     <ul class="list-unstyled">
                         <li><i class="fab fa-instagram fa-lg text-white mr-3"></i></li>
@@ -675,7 +675,7 @@
                         <h6>Preço Total do Carrinho: ${response.totalPrice} €</h6>
                     </div>
                     <div class="text-center">
-                        <a href="/cart-details" class="btn btn-primary">Ver Carrinho</a>
+                        <a href="/cart-details" class="btn " style=" background-color: rgb(119, 0, 0); color: white;">Ver Carrinho</a>
                     </div>`;
 
                 $('#cart-content').html(cartContent);

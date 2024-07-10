@@ -266,4 +266,13 @@ Estilo da div que contém o botão
     cursor: not-allowed;
 }
 
+.btn-checkout{
+    background-color: rgb(119, 0, 0);
+    color: white;
+}
+
+.btn-checkout:hover{
+    background-color: rgb(133, 6, 6);
+    color: white;
+}
 

@@ -186,4 +186,69 @@ class CartController extends Controller
 
         return response()->json(['success' => false, 'message' => 'Produto não encontrado no carrinho.']);
     }
+
+
+    //mario
+    public function increaseQuantity(Request $request)
+    {
+        $productId = $request->productId;
+        $user = Auth::id();
+        $cart = Cart::where('user_id', $user)->first();
+
+        if ($cart) {
+            $product = $cart->products()->where('product_id', $productId)->first();
+
+            if ($product) {
+                $product->pivot->quantity += 1;
+                $product->pivot->save();
+                $totalPrice = $cart->products->sum(function ($product) {
+                    return $product->price * $product->pivot->quantity;
+                });
+
+                return response()->json(['success' => true, 'message' => 'Quantidade aumentada com sucesso!', 'quantity' => $product->pivot->quantity, 'totalPrice' => $totalPrice]);
+            }
+        }
+
+        return response()->json(['success' => false, 'message' => 'Produto não encontrado no carrinho.']);
+    }
+
+    public function decreaseQuantity(Request $request)
+    {
+        $productId = $request->productId;
+        $user = Auth::id();
+        $cart = Cart::where('user_id', $user)->first();
+    
+        if ($cart) {
+            $product = $cart->products()->where('product_id', $productId)->first();
+    
+            if ($product) {
+                if ($product->pivot->quantity > 1) {
+                    $product->pivot->quantity -= 1;
+                    $product->pivot->save();
+                    $totalPrice = $cart->products->sum(function ($product) {
+                        return $product->price * $product->pivot->quantity;
+                    });
+    
+                    return response()->json(['success' => true, 'message' => 'Quantidade diminuída com sucesso!', 'quantity' => $product->pivot->quantity, 'totalPrice' => $totalPrice]);
+                } else {
+                    // Remove item if quantity is 1
+                    return $this->removeItem($request);
+                }
+            }
+        }
+    
+        return response()->json(['success' => false, 'message' => 'Produto não encontrado no carrinho ou quantidade já está em 1.']);
+    }
+
+    public function cartDe()
+{
+    $user = Auth::id();
+    $cart = Cart::where('user_id', $user)->with('products')->first();
+    
+    if ($cart) {
+        return response()->json(['success' => true, 'cart' => $cart]);
+    }
+    
+    return response()->json(['success' => false, 'message' => 'Carrinho não encontrado.']);
+}
 }

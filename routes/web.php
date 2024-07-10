@@ -12,6 +12,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\WishlistController;
 use Illuminate\Support\Facades\Route;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -106,4 +107,11 @@ Route::get('/wishlist/has-items', [WishlistController::class, 'hasWishlistItems'
 Route::get('/search', [SiteController::class, 'search'])->name('search');
 
 Route::get('/payment', [PaymentController::class, 'index'])->name('payment.process');
+
+
+
+//teste
+Route::post('/cart/increase', [CartController::class, 'increaseQuantity'])->name('cart.increase');
+Route::post('/cart/decrease', [CartController::class, 'decreaseQuantity'])->name('cart.decrease');
+Route::get('/cart/de', [CartController::class, 'cartDe'])->name('cart.de');
 

@@ -26,10 +26,10 @@
                                 <a onclick="toggleWishlist({{ $product->id }})" class="position-absolute top-0 end-0 m-2"
                                     id="wishlist-button-{{ $product->id }}">
                                     @if (in_array($product->id, $wishlistProductIds))
-                                        <i class="fa-solid fa-heart" style="color: red; font-size: 1.5rem;"
+                                        <i class="fa-solid fa-heart" style="color: red; font-size: 1.5rem; cursor: pointer;"
                                             id="wishlist-icon-{{ $product->id }}"></i>
                                     @else
-                                        <i class="fa-regular fa-heart" style="color: red; font-size: 1.5rem;"
+                                        <i class="fa-regular fa-heart" style="color: red; font-size: 1.5rem; cursor: pointer;"
                                             id="wishlist-icon-{{ $product->id }}"></i>
                                     @endif
                                 </a>

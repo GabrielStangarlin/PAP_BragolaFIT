@@ -213,7 +213,7 @@
                         <h6>Preço Total do Carrinho: {{ number_format($totalPrice, 2, ',', '.') }} €</h6>
                     </div>
                     <div class="text-center">
-                        <a href="/cart-details" class="btn btn-primary">Ver Carrinho</a>
+                        <a href="/cart-details" class="btn btn-checkout">Ver Carrinho</a>
                     </div>
                 @else
                     <div class="d-flex flex-column align-items-center text-center">
@@ -259,7 +259,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
-                    <h5 class="text-white"><span style="color: rgb(119, 0, 0)">LOCALIDADES</span></h5>
+                    <h5 class="text-white"><span style="color: rgb(133, 31, 0)">LOCALIDADES</span></h5>
                     <ul class="text-white">
                         <li>LISBOA</li>
                         <li>BEJA</li>
@@ -268,7 +268,7 @@
                     </ul>
                 </div>
                 <div class="col-md-4">
-                    <h5 class="text-white"><span style="color: rgb(119, 0, 0)">LINKS RÁPIDOS</span></h5>
+                    <h5 class="text-white"><span style="color: rgb(133, 31, 0)">LINKS RÁPIDOS</span></h5>
                     <ul class="text-white">
                         <li>Preços</li>
                         <li>Blog</li>
@@ -276,7 +276,7 @@
                     </ul>
                 </div>
                 <div class="col-md-4">
-                    <h5 class="text-white"><span style="color: rgb(119, 0, 0)">REDES SOCIAIS</span></h5>
+                    <h5 class="text-white"><span style="color: rgb(133, 31, 0)">REDES SOCIAIS</span></h5>
                     <!-- Aqui você pode adicionar seus ícones de mídia social -->
                     <ul style="color: #f0f0f0">
                         <li><i class="fa-brands fa-instagram fa-lg" style="color: #ffffff;"></i></li>
@@ -398,7 +398,8 @@
             updateCartBadge(initialCartItemCount);
         });
 
-        function updateCartQuantity(productId, action) {
+
+        function updateCartQuantity(productId, action, callback) {
             $.ajax({
                 type: 'POST',
                 url: '/cart-update',
@@ -412,12 +413,75 @@
                         $('#cart-content').html(
                             '<div class="d-flex flex-column align-items-center text-center"><i class="fa-solid fa-box fa-bounce mb-2" style="font-size: 3rem;"></i><p class="text-muted">De momento o seu carrinho está vazio.</p></div>'
                         );
-
                     } else {
                         updateCartContent();
-
                     }
                     updateCartBadge(response.cartCounter);
+                    if (callback) callback();
+                },
+                error: function(xhr) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Erro",
+                        text: xhr.responseJSON.error,
+                        showConfirmButton: true
+                    });
+                    if (callback) callback();
+                }
+            });
+        }
+
+        // $(document).on('click', '.increase-quantity', function() {
+        //     var productId = $(this).data('id');
+        //     updateCartQuantity(productId, 'increase');
+        // });
+
+        // $(document).on('click', '.decrease-quantity', function() {
+        //     var productId = $(this).data('id');
+        //     updateCartQuantity(productId, 'decrease');
+
+        // });
+
+        function updateCartContent() {
+            $.ajax({
+                type: 'GET',
+                url: '{{ route('cart.content') }}',
+                success: function(response) {
+                    let cartContent = '';
+
+                    response.products.forEach(product => {
+                        cartContent += `
+                    <div class="container overflow-hidden text-center">
+                        <h6>${product.name}</h6>
+                        <div class="row gx-2">
+                            <div class="col">
+                                <div class="p-3">
+                                    <img src="${product.photo_1}" class="rounded" style="max-width: 50%">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="p-3">
+                                    <p class="text-muted">Preço: ${product.price} €</p>
+                                    <p class="text-muted">Quantidade: ${product.quantity}</p>
+                                    <button class="btn btn-light decrease-quantity" data-id="${product.id}">-</button>
+                                    <button class="btn btn-light increase-quantity" data-id="${product.id}">+</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div><br>
+                `;
+                    });
+
+                    cartContent += `
+                <div class="pt-3">
+                    <h6>Preço Total do Carrinho: ${response.totalPrice} €</h6>
+                </div>
+                <div class="text-center">
+                    <a href="/cart-details" class="btn" style="background-color: rgb(119, 0, 0); color: white;">Ver Carrinho</a>
+                </div>`;
+
+                    $('#cart-content').html(cartContent);
+                    updateCartBadge(response.totalItems);
                 },
                 error: function(xhr) {
                     Swal.fire({
@@ -430,63 +494,10 @@
             });
         }
 
-        $(document).on('click', '.increase-quantity', function() {
-            var productId = $(this).data('id');
-            updateCartQuantity(productId, 'increase');
-        });
 
-        $(document).on('click', '.decrease-quantity', function() {
-            var productId = $(this).data('id');
-            updateCartQuantity(productId, 'decrease');
 
-        });
 
-        function updateCartContent() {
-            $.ajax({
-                type: 'GET',
-                url: '{{ route('cart.content') }}',
-                success: function(response) {
-                    let cartContent = '';
 
-                    response.products.forEach(product => {
-                        cartContent += `
-                            <div class="container overflow-hidden text-center">
-                                <h6>${product.name}</h6>
-                                <div class="row gx-2">
-                                    <div class="col">
-                                        <div class="p-3">
-                                            <img src="${product.photo_1}" class="rounded" style="max-width: 50%">
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="p-3">
-                                            <p class="text-muted">Preço: ${product.price} €</p>
-                                            <p class="text-muted">Quantidade: ${product.quantity}</p>
-                                            <button class="btn btn-light decrease-quantity" data-id="${product.id}">-</button>
-                                            <button class="btn btn-light increase-quantity" data-id="${product.id}">+</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div><br>
-                        `;
-                    });
-
-                    cartContent += `
-                        <div class="pt-3">
-                            <h6>Preço Total do Carrinho: ${response.totalPrice} €</h6>
-                        </div>
-                        <div class="text-center">
-                            <a href="/cart-details" class="btn btn-primary">Ver Carrinho</a>
-                        </div>`;
-
-                    $('#cart-content').html(cartContent);
-                    updateCartBadge(response.totalItems);
-                },
-                error: function(xhr) {
-                    alert('Error: ' + xhr.responseJSON.error); // Exibir mensagem de erro
-                }
-            });
-        }
 
         function toggleWishlist(productId) {
             let url = '/wishlist/add';
@@ -539,6 +550,7 @@
                 },
             });
         }
+
 
         document.addEventListener("DOMContentLoaded", function() {
 

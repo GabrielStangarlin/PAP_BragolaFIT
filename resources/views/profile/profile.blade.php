@@ -23,6 +23,79 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
+<style>
+    .container {
+        display: flex;
+    }
+
+    .left-column {
+        width: 350px;
+        /* Adjust as needed */
+        background-color: #f8f9fa;
+        /* Optional: change background color */
+        padding: 15px;
+        overflow-y: auto;
+    }
+
+    .sidebar ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .sidebar ul li {
+        margin-bottom: 20px;
+        /* Adjust spacing between items */
+    }
+
+    .sidebar ul li a {
+        font-size: 18px;
+        /* Adjust font size */
+        font-weight: bold;
+        text-decoration: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 15px;
+        background-color: #fff;
+        /* Optional: change background color */
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    .sidebar ul li a:hover {
+        background-color: #e9ecef;
+        /* Optional: change hover background color */
+    }
+
+    .sidebar ul li a i {
+        margin-left: 10px;
+        /* Adjust space between text and icon */
+    }
+
+    .right-column {
+        flex-grow: 1;
+        padding: 15px;
+    }
+
+    h2 {
+        margin-bottom: 20px;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .order-card {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 20px;
+        background-color: #fafafa;
+    }
+
+    .order-card p {
+        margin: 5px 0;
+        po
+    }
+</style>
 
 <body>
     <div class="navbar navbar-expand-lg navbar-light sticky-top" style="background-color:#ffffff; height: 100px;">
@@ -88,11 +161,17 @@
 
 
     <div class="container main-container">
-        <div class="left-column">
+        <div class="left-column sidebar">
             <ul>
-                <li><a onclick="showContent('perfil')" style="cursor: pointer;">MEU PERFIL</a></li>
-                <li><a onclick="showContent('encomendas')" style="cursor: pointer;">MINHAS ENCOMENDAS</a></li>
-                <li><a onclick="showContent('desejos')" style="cursor: pointer;">LISTA DE FAVORITOS</a></li>
+                <li><a onclick="showContent('perfil')" style="cursor: pointer;">
+                        MEU PERFIL <i class="fa fa-chevron-right"></i>
+                    </a></li>
+                <li><a onclick="showContent('encomendas')" style="cursor: pointer;">
+                        MINHAS ENCOMENDAS <i class="fa fa-chevron-right"></i>
+                    </a></li>
+                <li><a onclick="showContent('desejos')" style="cursor: pointer;">
+                        LISTA DE FAVORITOS <i class="fa fa-chevron-right"></i>
+                    </a></li>
             </ul>
         </div>
         <div class="right-column">
@@ -165,8 +244,8 @@
                                 onclick="toggleDetails('details-{{ $order->id }}')"
                                 style="cursor: pointer; position: relative;">
                                 <p style="margin-bottom: 0;">
-                                    <strong>Encomenda #{{ $order->id }}</strong> - Total:
-                                    {{ number_format($totalPrice, 2, ',', '.') }}€
+                                    Encomenda N°:<strong>{{ $order->id }}</strong> - Valor:
+                                    <strong>€{{ number_format($totalPrice, 2, ',', '.') }}</strong>
                                     <span style="float: right; margin-right: 25px;">Data da encomenda:
                                         {{ \Carbon\Carbon::parse($order->created_at)->format('d/m/Y') }}</span>
                                 </p>
@@ -226,13 +305,34 @@
                             <div class="row g-0">
                                 <div class="col-md-4 text-center p-3">
                                     <img src="{{ $product->photo_1 }}" class="img-fluid rounded"
-                                        style="max-width: 100%;">
+                                        style="max-width: 50%;">
                                 </div>
                                 <div class="col-md-8">
                                     <div class="card-body">
                                         <h5 class="card-title">{{ $product->name }}</h5>
                                         <p class="card-text text-muted">Preço:
                                             {{ number_format($product->price, 2, ',', '.') }} €</p>
+                                        @if ($product->quantity > 6)
+                                            <span class="availability-status"
+                                                style="color: green; font-size: 0.9rem;">
+                                                <i class="fa-solid fa-circle availability-icon"
+                                                    style="color: green; font-size: 0.6rem;"></i>
+                                                <strong>Em estoque</strong>
+                                            </span>
+                                        @elseif ($product->quantity >= 1 && $product->quantity <= 6)
+                                            <span class="availability-status"
+                                                style="color: orange; font-size: 0.9rem;">
+                                                <i class="fa-solid fa-circle availability-icon"
+                                                    style="color: orange; font-size: 0.6rem;"></i>
+                                                <strong>Poucas unidades</strong>
+                                            </span>
+                                        @else
+                                            <span class="availability-status" style="color: red; font-size: 0.9rem;">
+                                                <i class="fa-solid fa-circle availability-icon"
+                                                    style="color: red; font-size: 0.6rem;"></i>
+                                                <strong>Fora de estoque</strong>
+                                            </span>
+                                        @endif
                                         <div class="d-flex justify-content-between align-items-center">
                                             <a id="addToCart" class="btn btn-outline-success mt-auto"
                                                 data-product-id="{{ $product->id }}">
