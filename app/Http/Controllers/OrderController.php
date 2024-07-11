@@ -52,7 +52,8 @@ class OrderController extends Controller
     public function checkout(Request $request)
     {
         try {
-            DB::transaction(function () {
+            $order = null;
+            DB::transaction(function () use (&$order) {
                 $user = auth()->user();
                 $order = Order::create([
                     'user_id' => $user->id,
@@ -118,8 +119,9 @@ class OrderController extends Controller
                 // Enviar notificação de confirmação de compra
                 Notification::send($user, new PurchaseConfirmed($order, $products, $totalPrice));
 
-                return response()->json(['status' => 'success', 'order_id' => $order->id]);
             });
+
+            return response()->json(['status' => 'success', 'order_id' => $order->id]);
 
         } catch (\Exception $e) {
             DB::rollBack();
