@@ -207,25 +207,6 @@
                         <button id="btn-profile" class="btn btn btn-primary">GUARDAR</button>
                     </form>
                 </div>
-                <div class="card p-4 mt-4">
-                    <h4>Alterar Password</h4>
-                    <form id="passwordForm" method="POST">
-                        @csrf
-                        <div class="form-group mb-3">
-                            <label for="current-password">Password atual</label>
-                            <input type="password" id="current-password" class="form-control">
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="new-password">Nova Password</label>
-                            <input type="password" id="new-password" class="form-control">
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="confirm-password">Confirmar Nova Password</label>
-                            <input type="password" id="confirm-password" class="form-control">
-                        </div>
-                        <button id="btn-password" class="btn btn-primary">Alterar Password</button>
-                    </form>
-                </div>
             </div>
             <div id="encomendas" class="content-section" style="display: none;">
                 <div class="card p-4">

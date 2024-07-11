@@ -58,7 +58,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="phone" class="form-label">Vat number</label>
+                                        <label for="phone" class="form-label">NIF:</label>
                                         <input type="number" id="vat_numberAdd" name="vat_numberAdd" class="form-control"
                                             maxlength="10">
                                     </div>
@@ -222,7 +222,7 @@
                     name: name,
                     address: address,
                     email: email,
-                    Telefone: phone,
+                    phone: phone,
                     password: password,
                     vat_number: vat_number,
                     isAdmin: isAdmin,

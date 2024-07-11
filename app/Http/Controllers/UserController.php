@@ -66,7 +66,7 @@ class UserController extends Controller
 
         $user = Auth::user();
 
-        if (!Hash::check($request->current_password, $user->password)) {
+        if (! Hash::check($request->current_password, $user->password)) {
             return response()->json(['message' => 'A senha atual está incorreta.'], 400);
         }
 
@@ -75,7 +75,6 @@ class UserController extends Controller
 
         return response()->json(['message' => 'Senha atualizada com sucesso!'], 200);
     }
-
 
     //dashboard:
     public function listUser()
@@ -108,7 +107,7 @@ class UserController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'address' => 'nullable|string|max:255',
-            'phone' => 'nullable|string|max:20',
+            'phone' => 'nullable',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
             'vat_number' => 'nullable|string|max:50',
