@@ -125,4 +125,12 @@ class ProductsController extends Controller
     }
 
 
+    public function show($id)
+    {
+        $product = Product::findOrFail($id);
+        $categories = Category::all();
+        return view('store.showproduct', compact('product', 'categories'));
+    }
+
+
 }

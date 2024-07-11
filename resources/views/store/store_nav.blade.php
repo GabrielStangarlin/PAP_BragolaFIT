@@ -431,15 +431,30 @@
             });
         }
 
+        // function disableButton($button) {
+        //     $button.prop('disabled', true).css('cursor', 'not-allowed');
+        // }
+
+        // function enableButton($button) {
+        //     $button.prop('disabled', false).css('cursor', 'pointer');
+        // }
+
         // $(document).on('click', '.increase-quantity', function() {
         //     var productId = $(this).data('id');
-        //     updateCartQuantity(productId, 'increase');
+        //     var $button = $(this);
+        //     disableButton($button);
+        //     updateCartQuantity(productId, 'increase', function() {
+        //         enableButton($button);
+        //     });
         // });
 
         // $(document).on('click', '.decrease-quantity', function() {
         //     var productId = $(this).data('id');
-        //     updateCartQuantity(productId, 'decrease');
-
+        //     var $button = $(this);
+        //     disableButton($button);
+        //     updateCartQuantity(productId, 'decrease', function() {
+        //         enableButton($button);
+        //     });
         // });
 
         function updateCartContent() {

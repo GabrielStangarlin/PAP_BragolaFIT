@@ -115,3 +115,5 @@ Route::post('/cart/increase', [CartController::class, 'increaseQuantity'])->name
 Route::post('/cart/decrease', [CartController::class, 'decreaseQuantity'])->name('cart.decrease');
 Route::get('/cart/de', [CartController::class, 'cartDe'])->name('cart.de');
 
+//showproduct
+Route::get('/product/{id}', [ProductsController::class, 'show'])->name('product.show');

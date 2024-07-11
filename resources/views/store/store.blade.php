@@ -299,8 +299,11 @@
                                                     </a>
                                                 @endauth
                                                 <!-- Product image-->
-                                                <img class="card-img-top img-fluid mx-auto d-block" style="width: 50%"
-                                                    src="{{ $product->photo_1 }}" alt="..." />
+                                                <a href="{{ route('product.show', $product->id) }}">
+                                                    <img class="card-img-top img-fluid mx-auto d-block"
+                                                        style="width: 50%" src="{{ $product->photo_1 }}"
+                                                        alt="{{ $product->name }}" />
+                                                </a>
                                                 <!-- Product details-->
                                                 <div class="card-body p-4">
                                                     <div class="text-center">
@@ -387,8 +390,10 @@
                                     </a>
                                 @endauth
                                 <!-- Product image-->
-                                <img class="card-img-top img-fluid mx-auto d-block" style="width: 50%"
-                                    src="{{ $product->photo_1 }}" alt="..." />
+                                <a href="{{ route('product.show', $product->id) }}">
+                                    <img class="card-img-top img-fluid mx-auto d-block" style="width: 50%"
+                                        src="{{ $product->photo_1 }}" alt="{{ $product->name }}" />
+                                </a>
                                 <!-- Product details-->
                                 <div class="card-body p-4">
                                     <div class="text-center">
