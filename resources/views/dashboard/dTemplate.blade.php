@@ -34,7 +34,7 @@
     {{-- chart js --}}
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    @vite('resources/css/styles.css')
+    @vite(['resources/css/styles.css'])
 
     <style>
         .card-custom {
