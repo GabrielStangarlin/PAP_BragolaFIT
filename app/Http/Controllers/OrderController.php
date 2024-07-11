@@ -51,78 +51,75 @@ class OrderController extends Controller
 
     public function checkout(Request $request)
     {
-        $user = auth()->user();
-
-        DB::beginTransaction();
-
         try {
-            $order = Order::create([
-                'user_id' => $user->id,
-                'order_status' => 0,
-                'ship_address' => $user->address,
-                'invoicing_address' => $user->address,
-            ]);
+            DB::transaction(function () {
+                $user = auth()->user();
+                $order = Order::create([
+                    'user_id' => $user->id,
+                    'order_status' => 0,
+                    'ship_address' => $user->address,
+                    'invoicing_address' => $user->address,
+                ]);
 
-            $cartItems = Cart::with('products')->where('user_id', $user->id)->get();
-            $totalPrice = 0;
-            $products = [];
-            $insufficientStockProducts = [];
+                $cartItems = Cart::with('products')->where('user_id', $user->id)->get();
+                $totalPrice = 0;
+                $products = [];
+                $insufficientStockProducts = [];
 
-            foreach ($cartItems as $cartItem) {
-                foreach ($cartItem->products as $product) {
-                    // Acessa a quantidade da tabela pivot
-                    $quantity = $product->pivot->quantity;
+                foreach ($cartItems as $cartItem) {
+                    foreach ($cartItem->products as $product) {
+                        // Acessa a quantidade da tabela pivot
+                        $quantity = $product->pivot->quantity;
 
-                    $itemTotalValue = $product->price * $quantity;
+                        $itemTotalValue = $product->price * $quantity;
 
-                    $productInStock = Product::find($product->id);
+                        $productInStock = Product::find($product->id);
 
-                    if ($productInStock) {
-                        if ($productInStock->quantity < $quantity) {
-                            $insufficientStockProducts[] = $productInStock->name;
+                        if ($productInStock) {
+                            if ($productInStock->quantity < $quantity) {
+                                $insufficientStockProducts[] = $productInStock->name;
+                            }
                         }
                     }
                 }
-            }
 
-            if (!empty($insufficientStockProducts)) {
-                throw new \Exception('Quantidade insuficiente para os produtos: ' . implode(', ', $insufficientStockProducts));
-            }
-
-            foreach ($cartItems as $cartItem) {
-                foreach ($cartItem->products as $product) {
-                    // Acessa a quantidade da tabela pivot
-                    $quantity = $product->pivot->quantity;
-
-                    $itemTotalValue = $product->price * $quantity;
-
-                    // Cria uma nova instância de OrderProduct
-                    OrderProduct::create([
-                        'order_id' => $order->id,
-                        'product_id' => $product->id,
-                        'quantity' => $quantity,
-                        'value' => $product->price,
-                    ]);
-
-                    $productInStock = Product::find($product->id);
-
-                    if ($productInStock) {
-                        $productInStock->quantity -= $quantity;
-                        $productInStock->save();
-                    }
-                    $totalPrice += $itemTotalValue;
-                    $products[] = $product;
+                if (! empty($insufficientStockProducts)) {
+                    throw new \Exception('Quantidade insuficiente para os produtos: '.implode(', ', $insufficientStockProducts));
                 }
-            }
 
-            Cart::where('user_id', $user->id)->delete();
+                foreach ($cartItems as $cartItem) {
+                    foreach ($cartItem->products as $product) {
+                        // Acessa a quantidade da tabela pivot
+                        $quantity = $product->pivot->quantity;
 
-            DB::commit();
+                        $itemTotalValue = $product->price * $quantity;
 
-            // Enviar notificação de confirmação de compra
-            Notification::send($user, new PurchaseConfirmed($order, $products, $totalPrice));
+                        // Cria uma nova instância de OrderProduct
+                        OrderProduct::create([
+                            'order_id' => $order->id,
+                            'product_id' => $product->id,
+                            'quantity' => $quantity,
+                            'value' => $product->price,
+                        ]);
 
-            return response()->json(['status' => 'success', 'order_id' => $order->id]);
+                        $productInStock = Product::find($product->id);
+
+                        if ($productInStock) {
+                            $productInStock->quantity -= $quantity;
+                            $productInStock->save();
+                        }
+                        $totalPrice += $itemTotalValue;
+                        $products[] = $product;
+                    }
+                }
+
+                Cart::where('user_id', $user->id)->delete();
+
+                // Enviar notificação de confirmação de compra
+                Notification::send($user, new PurchaseConfirmed($order, $products, $totalPrice));
+
+                return response()->json(['status' => 'success', 'order_id' => $order->id]);
+            });
 
         } catch (\Exception $e) {
             DB::rollBack();
@@ -130,8 +127,6 @@ class OrderController extends Controller
             return response()->json(['status' => 'error', 'message' => $e->getMessage()], 500);
         }
     }
-
-
 
     public function orderInfo(Request $request)
     {
