@@ -34,6 +34,7 @@ Route::get('/categoria/{id}', [SiteController::class, 'filterByCategory'])->name
 
 Route::post('/register', [AuthController::class, 'registerPost'])->name('user.register');
 Route::get('/login', [AuthController::class, 'login'])->name('user.login');
+Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/loginPost', [AuthController::class, 'loginPost'])->name('user.loginPost');
 Route::get('/logout', [AuthController::class, 'logout'])->name('user.logout');
 

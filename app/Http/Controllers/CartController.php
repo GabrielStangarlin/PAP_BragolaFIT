@@ -16,7 +16,13 @@ class CartController extends Controller
         $categories = Category::all();
         $cart = Cart::where('user_id', Auth::user()->id)->first();
 
-        return view('cart.cart_details', compact('cart', 'categories'));
+        if(Auth::check()){
+
+            return view('cart.cart_details', compact('cart', 'categories'));
+        }else {
+            return redirect('/login');
+        }
+
     }
 
     public function checkProductQuantity($productId)
