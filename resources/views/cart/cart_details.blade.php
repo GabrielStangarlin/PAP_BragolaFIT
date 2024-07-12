@@ -141,6 +141,11 @@
             document.getElementById('checkout-form').addEventListener('submit', function(event) {
                 event.preventDefault(); // Previne o comportamento padrão de submissão do formulário
 
+                // Desabilita e esconde o botão de submissão
+                const submitButton = this.querySelector('button[type="submit"]');
+                submitButton.disabled = true;
+                submitButton.style.display = 'none';
+
                 // Cria uma instância do FormData para coletar dados do formulário
                 let formData = new FormData(this);
 
@@ -171,6 +176,10 @@
                                 title: 'Oops...',
                                 text: data.message // Exibe a mensagem de erro específica
                             });
+
+                            // Habilita e mostra o botão novamente em caso de erro
+                            submitButton.disabled = false;
+                            submitButton.style.display = 'inline-block';
                         }
                     })
                     .catch(error => {
@@ -181,6 +190,10 @@
                             title: 'Oops...',
                             text: 'Houve um erro ao finalizar sua compra. Por favor, tente novamente.'
                         });
+
+                        // Habilita e mostra o botão novamente em caso de erro
+                        submitButton.disabled = false;
+                        submitButton.style.display = 'inline-block';
                     });
             });
         });
