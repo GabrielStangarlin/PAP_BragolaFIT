@@ -52,11 +52,14 @@ Route::post('/cart-checkout', [OrderController::class, 'checkout'])->name('cart.
 Route::get('(cart/verification/content', [CartController::class, 'verifyContent'])->name('cart.verification.for.cartContent');
 
 //Detalhes Carrinho
-Route::get('/cart-details', [CartController::class, 'cartDetails'])->name('cart.details');
-Route::post('/delete/product/cart', [CartController::class, 'removeItem'])->name('cart.delete');
+Route::middleware(['auth'])->group(function(){
+    Route::get('/cart-details', [CartController::class, 'cartDetails'])->name('cart.details');
+    Route::post('/delete/product/cart', [CartController::class, 'removeItem'])->name('cart.delete');
+    Route::get('/db', [SiteController::class, 'dashboardHome'])->name('dashboard.home');
+});
 
 //Dashboard (Gabriel)
-Route::get('/db', [SiteController::class, 'dashboardHome'])->name('dashboard.home');
+
 Route::get('/api/product-subcategories', [ProductsController::class, 'getProductSubcategories']);
 
 //User
