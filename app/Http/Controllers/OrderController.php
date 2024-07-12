@@ -19,7 +19,7 @@ class OrderController extends Controller
         if (request()->ajax()) {
             return datatables::of(Order::all())
                 ->editColumn('name', function ($order) {
-                    return $order->user->name;
+                    return $order->user ? $order->user->name : 'Utilizador Excluido';
                 })
                 ->editColumn('order_status', function ($order) {
                     if ($order->order_status == 0) {
