@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Subcategory;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -60,8 +61,12 @@ class SubcategoryController extends Controller
     {
         $where = ['id' => $request->id];
         $subcategory = Subcategory::where($where)->first();
+        $categories = Category::all();
 
-        return response()->json($subcategory);
+        return response()->json([
+            'subcategory' => $subcategory,
+            'categories' => $categories,
+        ]);
     }
 
     public function destroy(Request $request)

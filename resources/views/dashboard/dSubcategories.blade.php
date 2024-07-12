@@ -140,11 +140,6 @@
             $('#addSubcategoryModal').on('shown.bs.modal', function() {
                 loadCategories('#addSubcategoryModal #categorySelectAdd');
             });
-
-            // Trigger when the edit subcategory modal is shown
-            $('#editSubcategoryModal').on('shown.bs.modal', function() {
-                loadCategories('#editSubcategoryModal #categorySelectEdit');
-            });
         });
 
         let table = $('#subcategory-datatable').DataTable({
@@ -210,9 +205,24 @@
                 },
                 dataType: 'json',
                 success: function(res) {
-                    $('#editSubcategoryModal').find('#id').val(res.id);
-                    $('#editSubcategoryModal').find('#name').val(res.name);
+                    const subcategory = res.subcategory;
+                    const categories = res.categories;
 
+                    $('#editSubcategoryModal').find('#id').val(subcategory.id);
+                    $('#editSubcategoryModal').find('#name').val(subcategory.name);
+
+                    const $categoryEdit = $('#editSubcategoryModal').find('#categorySelectEdit');
+                    $categoryEdit.empty();
+                    $.each(categories, function(index, category) {
+                        $categoryEdit.append(
+                            $('<option>', {
+                                value: category.id,
+                                text: category.name,
+                            })
+                        );
+
+                    });
+                    $categoryEdit.val(subcategory.category_id);
                     $('#editSubcategoryModal').modal('show');
                 }
             });
@@ -255,7 +265,7 @@
         });
 
         function deleteFunction(id) {
-            if (confirm("Do you really want do delete?") == true) {
+            if (confirm("quer mesmo apagar?") == true) {
                 var id = id;
                 $.ajax({
                     type: "POST",

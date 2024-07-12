@@ -183,7 +183,6 @@ function editFunc(id) {
 
             });
 
-            console.log($subcategoryEdit)
             $subcategoryEdit.val(product.subcategories[0].id);
             $('#editModal').modal('toggle');
         }
