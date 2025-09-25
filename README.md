@@ -136,9 +136,6 @@ MAIL_FROM_NAME="${APP_NAME}"
 
 As rotas principais encontram‑se em `routes/` e a lógica nas *Controllers* dentro de `app/Http/Controllers/`. As *views* estão em `resources/views/` (Blade) e os ficheiros front‑end em `resources/` (JS/CSS).
 
-## 📸 Screenshots (opcional)
-Coloque aqui imagens do front‑office (home, categoria, carrinho, checkout) e do back‑office (dashboard, gestão de produtos, encomendas).
-
 ## 📚 Créditos
 Projeto desenvolvido por **Gabriel Stangarlin** e **Mário Edson Fernandes Figueiredo** no âmbito da PAP (Escola Secundária D. Pedro V).
 
